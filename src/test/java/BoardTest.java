@@ -16,5 +16,40 @@ public class BoardTest {
     }
 
     @Test
-    public void testInit() {}
+    public void testInitState() {
+	assert(board.getSize() == 5);
+	assert (board.getWinner() == null);
+	assert (board.getCurrentPlayer().toString().equals("RED"));
+    }
+    @Test
+    public void testInitMid() {
+
+	assert(board.getSize() != 0);
+	
+	//first and last row will have players on them so omit in this test
+	for (int i = 1; i < board.getSize()-1; i++) {
+	    for (int j = 0; j < board.getSize(); j++) {
+                assert (board.getSquareAtPos(i, j).toString().equals("EMPTY"));
+            }
+        }
+    }
+    @Test
+    public void testInitPieces() {
+
+	assert(board.getSize() != 0);
+	
+	//now test pieces were placed
+	for (int i = 0; i <1; i++) {
+	    for (int j = 0; j < board.getSize(); j++) {
+		assert (board.getSquareAtPos(i, j).toString().equals("OCCUPIED"));
+	    }
+	}
+	for (int i = board.getSize(); i <board.getSize()-1; i++) {
+            for (int j = 0; j < board.getSize(); j++) {
+		assert (board.getSquareAtPos(i, j).toString().equals("OCCUPIED"));
+            }
+        }
+	
+    }
+
 }
