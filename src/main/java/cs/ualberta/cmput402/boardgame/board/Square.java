@@ -5,7 +5,6 @@ public class Square {
     
     public enum State { OCCUPIED, EMPTY };
     private State squareState;
-    public enum Piece { RED, BLUE };
     private Piece pieceOnSquare;
     private boolean isShrine;
     
@@ -26,12 +25,8 @@ public class Square {
 	}
     }
     
-    public void placePiece(String piece){
-	if(piece == "RED"){
-	    pieceOnSquare = Piece.RED;
-	}else{
-	    pieceOnSquare = Piece.BLUE;
-	}
+    public void placePiece(String piece, boolean master){
+	pieceOnSquare = new Piece(piece, master);
 	squareState = State.OCCUPIED;
     }
     

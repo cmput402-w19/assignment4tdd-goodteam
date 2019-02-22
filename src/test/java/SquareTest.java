@@ -28,7 +28,7 @@ public class SquareTest {
     
     @Test
     public void testPlacePiece(){
-	square.placePiece("RED");
+	square.placePiece("RED", false);
 	assert(square.getState().equals("OCCUPIED"));
     }
     
