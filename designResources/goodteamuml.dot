@@ -1,0 +1,41 @@
+digraph G {
+
+fontname = "Bitstream Vera Sans"
+        fontsize = 10
+
+        node [
+                fontname = "Bitstream Vera Sans"
+                fontsize = 10
+                shape = "record"
+        ]
+
+        edge [
+                fontname = "Bitstream Vera Sans"
+                fontsize = 10
+        ]
+
+Game[
+label = "{Game|}"
+]
+
+Board [
+ label = "{Board|+ livePieces : Piece[ ]\l+  board : Square[ ][ ]\l- size : int\l- winner : Player|+ initBoard() : void\l+ getSize() : int\l+ getCurrentPlayer() : Player\l+ getSquareAtPos(i, j) : Square}"
+        ]
+Square[
+ label = "{Square|+ pieceOnSquare : Piece\l- squareState : State\l- isShrine : boolean  |+ placePiece(Piece) : void \l+ getState : State}"
+]
+
+State[
+label = "{ enumeration \l State| OCCUPIED \l EMPTY}"
+]
+
+Piece[
+label = "{Piece| - color : String\l - isMaster : boolean\l}"
+]
+
+Move[
+label = "{Move| - numberOfPositions : int\l - moveName : String}"
+]
+
+
+}
