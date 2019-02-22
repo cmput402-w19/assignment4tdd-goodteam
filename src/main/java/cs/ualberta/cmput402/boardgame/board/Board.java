@@ -3,8 +3,6 @@ package cs.ualberta.cmput402.boardgame.board;
 public class Board {
 
     public enum Player { RED, BLUE };
-    //just for now, will refactor to be real object list 
-    public enum Square { OCCUPIED, EMPTY};
     public Square board[][];
     private int size = 5;
     private Player currentPlayer;
@@ -12,20 +10,41 @@ public class Board {
     
     public Board(){
 	board = new Square[size][size];
+	currentPlayer = Player.RED;
+	winner = null;
 	initBoard();
     }
 
     public void initBoard(){
-	currentPlayer = Player.RED;
-	winner = null;
 
 	for (int i = 0; i < size; i++){
 	    for(int j = 0; j < size; j++){
-		if (i == 0 || i == size-1){
-		    board[i][j] = Square.OCCUPIED;
-		}else{
-		    board[i][j] = Square.EMPTY;
+		
+		Square square = new Square();
+		boolean placePiece = false;
+		String color = "";
+
+		//if first row
+		if (i == 0){
+		    color = "RED";
+		    placePiece = true;
+		//or last row
+		}else if(i == size-1){
+		    color = "BLUE";
+		    placePiece = true;
 		}
+		//if first or last row and middle column
+		if(placePiece && (j == 2)){
+		    square.setShrine();
+		    boolean master = true;
+		}
+		    
+		if(placePiece){
+		    square.placePiece(color, placePiece);
+		}
+		
+		board[i][j] = square;
+		
 	    }
 	}
     }

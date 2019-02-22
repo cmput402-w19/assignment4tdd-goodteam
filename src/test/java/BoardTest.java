@@ -29,7 +29,7 @@ public class BoardTest {
 	//first and last row will have players on them so omit in this test
 	for (int i = 1; i < board.getSize()-1; i++) {
 	    for (int j = 0; j < board.getSize(); j++) {
-                assert (board.getSquareAtPos(i, j).toString().equals("EMPTY"));
+                assert (board.getSquareAtPos(i, j).getState().equals("EMPTY"));
             }
         }
     }
@@ -41,15 +41,21 @@ public class BoardTest {
 	//now test pieces were placed
 	for (int i = 0; i <1; i++) {
 	    for (int j = 0; j < board.getSize(); j++) {
-		assert (board.getSquareAtPos(i, j).toString().equals("OCCUPIED"));
+		assert (board.getSquareAtPos(i, j).getState().equals("OCCUPIED"));
 	    }
 	}
 	for (int i = board.getSize(); i <board.getSize()-1; i++) {
             for (int j = 0; j < board.getSize(); j++) {
-		assert (board.getSquareAtPos(i, j).toString().equals("OCCUPIED"));
+		assert (board.getSquareAtPos(i, j).getState().equals("OCCUPIED"));
             }
         }
 	
     }
+
+   @Test
+   public void testInitMidShrine(){
+       assert (board.getSquareAtPos(0, 2).isShrine() == true);
+       assert (board.getSquareAtPos(4, 2).isShrine() == true);
+   }
 
 }
