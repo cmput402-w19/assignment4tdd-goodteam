@@ -3,6 +3,7 @@ package cs.ualberta.cmput402.boardgame;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageFilter;
 import javax.swing.*;
 
 public class Renderer {
@@ -12,6 +13,7 @@ public class Renderer {
 
     // Assets.
     private Image[][] pieces = new Image[2][2];
+    private Image empty;
 
     // Dimensions.
     private final int tileSize = 64;
@@ -58,11 +60,17 @@ public class Renderer {
      * Creates the images for the icons to use in the GUI.
      */
     private void createPieceImages() {
+        // Create the empty tile.
+        BufferedImage empty = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);
+        Graphics2D emptyG = empty.createGraphics();
+        emptyG.setColor(Color.WHITE);
+        emptyG.fillRect(0, 0, tileSize, tileSize)gi;
+
         // Iterate over teams and piece types.
         for (Team team : Team.values()) {
             for (PieceType piece : PieceType.values()) {
                 // Instantiate a new image to modify.
-                BufferedImage img = new BufferedImage(64, 64, BufferedImage.TYPE_INT_RGB);
+                BufferedImage img = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);
                 Graphics2D imgG = img.createGraphics();
 
                 // File BG with white.
