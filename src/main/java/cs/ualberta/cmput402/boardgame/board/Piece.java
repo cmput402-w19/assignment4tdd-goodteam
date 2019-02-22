@@ -5,16 +5,17 @@ public class Piece{
     private String team;
     private boolean masterStatus;
     
-    public Piece(String color, boolean isMaster){
-	
+    public Piece(String color, boolean master){
+	team = color;
+	masterStatus = master;
     }
 
     public boolean isMaster(){
-	return false;
+	return masterStatus;
     }
 
     public String getTeam(){
-	return "";
+	return team;
     }
     
 }
