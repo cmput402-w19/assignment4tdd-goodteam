@@ -16,28 +16,28 @@ public class PieceTest {
     public void testBlueStudentPiece(){
 	piece = new Piece("BLUE", false);
 	assert(piece.isMaster() == false);
-	assert(piece.getTeam() == "BLUE");
+	assert(piece.getTeam().equals("BLUE"));
     }
 
     @Test
     public void testRedMasterPiece(){
 	piece = new Piece("RED", true);
 	assert(piece.isMaster() == true);
-	assert(piece.getTeam() == "RED");
+	assert(piece.getTeam().equals("RED"));
     }
 
     @Test
     public void testRedStudentPiece(){
 	piece = new Piece("RED", false);
 	assert(piece.isMaster() == false);
-	assert(piece.getTeam() == "RED");
+	assert(piece.getTeam().equals("RED"));
     }
 
     @Test
     public void testBlueMasterPiece(){
 	piece = new Piece("BLUE", true);
 	assert(piece.isMaster() == true);
-	assert(piece.getTeam() == "BLUE");
+	assert(piece.getTeam().equals("BLUE"));
     }
     
 }
