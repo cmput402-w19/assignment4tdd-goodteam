@@ -18,29 +18,24 @@ public class Board {
 
     public void initBoard(){
 
-	//init mid board
-	for (int i = 1; i < size-1; i++){
+	//init board of squares
+	for (int i = 0; i < size; i++){
 	    for(int j = 0; j < size; j++){
 		board[i][j] = new Square();
 	    }
 	}
-	//init first and last row
+	//place pieces on first and last row
 	for(int j = 0; j < size; j++){
-	    Square squareFirstRow = new Square();
-	    Square squareLastRow = new Square();
 	    if(j == 2){
 		//if middle of row, place shrine and master
-		squareFirstRow.setShrine();
-		squareLastRow.setShrine();
-		squareFirstRow.placePiece(Team.RED, true);
-		squareLastRow.placePiece(Team.BLUE, true);
+		board[0][j].setShrine();
+		board[size-1][j].setShrine();
+		board[0][j].placePiece(Team.RED, true);
+		board[size-1][j].placePiece(Team.BLUE, true);
 	    }else{
-		squareFirstRow.placePiece(Team.RED, false);
-		squareLastRow.placePiece(Team.BLUE, false);
+		board[0][j].placePiece(Team.RED, false);
+		board[size-1][j].placePiece(Team.BLUE, false);
 	    }
-	    
-	    board[0][j] = squareFirstRow;
-	    board[size-1][j] = squareLastRow;
 	}
     }
     
