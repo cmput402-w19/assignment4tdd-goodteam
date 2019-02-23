@@ -25,8 +25,8 @@ public class Square {
 	}
     }
     
-    public void placePiece(String piece, boolean master){
-	pieceOnSquare = new Piece(piece, master);
+    public void placePiece(Board.Team team, boolean master){
+	pieceOnSquare = new Piece(team, master);
 	squareState = State.OCCUPIED;
     }
     

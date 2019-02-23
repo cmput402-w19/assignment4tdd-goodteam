@@ -1,4 +1,5 @@
 import cs.ualberta.cmput402.boardgame.board.Square;
+import cs.ualberta.cmput402.boardgame.board.Board;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runners.model.TestClass;
@@ -28,7 +29,7 @@ public class SquareTest {
     
     @Test
     public void testPlacePiece(){
-	square.placePiece("RED", false);
+	square.placePiece(Board.Team.RED, false);
 	assert(square.getState().equals("OCCUPIED"));
     }
     

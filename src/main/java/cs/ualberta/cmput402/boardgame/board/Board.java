@@ -2,15 +2,15 @@ package cs.ualberta.cmput402.boardgame.board;
 
 public class Board {
 
-    public enum Player { RED, BLUE };
+    public enum Team { RED, BLUE };
     public Square board[][];
     private int size = 5;
-    private Player currentPlayer;
-    private Player winner;
+    private Team currentPlayer;
+    private Team winner;
     
     public Board(){
 	board = new Square[size][size];
-	currentPlayer = Player.RED;
+	currentPlayer = Team.RED;
 	winner = null;
 	initBoard();
     }
@@ -22,15 +22,15 @@ public class Board {
 		
 		Square square = new Square();
 		boolean placePiece = false;
-		String color = "";
+		Team team = null;
 
 		//if first row
 		if (i == 0){
-		    color = "RED";
+		    team = Team.RED;
 		    placePiece = true;
 		//or last row
 		}else if(i == size-1){
-		    color = "BLUE";
+		    team = Team.BLUE;
 		    placePiece = true;
 		}
 		//if first or last row and middle column
@@ -40,7 +40,7 @@ public class Board {
 		}
 		    
 		if(placePiece){
-		    square.placePiece(color, placePiece);
+		    square.placePiece(team, placePiece);
 		}
 		
 		board[i][j] = square;
@@ -53,11 +53,11 @@ public class Board {
 	return size;
     }
 
-    public Player getCurrentPlayer(){
+    public Team getCurrentPlayer(){
 	return currentPlayer;
     }
 
-    public Player getWinner(){
+    public Team getWinner(){
 	return winner;
     }
 	

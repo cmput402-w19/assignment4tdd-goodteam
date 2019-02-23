@@ -2,11 +2,11 @@ package cs.ualberta.cmput402.boardgame.board;
 
 public class Piece{
 
-    private String team;
+    private Board.Team team;
     private boolean masterStatus;
     
-    public Piece(String color, boolean master){
-	team = color;
+    public Piece(Board.Team team, boolean master){
+	team = team;
 	masterStatus = master;
     }
 
@@ -14,7 +14,7 @@ public class Piece{
 	return masterStatus;
     }
 
-    public String getTeam(){
+    public Board.Team getTeam(){
 	return team;
     }
     
