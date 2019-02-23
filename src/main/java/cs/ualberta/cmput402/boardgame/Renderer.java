@@ -1,11 +1,11 @@
 package cs.ualberta.cmput402.boardgame;
 
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageFilter;
 import javax.swing.*;
 
+
+// Initial ideas based on https://stackoverflow.com/a/21142687/2379240
 public class Renderer {
 
     // GUI elements.
@@ -30,6 +30,7 @@ public class Renderer {
             this.idx = idx;
         }
     }
+
     private enum Team {
         RED(0, Color.RED),
         BLACK(1, Color.BLACK);
@@ -59,12 +60,13 @@ public class Renderer {
     /**
      * Creates the images for the icons to use in the GUI.
      */
-    private void createPieceImages() {
+    private void createTileGraphics() {
         // Create the empty tile.
         BufferedImage empty = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);
         Graphics2D emptyG = empty.createGraphics();
         emptyG.setColor(Color.WHITE);
-        emptyG.fillRect(0, 0, tileSize, tileSize)gi;
+        emptyG.fillRect(0, 0, tileSize, tileSize);
+        this.empty = empty;
 
         // Iterate over teams and piece types.
         for (Team team : Team.values()) {
