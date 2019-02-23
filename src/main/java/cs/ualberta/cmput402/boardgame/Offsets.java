@@ -11,4 +11,11 @@ public class Offsets {
 	xOffset = x;
 	yOffset = y;
     }
+
+    public boolean equals(Offsets other){
+	if((other.xOffset == xOffset) && (other.yOffset == yOffset)){
+	    return true;
+	}
+	return false;
+    }
 }

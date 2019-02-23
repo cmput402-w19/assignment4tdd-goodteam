@@ -21,8 +21,8 @@ public class MoveTest {
 	gooseMove = Move.GOOSE;
 	elephantMove = Move.ELEPHANT;
 	monkeyMove = Move.MONKEY;
-	offsets1 = new Offsets(1, 1);
-	offsets2 = new Offsets(2, 1);
+	offsets1 = new Offsets(-1, 1);
+	offsets2 = new Offsets(-2, 1);
     }
 
 
