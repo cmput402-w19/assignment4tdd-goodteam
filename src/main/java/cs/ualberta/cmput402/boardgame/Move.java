@@ -3,10 +3,14 @@ package cs.ualberta.cmput402.boardgame;
 import cs.ualberta.cmput402.boardgame.Offsets;
 
 public enum Move {
-    DRAGON(new Offsets[] {new Offsets(1,1), new Offsets(1,1), new Offsets(1,1 ), new Offsets(1,1)});
-    //    GOOSE(1),
-    //ELEPHANT(1),
-    //MONKEY(1);
+    DRAGON(new Offsets[] {new Offsets(0,0), new Offsets(1,1), new Offsets(1,1 ),
+			  new Offsets(1,1)}),
+    GOOSE(new Offsets[] {new Offsets(0,0), new Offsets(1,1), new Offsets(1,1 ),
+			 new Offsets(1,1)}),
+    ELEPHANT(new Offsets[] {new Offsets(0,0), new Offsets(1,1), new Offsets(1,1 ),
+			    new Offsets(1,1)}),
+    MONKEY(new Offsets[] {new Offsets(0,0), new Offsets(1,1), new Offsets(1,1 ),
+			  new Offsets(1,1)});
 
     private boolean selected;
     private Offsets[] offsets;
@@ -17,7 +21,6 @@ public enum Move {
     }
 
     public void select(){
-
     }
     
     public boolean isChosen(){
