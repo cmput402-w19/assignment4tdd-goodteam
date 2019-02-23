@@ -1,4 +1,4 @@
-package cs.ualberta.cmput402.boardgame;
+package cs.ualberta.cmput402.boardgame.rendering;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
