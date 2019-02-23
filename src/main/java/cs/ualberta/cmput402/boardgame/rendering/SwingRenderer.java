@@ -1,5 +1,7 @@
 package cs.ualberta.cmput402.boardgame.rendering;
 
+import cs.ualberta.cmput402.boardgame.board.Board;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
@@ -9,7 +11,7 @@ import javax.swing.border.LineBorder;
 
 
 // Initial ideas based on https://stackoverflow.com/a/21142687/2379240
-public class SwingRenderer {
+public class SwingRenderer implements GameRenderer {
 
     // GUI elements.
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
@@ -131,7 +133,8 @@ public class SwingRenderer {
         gui.add(boardConstraints);
     }
 
-    public void drawBoard() {
+    @Override
+    public void drawBoard(Board board) {
 
     }
 
