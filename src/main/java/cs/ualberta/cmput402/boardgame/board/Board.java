@@ -30,35 +30,29 @@ public class Board {
 
     public void initBoard(){
 
-	for (int i = 0; i < size; i++){
+	//init mid board
+	for (int i = 1; i < size-1; i++){
 	    for(int j = 0; j < size; j++){
-		
-		Square square = new Square();
-		boolean placePiece = false;
-		Team team = null;
-
-		//if first row
-		if (i == 0){
-		    team = Team.RED;
-		    placePiece = true;
-		//or last row
-		}else if(i == size-1){
-		    team = Team.BLUE;
-		    placePiece = true;
-		}
-		//if first or last row and middle column
-		if(placePiece && (j == 2)){
-		    square.setShrine();
-		    boolean master = true;
-		}
-		    
-		if(placePiece){
-		    square.placePiece(team, placePiece);
-		}
-		
-		board[i][j] = square;
-		
+		board[i][j] = new Square();
 	    }
+	}
+	//init first and last row
+	for(int j = 0; j < size; j++){
+	    Square squareFirstRow = new Square();
+	    Square squareLastRow = new Square();
+	    if(j == 2){
+		//if middle of row, place shrine and master
+		squareFirstRow.setShrine();
+		squareLastRow.setShrine();
+		squareFirstRow.placePiece(Team.RED, true);
+		squareLastRow.placePiece(Team.BLUE, true);
+	    }else{
+		squareFirstRow.placePiece(Team.RED, false);
+		squareLastRow.placePiece(Team.BLUE, false);
+	    }
+	    
+	    board[0][j] = squareFirstRow;
+	    board[size-1][j] = squareLastRow;
 	}
     }
     
