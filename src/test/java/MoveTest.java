@@ -12,8 +12,8 @@ public class MoveTest {
     private Move gooseMove;
     private Move elephantMove;
     private Move monkeyMove;
-    private Offsets offsets1;
-    private Offsets offsets2;
+    private Move tigerMove;
+    private Offsets offsets1, offsets2, offsets3;
 
     @Before
     public void setup() {
@@ -21,8 +21,10 @@ public class MoveTest {
 	gooseMove = Move.GOOSE;
 	elephantMove = Move.ELEPHANT;
 	monkeyMove = Move.MONKEY;
+	tigerMove = Move.TIGER;
 	offsets1 = new Offsets(-1, 1);
 	offsets2 = new Offsets(-2, 1);
+	offsets3 = new Offsets(0, 2);
     }
 
 
@@ -46,6 +48,10 @@ public class MoveTest {
         assert(monkeyMove.getOffsets()[0].equals(offsets1));
     }
 
+    @Test
+    public void testGetOffsetsTigerMove() {
+        assert(tigerMove.getOffsets()[0].equals(offsets3));
+    }    
     
     @Test
     public void testSelectChosen() {

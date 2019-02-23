@@ -14,8 +14,10 @@ public enum Move {
 			    new Offsets(1,1)}),
 
     MONKEY(new Offsets[] {new Offsets(-1,1), new Offsets(-1,-1), new Offsets(1,1),
-			  new Offsets(1,-1)});
+			  new Offsets(1,-1)}),
 
+    TIGER(new Offsets[] {new Offsets(0, 2), new Offsets(0, -1)});
+    
     private boolean selected;
     private Offsets[] offsets;
     
