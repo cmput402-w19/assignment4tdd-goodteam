@@ -3,15 +3,15 @@ package cs.ualberta.cmput402.boardgame.board;
 public class Piece{
 
     private Board.Team team;
-    private boolean masterStatus;
+    private boolean isMaster;
     
     public Piece(Board.Team team, boolean master){
 	this.team = team;
-	masterStatus = master;
+	isMaster = master;
     }
 
     public boolean isMaster(){
-	return masterStatus;
+	return isMaster;
     }
 
     public Board.Team getTeam(){
