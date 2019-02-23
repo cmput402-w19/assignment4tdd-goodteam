@@ -14,15 +14,8 @@ public class Square {
 	isShrine = false;
     }
 
-    public String getState(){
-	switch(squareState){
-	    case EMPTY:
-		return "EMPTY";
-	    case OCCUPIED:
-		return "OCCUPIED";
-	    default:
-		return "";
-	}
+    public State getState(){
+	return squareState;
     }
     
     public void placePiece(Board.Team team, boolean master){

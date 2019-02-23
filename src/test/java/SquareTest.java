@@ -18,7 +18,7 @@ public class SquareTest {
 
     @Test
     public void testInitialState(){
-	assert(square.getState().equals("EMPTY"));
+	assert(square.getState().equals(Square.State.EMPTY));
     }
 
     @Test
@@ -30,7 +30,7 @@ public class SquareTest {
     @Test
     public void testPlacePiece(){
 	square.placePiece(Board.Team.RED, false);
-	assert(square.getState().equals("OCCUPIED"));
+	assert(square.getState().equals(Square.State.OCCUPIED));
     }
     
 }

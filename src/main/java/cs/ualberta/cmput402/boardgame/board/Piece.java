@@ -6,7 +6,7 @@ public class Piece{
     private boolean masterStatus;
     
     public Piece(Board.Team team, boolean master){
-	team = team;
+	this.team = team;
 	masterStatus = master;
     }
 
@@ -17,5 +17,4 @@ public class Piece{
     public Board.Team getTeam(){
 	return team;
     }
-    
 }

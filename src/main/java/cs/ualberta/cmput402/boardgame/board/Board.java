@@ -2,7 +2,20 @@ package cs.ualberta.cmput402.boardgame.board;
 
 public class Board {
 
-    public enum Team { RED, BLUE };
+    public enum Team {
+	RED, BLUE;
+
+	public String toString(){
+	    switch(this){
+	    case RED :
+            return "RED";
+	    case BLUE :
+            return "BLUE";
+	    }
+        return null;
+    }
+    };
+    
     public Square board[][];
     private int size = 5;
     private Team currentPlayer;
