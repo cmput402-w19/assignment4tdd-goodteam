@@ -69,6 +69,7 @@ public class Renderer {
         this.empty = empty;
 
         // Iterate over teams and piece types.
+        int tileCenter = tileSize / 2;
         for (Team team : Team.values()) {
             for (PieceType piece : PieceType.values()) {
                 // Instantiate a new image to modify.
@@ -82,16 +83,26 @@ public class Renderer {
                 // Choose based on piece type.
                 switch (piece) {
                     case KING:
+                        // Math setup.
+                        int outerRadius = tileSize / 3;
+                        int innerRadius = tileSize / 5;
+
                         // Draw king.
                         imgG.setColor(team.color);
-                        imgG.fillOval(tileSize / 2, tileSize / 2, tileSize / 3, tileSize / 3);
+                        imgG.fillOval(tileCenter - outerRadius, tileCenter - outerRadius,
+                                outerRadius * 2, outerRadius * 2);
                         imgG.setColor(Color.WHITE);
-                        imgG.fillOval(tileSize / 2, tileSize / 2, tileSize / 5, tileSize / 5);
+                        imgG.fillOval(tileCenter - innerRadius, tileCenter - innerRadius,
+                                innerRadius * 2, innerRadius * 2);
                         break;
                     case PAWN:
+                        // Math setup.
+                        int radius = tileSize / 4;
+
                         // Draw pawn.
                         imgG.setColor(team.color);
-                        imgG.fillOval(tileSize / 2, tileSize / 2, tileSize / 4, tileSize / 4);
+                        imgG.fillOval(tileCenter - radius, tileCenter - radius,
+                                radius * 2, radius * 2);
                         break;
                 }
 
