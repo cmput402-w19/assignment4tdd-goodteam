@@ -10,7 +10,6 @@ public class Game {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new GUIThread());
-        System.out.println("Hello");
     }
 
     private static class GUIThread implements Runnable {
