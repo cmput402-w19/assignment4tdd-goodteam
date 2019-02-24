@@ -1,3 +1,9 @@
 # Intellij files.
 *.iml
 .idea/
+
+#emacs temp files
+*~
+
+#Mac finder leftovers- the worst
+*.DS_Store
