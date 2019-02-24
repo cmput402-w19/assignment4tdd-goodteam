@@ -43,7 +43,7 @@ public class SquareClickCallbackTest {
         assertTrue("Callback was called before event.", !cb.wasCalled());
 
         // Call results.
-        Point res1 = new Point(0, 0);
+        Point res1 = new Point(4, 3);
         Point res2 = new Point(1, 2);
 
         // Create an action event, the parameters here are unimportant.
