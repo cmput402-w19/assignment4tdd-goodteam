@@ -1,9 +1,12 @@
 import cs.ualberta.cmput402.boardgame.board.Board;
 import cs.ualberta.cmput402.boardgame.board.Square;
 import cs.ualberta.cmput402.boardgame.Move;
+import cs.ualberta.cmput402.boardgame.Player;
+import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runners.model.TestClass;
+
 
 /**
  * Created by knewbury on 02-21-19
@@ -21,7 +24,7 @@ public class BoardTest {
     public void testInitState() {
 	assert(board.getSize() == 5);
 	assert (board.getWinner() == null);
-	assert (board.getCurrentPlayer().equals(Board.Team.RED));
+	assert (board.getCurrentPlayer().getTeam().equals(Player.Team.RED));
     }
     @Test
     public void testInitMid() {
@@ -62,24 +65,30 @@ public class BoardTest {
 
     @Test
     public void testNextTurn(){
-	assert (board.getCurrentPlayer().equals(Board.Team.RED));
+	assert (board.getCurrentPlayer().getTeam().equals(Player.Team.RED));
 	board.nextTurn();
-	assert (board.getCurrentPlayer().equals(Board.Team.BLUE));
+	assert (board.getCurrentPlayer().getTeam().equals(Player.Team.BLUE));
        
     }
 
     @Test
     public void testInitMoves(){
-	Move[] firstPMoves = board.getCurrentPlayer().getMoves();
-        assert(firstPMoves.length == 2);
+	ArrayList<Move> firstPMoves = board.getCurrentPlayer().getMoves();
+
+	System.out.print("THIS IS SIZEOF currentp moves");
+        System.out.print(firstPMoves.size());
+	System.out.print(firstPMoves);
+        System.out.print("\n");
+	
+	assert(firstPMoves.size() == 2);
 	//want to test that both players have 2 moves, could write getter
 	//for other player but it would only be used here...
 	board.nextTurn();
-	Move[] secondPMoves = board.getCurrentPlayer().getMoves();
-	assert(secondPMoves.length == 2);
+	ArrayList<Move> secondPMoves = board.getCurrentPlayer().getMoves();
+	assert(secondPMoves.size() == 2);
 	Move extraMove = board.getExtraMove();
 	//dont care what the actual moves are, just that no one was double placed
-	assert((!extraMove.equals(firstPMoves[0])) && (!extraMove.equals(firstPMoves[1])) && (!extraMove.equals(secondPMoves[0])) && (!extraMove.equals(secondPMoves[1])));
+	assert((!extraMove.equals(firstPMoves.get(0))) && (!extraMove.equals(firstPMoves.get(1))) && (!extraMove.equals(secondPMoves.get(0))) && (!extraMove.equals(secondPMoves.get(1))));
     }
 
     

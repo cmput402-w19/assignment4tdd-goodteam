@@ -1,5 +1,7 @@
 package cs.ualberta.cmput402.boardgame.board;
 
+import cs.ualberta.cmput402.boardgame.Player;
+
 public class Square {
 
     
@@ -18,7 +20,7 @@ public class Square {
 	return squareState;
     }
     
-    public void placePiece(Board.Team team, boolean master){
+    public void placePiece(Player.Team team, boolean master){
 	pieceOnSquare = new Piece(team, master);
 	squareState = State.OCCUPIED;
     }
