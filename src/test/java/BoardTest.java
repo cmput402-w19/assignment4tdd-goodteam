@@ -1,5 +1,6 @@
 import cs.ualberta.cmput402.boardgame.board.Board;
 import cs.ualberta.cmput402.boardgame.board.Square;
+import cs.ualberta.cmput402.boardgame.Move;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runners.model.TestClass;
@@ -53,10 +54,33 @@ public class BoardTest {
 	
     }
 
-   @Test
-   public void testInitMidShrine(){
-       assert (board.getSquareAtPos(0, 2).isShrine() == true);
-       assert (board.getSquareAtPos(4, 2).isShrine() == true);
-   }
+    @Test
+    public void testInitMidShrine(){
+	assert (board.getSquareAtPos(0, 2).isShrine() == true);
+	assert (board.getSquareAtPos(4, 2).isShrine() == true);
+    }
 
+    @Test
+    public void testNextTurn(){
+	assert (board.getCurrentPlayer().equals(Board.Team.RED));
+	board.nextTurn();
+	assert (board.getCurrentPlayer().equals(Board.Team.BLUE));
+       
+    }
+
+    @Test
+    public void testInitMoves(){
+	Move[] firstPMoves = board.getCurrentPlayer().getMoves();
+        assert(firstPMoves.length == 2);
+	//want to test that both players have 2 moves, could write getter
+	//for other player but it would only be used here...
+	board.nextTurn();
+	Move[] secondPMoves = board.getCurrentPlayer().getMoves();
+	assert(secondPMoves.length == 2);
+	Move extraMove = board.getExtraMove();
+	//dont care what the actual moves are, just that no one was double placed
+	assert((!extraMove.equals(firstPMoves[0])) && (!extraMove.equals(firstPMoves[1])) && (!extraMove.equals(secondPMoves[0])) && (!extraMove.equals(secondPMoves[1])));
+    }
+
+    
 }

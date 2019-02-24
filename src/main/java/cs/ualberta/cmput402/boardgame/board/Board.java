@@ -1,12 +1,28 @@
 package cs.ualberta.cmput402.boardgame.board;
 
+import cs.ualberta.cmput402.boardgame.Move;
+    
 public class Board {
 
-    public enum Team { RED, BLUE };
+    public enum Team {
+	RED, BLUE;
+
+	private Move move1, move2;
+
+	public void setMove(){
+	    
+	}
+
+	public Move[] getMoves(){
+	    return new Move[]{};
+	}
+
+	
+    };
     
     public Square board[][];
     private int size = 5;
-    private Team currentPlayer;
+    private Team currentPlayer, idlePlayer;
     private Team winner;
     
     public Board(){
@@ -37,6 +53,15 @@ public class Board {
 		board[size-1][j].placePiece(Team.BLUE, false);
 	    }
 	}
+    }
+
+    public void nextTurn(){
+	
+    }
+
+    
+    public Move getExtraMove(){
+	return Move.DRAGON;
     }
     
     public int getSize(){
