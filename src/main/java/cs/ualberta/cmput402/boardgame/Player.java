@@ -14,20 +14,22 @@ public class Player{
     }
 
     public Team getTeam(){
-	return Team.BLUE;
+	return team;
     }
     
-    public void setMove(Move move){
+    public void setMove(Move move){       
+	moves.add(move);	
     }
+    
 
 
     public void removeMove(int i){
+	moves.remove(i);
     }
 
 
     public ArrayList<Move> getMoves(){
-        ArrayList<Move> arr= new ArrayList<Move>();
-	return arr;
+        return moves;
     }
     
 }

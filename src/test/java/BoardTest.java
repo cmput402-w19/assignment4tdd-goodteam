@@ -74,11 +74,6 @@ public class BoardTest {
     @Test
     public void testInitMoves(){
 	ArrayList<Move> firstPMoves = board.getCurrentPlayer().getMoves();
-
-	System.out.print("THIS IS SIZEOF currentp moves");
-        System.out.print(firstPMoves.size());
-	System.out.print(firstPMoves);
-        System.out.print("\n");
 	
 	assert(firstPMoves.size() == 2);
 	//want to test that both players have 2 moves, could write getter

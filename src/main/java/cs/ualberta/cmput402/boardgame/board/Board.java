@@ -43,10 +43,6 @@ public class Board {
             idlePlayer.setMove(deck.get(rnd2));
             deck.remove(rnd2);
 	}
-
-	System.out.print("THIS IS MY DECK");
-	System.out.print(deck);
-	System.out.print("\n");
     }
     
     public void initBoard(){
@@ -81,7 +77,7 @@ public class Board {
 
     
     public Move getExtraMove(){
-	return Move.DRAGON;
+	return deck.get(0);
     }
     
     public int getSize(){
