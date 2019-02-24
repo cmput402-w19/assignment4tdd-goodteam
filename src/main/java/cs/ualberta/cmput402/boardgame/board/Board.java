@@ -1,37 +1,54 @@
 package cs.ualberta.cmput402.boardgame.board;
 
+import java.util.Random;
+import java.util.ArrayList;
 import cs.ualberta.cmput402.boardgame.Move;
-    
+import cs.ualberta.cmput402.boardgame.Player;
+
 public class Board {
 
-    public enum Team {
-	RED, BLUE;
-
-	private Move move1, move2;
-
-	public void setMove(){
-	    
-	}
-
-	public Move[] getMoves(){
-	    return new Move[]{};
-	}
-
-	
-    };
     
     public Square board[][];
     private int size = 5;
-    private Team currentPlayer, idlePlayer;
-    private Team winner;
+    private Player currentPlayer, idlePlayer;
+    private Player winner;
+    private ArrayList<Move> deck =
+	 new ArrayList<Move>() {{
+	    add(Move.DRAGON);
+	    add(Move.MONKEY);
+	    add(Move.ELEPHANT);
+	    add(Move.TIGER);
+	    add(Move.GOOSE);
+	}};
     
     public Board(){
 	board = new Square[size][size];
-	currentPlayer = Team.RED;
 	winner = null;
+	setupPlayers();
 	initBoard();
     }
 
+    public void setupPlayers(){
+	//set current and then deal cards random
+	currentPlayer = new Player(Player.Team.RED);
+	idlePlayer = new Player(Player.Team.BLUE);
+
+	for (int i = 0; i < 2; i++){
+	    //thank you Chris Dennett
+	    //https://stackoverflow.com/questions/8065532/how-to-randomly-pick-an-element-from-an-array
+	    int rnd = new Random().nextInt(deck.size());
+	    currentPlayer.setMove(deck.get(rnd));
+	    deck.remove(rnd);
+	    int rnd2 = new Random().nextInt(deck.size());
+            idlePlayer.setMove(deck.get(rnd2));
+            deck.remove(rnd2);
+	}
+
+	System.out.print("THIS IS MY DECK");
+	System.out.print(deck);
+	System.out.print("\n");
+    }
+    
     public void initBoard(){
 
 	//init board of squares
@@ -46,17 +63,20 @@ public class Board {
 		//if middle of row, place shrine and master
 		board[0][j].setShrine();
 		board[size-1][j].setShrine();
-		board[0][j].placePiece(Team.RED, true);
-		board[size-1][j].placePiece(Team.BLUE, true);
+		board[0][j].placePiece(Player.Team.RED, true);
+		board[size-1][j].placePiece(Player.Team.BLUE, true);
 	    }else{
-		board[0][j].placePiece(Team.RED, false);
-		board[size-1][j].placePiece(Team.BLUE, false);
+		board[0][j].placePiece(Player.Team.RED, false);
+		board[size-1][j].placePiece(Player.Team.BLUE, false);
 	    }
 	}
     }
 
     public void nextTurn(){
-	
+	//classic swap
+	Player temp = idlePlayer;
+	idlePlayer = currentPlayer;
+	currentPlayer = temp;
     }
 
     
@@ -68,11 +88,11 @@ public class Board {
 	return size;
     }
 
-    public Team getCurrentPlayer(){
+    public Player getCurrentPlayer(){
 	return currentPlayer;
     }
 
-    public Team getWinner(){
+    public Player getWinner(){
 	return winner;
     }
 	
