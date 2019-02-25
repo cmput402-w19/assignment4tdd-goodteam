@@ -155,10 +155,8 @@ public class SwingRenderer implements GameRenderer {
         // Build top row buttons
         theirMoves = new JButton[moveCount];
         for (int i = 0; i < moveCount; ++i) {
-            // Get button.
+            // Get button, save a reference, and add to the layout.
             JButton button = constructButton();
-
-            // Save reference to the button and add to the layout.
             theirMoves[i] = button;
             moveGrid.add(button);
         }
@@ -166,7 +164,7 @@ public class SwingRenderer implements GameRenderer {
         // Build middle row.
         // First is the exchange move, contained in a label.
         {
-            // First button.
+            // First column.
             JLabel label = new JLabel(new ImageIcon(empty));
             neutralMove = label;
             moveGrid.add(label);
@@ -179,15 +177,13 @@ public class SwingRenderer implements GameRenderer {
         // Build bottom row buttons
         myMoves = new JButton[moveCount];
         for (int i = 0; i < moveCount; ++i) {
-            // Get button.
+            // Get button, save a reference, and add to the layout.
             JButton button = constructButton();
-
-            // Save reference to the button and add to the layout.
             myMoves[i] = button;
             moveGrid.add(button);
         }
 
-        // Finally, the panel constraints, and the actual add.
+        // Finally, the panel constraints and the actual add.
         JPanel moveConstraints = new JPanel(new GridBagLayout());
         moveConstraints.add(moveGrid);
         moveGui.add(moveConstraints);
