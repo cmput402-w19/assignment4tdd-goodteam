@@ -75,6 +75,10 @@ public class Board {
 	currentPlayer = temp;
     }
 
+    public void deselectMove(int i){
+	getCurrentPlayer().getMoves().get(0).deselect();
+    }
+    
 
     public void selectMove(int i){
 	getCurrentPlayer().getMoves().get(0).select();

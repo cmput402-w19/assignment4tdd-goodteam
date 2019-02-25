@@ -91,6 +91,9 @@ public class BoardTest {
     public void testSelectMove(){
 	board.selectMove(0);
 	assert(board.getCurrentPlayer().getMoves().get(0).isChosen());
+	board.deselectMove(0);
     }
+
+    
     
 }
