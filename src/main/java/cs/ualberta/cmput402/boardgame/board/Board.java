@@ -68,7 +68,7 @@ public class Board {
 	}
     }
 
-    public void nextTurn(){
+    public void otherPlayerTurn(){
 	//classic swap
 	Player temp = idlePlayer;
 	idlePlayer = currentPlayer;

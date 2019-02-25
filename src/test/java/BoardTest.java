@@ -64,9 +64,9 @@ public class BoardTest {
     }
 
     @Test
-    public void testNextTurn(){
+    public void testOtherPlayerTurn(){
 	assert (board.getCurrentPlayer().getTeam().equals(Player.Team.RED));
-	board.nextTurn();
+	board.otherPlayerTurn();
 	assert (board.getCurrentPlayer().getTeam().equals(Player.Team.BLUE));
        
     }
@@ -78,7 +78,7 @@ public class BoardTest {
 	assert(firstPMoves.size() == 2);
 	//want to test that both players have 2 moves, could write getter
 	//for other player but it would only be used here...
-	board.nextTurn();
+	board.otherPlayerTurn();
 	ArrayList<Move> secondPMoves = board.getCurrentPlayer().getMoves();
 	assert(secondPMoves.size() == 2);
 	Move extraMove = board.getExtraMove();
