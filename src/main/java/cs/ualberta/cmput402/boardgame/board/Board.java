@@ -8,7 +8,7 @@ import cs.ualberta.cmput402.boardgame.Player;
 public class Board {
 
     
-    public Square board[][];
+    private Square board[][];
     private int size = 5;
     private Player currentPlayer, idlePlayer;
     private Player winner;
