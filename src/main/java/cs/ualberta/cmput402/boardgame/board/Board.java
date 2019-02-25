@@ -75,6 +75,10 @@ public class Board {
 	currentPlayer = temp;
     }
 
+
+    public void selectMove(int i){
+	
+    }
     
     public Move getExtraMove(){
 	return deck.get(0);

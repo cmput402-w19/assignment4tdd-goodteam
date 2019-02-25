@@ -86,6 +86,11 @@ public class BoardTest {
 	assert((!extraMove.equals(firstPMoves.get(0))) && (!extraMove.equals(firstPMoves.get(1))) && (!extraMove.equals(secondPMoves.get(0))) && (!extraMove.equals(secondPMoves.get(1))));
     }
 
-    
+
+    @Test
+    public void testSelectMove(){
+	board.selectMove(0);
+	assert(board.getCurrentPlayer().getMoves().get(0).isChosen());
+    }
     
 }
