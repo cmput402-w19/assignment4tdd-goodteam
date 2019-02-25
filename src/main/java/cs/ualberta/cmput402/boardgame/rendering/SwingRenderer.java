@@ -109,22 +109,14 @@ public class SwingRenderer implements GameRenderer {
         Insets buttonInset = new Insets(0, 0, 0,0); // No insets.
         for (int i = 0; i < dim.height; ++i) {
             for (int j = 0; j < dim.width; ++j) {
-                JButton button = new JButton();
-
-                // Remove insets
-                button.setMargin(buttonInset);
-
-                // Set appearance.
-                ImageIcon icon = new ImageIcon(empty);
-                button.setIcon(icon);
-                button.setBackground(Color.WHITE);
-
-                // Save reference to the button and add to the layout.
+                // Get button, save a reference, and add to the layout.
+                JButton button = constructButton();
                 squares[i][j] = button;
                 board.add(button);
             }
         }
 
+        // Surround the board in constraints to allow nicer layouts.
         JPanel boardConstraints = new JPanel(new GridBagLayout());
         boardConstraints.add(board);
         boardGui.add(boardConstraints);
