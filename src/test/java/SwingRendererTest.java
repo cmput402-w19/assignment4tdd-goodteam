@@ -78,7 +78,6 @@ public class SwingRendererTest {
                 assertThat(String.format("Grid layout incorrect type (%d, 2)", j),
                         gridComps[i * 2 + j], instanceOf(JButton.class));
             }
-
         }
     }
 
@@ -96,6 +95,69 @@ public class SwingRendererTest {
         catch (AssertionError e) {
             // Pass.
         }
+    }
+
+    @Test
+    public void testBoardGUICreation() {
+        // Constants
+        CallbackStub cbs = new CallbackStub();
+        int moveCount = 2;
+
+        // Test a few board sizes. (3, 5, 7)
+        for (int i = 3; i < 9; i += 2) {
+            // Get the gui.
+            Dimension boardDim = new Dimension(i, i);
+            SwingRenderer renderer = new SwingRenderer(cbs, boardDim, moveCount);
+            JPanel boardGui = renderer.getBoardGui();
+
+            // Get the components. We should have only have a panel for layout constraints as a subcomponent.
+            Component[] constraintInternalComps = boardGui.getComponents();
+            assertEquals("Board gui did not have correct component count",
+                    1, constraintInternalComps.length);
+
+            // Get the gridbaglayout component.
+            Component gridBagPanelComp = constraintInternalComps[0];
+            assertThat("Grid bag panel incorrect type.", gridBagPanelComp, instanceOf(JPanel.class));
+            JPanel gridBagPanel = (JPanel) gridBagPanelComp;
+
+            // Ensure correct constraints layout.
+            LayoutManager gridBagPanelLayout = gridBagPanel.getLayout();
+            assertThat("Constraints layout incorrect type.", gridBagPanelLayout, instanceOf(GridBagLayout.class));
+
+            // Get the components. We should have only the move grid as a subcomponent.
+            Component[] gridBagPanelInternalComps = gridBagPanel.getComponents();
+            assertEquals("Board gui constraints did not have correct component count",
+                    1, gridBagPanelInternalComps.length);
+
+            // Get gridlayout component.
+            Component gridPanelComp = gridBagPanelInternalComps[0];
+            assertThat("Grid layout incorrect type.", gridPanelComp, instanceOf(JPanel.class));
+            JPanel gridPanel = (JPanel) gridPanelComp;
+
+            // Ensure correct constraints layout.
+            LayoutManager gridPanelLayout = gridPanel.getLayout();
+            assertThat(gridPanelLayout, instanceOf(GridLayout.class));
+            GridLayout gridLayout = (GridLayout) gridPanelLayout;
+
+            // Finally ensure that the rows and columns were set up correctly.
+            assertEquals("Wrong number of board rows.", i, gridLayout.getRows());
+            assertEquals("Wrong number of board columns.", i, gridLayout.getColumns());
+
+            // Get components and check that all of the grid is filled as it should be.
+            Component[] gridComps = gridPanel.getComponents();
+            assertEquals(String.format("Grid did not have correct number of components. (%d * %d).", i, i),
+                    i * i, gridComps.length);
+
+            // All components should be buttons.
+            for (int y = 0; y < i; ++y) {
+                for (int x = 0; x < i; ++x) {
+                    assertThat(String.format("Grid layout incorrect type (%d, %d)", x, y),
+                            gridComps[y * i + x], instanceOf(JButton.class));
+                }
+            }
+
+        }
+
     }
 
     class CallbackStub implements CallbackConsumer {

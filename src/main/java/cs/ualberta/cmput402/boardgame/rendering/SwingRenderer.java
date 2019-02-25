@@ -76,6 +76,10 @@ public class SwingRenderer implements GameRenderer {
         return gui;
     }
 
+    public JPanel getBoardGui() {
+        return null;
+    }
+
     public JPanel getMoveGui() {
         return moveGui;
     }
