@@ -1,0 +1,37 @@
+digraph fsm {
+    s [label="", shape="circle", style="filled", fillcolor="black", fixedsize=true, width=".25"];
+    e [label="", shape="doublecircle", style="filled", fillcolor="black" fixedsize=true, width=".25"];
+
+    // Player 1 states.
+    p1s1 [label="P1, Waiting: Card", shape="box"];
+    p1s2 [label="P1, Waiting: Piece", shape="box"];
+    p1s3 [label="P1, Waiting: Destination", shape="box"];
+    p1f  [label="P1 win?", shape="diamond"];
+
+    // Player 2 states.
+    p2s1 [label="P2, Waiting: Card", shape="box"];
+    p2s2 [label="P2, Waiting: Piece", shape="box"];
+    p2s3 [label="P2, Waiting: Destination", shape="box"];
+    p2f  [label="P2 win?", shape="diamond"];
+
+    // Beginning transition.
+    s -> p1s1 [label="Game start"];
+
+    // Player 1 transitions.
+    p1s1 -> p1s2 [label="onCardClicked(int idx)"];
+    p1s2 -> p1s3 [label="onSquareClicked(int x, int y)"];
+    p1s3 -> p1f  [label="onSquareClicked(int x, int y)\nApply P1's move."];
+
+    // P1 -> P2 intermediate transitions.
+    p1f  -> e    [label="P1 wins"];
+    p1f  -> p2s1 [label="P1 does not win"];
+
+    // Player 2 transitions.
+    p2s1 -> p2s2 [label="onCardClicked(int idx)"];
+    p2s2 -> p2s3 [label="onSquareClicked(int x, int y)"];
+    p2s3 -> p2f  [label="onSquareClicked(int x, int y)\nApply P2's move."];
+
+    // P2 -> P1 intermediate transitions.
+    p2f  -> e    [label="P2 wins"];
+    p2f  -> p1s1 [label="P2 does not win"];
+}
