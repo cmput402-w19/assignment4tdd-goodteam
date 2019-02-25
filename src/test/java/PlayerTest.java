@@ -29,8 +29,8 @@ public class PlayerTest {
     public void testPlayerMoves(){
 	player.setMove(Move.TIGER, 0);
 	assert(player.getMove(0).equals(Move.TIGER));
-	player.removeMove(0);
-	assert(player.getMove(0) == null);
+	player.replaceMove(Move.DRAGON, 0);
+	assert(player.getMove(0).equals(Move.DRAGON));
     }
 
 }

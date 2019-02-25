@@ -24,11 +24,11 @@ public class Player{
     }
     
 
-
-    public void removeMove(int idx){
-	moves[idx] = null;
+    public void replaceMove(Move move, int idx){
+	moves[idx] = move;
     }
 
+    
     public Move[] getMoves(){
         return moves;
     }
