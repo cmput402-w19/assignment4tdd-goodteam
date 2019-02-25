@@ -85,33 +85,7 @@ public class SwingRenderer implements GameRenderer {
         gui.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         // Start setting up UI.
-        JPanel board = new JPanel(new GridLayout(dim.width, dim.height)) {
-
-            /**
-             * Override the preferred size to return the largest it can, in
-             * a square shape.  Must (must, must) be added to a GridBagLayout
-             * as the only component (it uses the parent as a guide to size)
-             * with no GridBagConstaint (so it is centered).
-             */
-            @Override
-            public final Dimension getPreferredSize() {
-                Dimension d = super.getPreferredSize();
-                Dimension prefSize = null;
-                Component c = getParent();
-                if (c == null) {
-                    prefSize = d;
-                } else if (c.getWidth() > d.getWidth() && c.getHeight() > d.getHeight()) {
-                    prefSize = c.getSize();
-                } else {
-                    prefSize = d;
-                }
-                int w = (int) prefSize.getWidth();
-                int h = (int) prefSize.getHeight();
-                // the smaller of the two sizes
-                int s = (w>h ? h : w);
-                return new Dimension(s,s);
-            }
-        };
+        JPanel board = new TiledPanel(dim);
 
         // Create a border
         board.setBorder(new CompoundBorder(
@@ -147,7 +121,7 @@ public class SwingRenderer implements GameRenderer {
 
     @Override
     public void drawBoard(Board board) {
-
+        
     }
 
     /**
@@ -202,6 +176,42 @@ public class SwingRenderer implements GameRenderer {
                 // Save the image.
                 pieces[team.idx][piece.idx] = img;
             }
+        }
+    }
+
+    private class TiledPanel extends JPanel {
+
+        /**
+         * Call super constructor with gridlayout using dimension width/height.
+         * @param dimension The dimension to use.
+         */
+        TiledPanel(Dimension dimension) {
+            super(new GridLayout(dimension.height, dimension.width));
+        }
+
+        /**
+         * Override the preferred size to return the largest it can, in
+         * a square shape.  Must (must, must) be added to a GridBagLayout
+         * as the only component (it uses the parent as a guide to size)
+         * with no GridBagConstaint (so it is centered).
+         */
+        @Override
+        public final Dimension getPreferredSize() {
+            Dimension d = super.getPreferredSize();
+            Dimension prefSize = null;
+            Component c = getParent();
+            if (c == null) {
+                prefSize = d;
+            } else if (c.getWidth() > d.getWidth() && c.getHeight() > d.getHeight()) {
+                prefSize = c.getSize();
+            } else {
+                prefSize = d;
+            }
+            int w = (int) prefSize.getWidth();
+            int h = (int) prefSize.getHeight();
+            // the smaller of the two sizes
+            int s = (w>h ? h : w);
+            return new Dimension(s,s);
         }
     }
 }
