@@ -53,6 +53,32 @@ public class SwingRendererTest {
             // Finally ensure that the rows and columns were set up correctly.
             assertEquals("Wrong number of move rows.", 3, gridLayout.getRows());
             assertEquals("Wrong number of move columns.", i, gridLayout.getColumns());
+
+            // Get components and check that all of the grid is filled as it should be.
+            Component[] gridComps = gridPanel.getComponents();
+            assertEquals(String.format("Grid did not have correct number of components. (3 * %d).", i),
+                    3 * i, gridComps.length);
+
+            // Check components in first row. All should be buttons.
+            for (int j = 0; j < i; ++j) {
+                assertThat(String.format("Grid layout incorrect type (%d, 0)", j),
+                        gridComps[j], instanceOf(JButton.class));
+            }
+
+            // Check second row. First should be a component holding the image of the shared move, the rest should be
+            // blank JPanel.
+            assertThat("Grid layout incorrect type (0, 1)", gridComps[i], instanceOf(JLabel.class));
+            for (int j = 1; j < i; ++j) {
+                assertThat(String.format("Grid layout incorrect type (%d, 1)", j),
+                        gridComps[j], instanceOf(JPanel.class));
+            }
+
+            // Check components in last row. All should be buttons.
+            for (int j = 0; j < i; ++j) {
+                assertThat(String.format("Grid layout incorrect type (%d, 2)", j),
+                        gridComps[j], instanceOf(JButton.class));
+            }
+
         }
     }
 
