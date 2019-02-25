@@ -11,6 +11,7 @@ public class Board {
     
     private Square board[][];
     private int size = 5;
+    private int playerHandSize = 2;
     private Player currentPlayer, idlePlayer;
     private Player winner;
     private ArrayList<Move> deck =
@@ -31,16 +32,16 @@ public class Board {
 
     public void setupPlayers(){
 	//set current and then deal cards random
-	currentPlayer = new Player(Player.Team.RED);
-	idlePlayer = new Player(Player.Team.BLUE);
+	currentPlayer = new Player(Player.Team.RED, playerHandSize);
+	idlePlayer = new Player(Player.Team.BLUE, playerHandSize);
 
 	Collections.shuffle(deck);
 	
-	for (int i = 0; i < 2; i++){
-	    currentPlayer.setMove(deck.get(i), i);
-	    deck.remove(i);
-            idlePlayer.setMove(deck.get(i), i);
-            deck.remove(i);
+	for (int i = 0; i < playerHandSize; i++){
+	    currentPlayer.setMove(deck.get(0), i);
+	    deck.remove(0);
+            idlePlayer.setMove(deck.get(0), i);
+            deck.remove(0);
 	}
     }
     

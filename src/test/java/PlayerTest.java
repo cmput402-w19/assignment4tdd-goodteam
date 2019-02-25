@@ -12,10 +12,11 @@ import org.junit.runners.model.TestClass;
 public class PlayerTest {
 
     private Player player;
+    private int sampleHandSize = 2;
 
     @Before
     public void setup() {
-        player = new Player(Player.Team.RED);
+        player = new Player(Player.Team.RED, sampleHandSize);
     }
 
     @Test
@@ -28,8 +29,8 @@ public class PlayerTest {
     public void testPlayerMoves(){
 	player.setMove(Move.TIGER, 0);
 	assert(player.getMove(0).equals(Move.TIGER));
-	player.removeMove(0);
-	assert(player.getMove(0) == null);
+	player.replaceMove(Move.DRAGON, 0);
+	assert(player.getMove(0).equals(Move.DRAGON));
     }
 
 }

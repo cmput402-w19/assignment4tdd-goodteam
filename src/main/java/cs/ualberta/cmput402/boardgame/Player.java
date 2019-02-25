@@ -7,10 +7,12 @@ public class Player{
     private Move[] moves;
     public enum Team {RED, BLUE};
     private Team team;
+    private int handSize;
     
-    public Player(Team team){
+    public Player(Team team, int handSize){
 	this.team = team;
-	moves = new Move[2];
+	this.handSize = handSize;
+	moves = new Move[handSize];
     }
 
     public Team getTeam(){
@@ -22,11 +24,11 @@ public class Player{
     }
     
 
-
-    public void removeMove(int idx){
-	moves[idx] = null;
+    public void replaceMove(Move move, int idx){
+	moves[idx] = move;
     }
 
+    
     public Move[] getMoves(){
         return moves;
     }
