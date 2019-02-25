@@ -47,12 +47,16 @@ public class Game {
             f.setLocationByPlatform(true); // See https://stackoverflow.com/a/7143398/418556 for demo.
 
             // Set up panel that contains individual GUIs.
-            JPanel guis = new JPanel(new GridLayout(1, 2)); // Two internal panels, side by side.
+            JPanel guis = new JPanel(new GridBagLayout()); // Let Java lay our things out in GridBagLayout.
             f.add(guis);
 
-            // Add our internal guis.
-            guis.add(renderer.getGUI());
-            guis.add(renderer.getMoveGui());
+            // Set up board GUI.
+            JPanel boardGui = renderer.getGUI();
+            guis.add(boardGui);
+
+            // Set up moveGUI.
+            JPanel moveGui = renderer.getMoveGui();
+            guis.add(moveGui);
 
             // Pack the filled guis and fix the size.
             f.pack();
