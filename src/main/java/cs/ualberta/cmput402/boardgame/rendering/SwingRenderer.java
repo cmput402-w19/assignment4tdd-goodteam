@@ -60,6 +60,10 @@ public class SwingRenderer implements GameRenderer {
         return gui;
     }
 
+    public JPanel getMoveGui() {
+        return null;
+    }
+
     /**
      * Builds the GUI from swing components.
      *
