@@ -130,6 +130,11 @@ public class SwingRenderer implements GameRenderer {
         boardGui.add(boardConstraints);
     }
 
+    /**
+     * Builds the move GUI from swing components.
+     *
+     * @param moveCount The number of cards each player holds.
+     */
     private void initMoveGUI(int moveCount) {
         // Sanity check.
         assert(moveCount > 0);
