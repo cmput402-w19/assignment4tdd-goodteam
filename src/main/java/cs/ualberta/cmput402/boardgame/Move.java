@@ -1,7 +1,5 @@
 package cs.ualberta.cmput402.boardgame;
 
-import cs.ualberta.cmput402.boardgame.Offsets;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
