@@ -69,7 +69,7 @@ public class Board {
     }
 
     public boolean onBoard(int xCoord, int yCoord){
-	if(xCoord > 4 || yCoord > 4 || xCoord < 0 || yCoord < 0){
+	if(xCoord > size || yCoord > size || xCoord < 0 || yCoord < 0){
 	    return false;
 	}
 	return true;
