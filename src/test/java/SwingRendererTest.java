@@ -70,13 +70,13 @@ public class SwingRendererTest {
             assertThat("Grid layout incorrect type (0, 1)", gridComps[i], instanceOf(JLabel.class));
             for (int j = 1; j < i; ++j) {
                 assertThat(String.format("Grid layout incorrect type (%d, 1)", j),
-                        gridComps[j], instanceOf(JPanel.class));
+                        gridComps[i + j], instanceOf(JPanel.class));
             }
 
             // Check components in last row. All should be buttons.
             for (int j = 0; j < i; ++j) {
                 assertThat(String.format("Grid layout incorrect type (%d, 2)", j),
-                        gridComps[j], instanceOf(JButton.class));
+                        gridComps[i * 2 + j], instanceOf(JButton.class));
             }
 
         }
