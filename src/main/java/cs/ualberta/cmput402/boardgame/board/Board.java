@@ -77,14 +77,17 @@ public class Board {
     
 
     public boolean playPiece(int oldx, int oldy, int x, int y){
-	//if its on the board and either that square is empty, or occupied by enemy
-	//move is good
-	if(onBoard(x, y) && ((getSquareAtPos(x, y).getState().equals(Square.State.EMPTY)) || getSquareAtPos(x, y).getPiece().getTeam().equals(idlePlayer.getTeam()))){
-	    //shouldnt have to do it like this, will fix shortly
-	    Piece oldpiece = getSquareAtPos(oldx, oldy).getPiece();
-	    getSquareAtPos(oldx, oldy).removePiece();
-	    getSquareAtPos(x, y).placePiece(oldpiece.getTeam(), oldpiece.isMaster()); 
-	    return true;
+	//if its on the board
+	if(onBoard(x, y)){
+	    //check if that square is empty, or occupied by enemy
+	    Square newSquare = getSquareAtPos(x, y);
+	    if(((newSquare.getState().equals(Square.State.EMPTY)) || newSquare.getPiece().getTeam().equals(idlePlayer.getTeam()))){
+		Square oldSquare = getSquareAtPos(oldx, oldy);
+		Piece oldpiece = oldSquare.getPiece();
+		oldSquare.removePiece();
+		newSquare.placePiece(oldpiece.getTeam(), oldpiece.isMaster()); 
+		return true;
+	    }
 	}
 	return false;
     }
