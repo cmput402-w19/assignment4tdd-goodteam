@@ -1,6 +1,7 @@
 package cs.ualberta.cmput402.boardgame.rendering;
 
 import cs.ualberta.cmput402.boardgame.board.Board;
+import cs.ualberta.cmput402.boardgame.fsm.CallbackConsumer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -52,8 +53,15 @@ public class SwingRenderer implements GameRenderer {
         }
     }
 
-    public SwingRenderer(Dimension dim) {
-        initGUI(dim);
+    /**
+     * Initialises the swing renderer with a place to send callbacks, the size of the board, and how many moves a player
+     * holds at once.
+     * @param callback The callback destination.
+     * @param boardDim The board dimensions.
+     * @param moveCount The player move count.
+     */
+    public SwingRenderer(CallbackConsumer callback, Dimension boardDim, int moveCount) {
+        initGUI(boardDim);
     }
 
     public JPanel getGUI() {
