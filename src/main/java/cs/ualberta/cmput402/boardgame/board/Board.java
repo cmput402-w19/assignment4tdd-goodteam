@@ -2,6 +2,7 @@ package cs.ualberta.cmput402.boardgame.board;
 
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.Collections;
 import cs.ualberta.cmput402.boardgame.Move;
 import cs.ualberta.cmput402.boardgame.Player;
 
@@ -33,15 +34,13 @@ public class Board {
 	currentPlayer = new Player(Player.Team.RED);
 	idlePlayer = new Player(Player.Team.BLUE);
 
+	Collections.shuffle(deck);
+	
 	for (int i = 0; i < 2; i++){
-	    //thank you Chris Dennett
-	    //https://stackoverflow.com/questions/8065532/how-to-randomly-pick-an-element-from-an-array
-	    int rnd = new Random().nextInt(deck.size());
-	    currentPlayer.setMove(deck.get(rnd), i);
-	    deck.remove(rnd);
-	    int rnd2 = new Random().nextInt(deck.size());
-            idlePlayer.setMove(deck.get(rnd2), i);
-            deck.remove(rnd2);
+	    currentPlayer.setMove(deck.get(i), i);
+	    deck.remove(i);
+            idlePlayer.setMove(deck.get(i), i);
+            deck.remove(i);
 	}
     }
     
