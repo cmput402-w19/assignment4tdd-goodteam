@@ -1,6 +1,5 @@
 package cs.ualberta.cmput402.boardgame.rendering;
 
-import cs.ualberta.cmput402.boardgame.Move;
 import cs.ualberta.cmput402.boardgame.board.Board;
 import cs.ualberta.cmput402.boardgame.fsm.CallbackConsumer;
 
@@ -16,7 +15,7 @@ import javax.swing.border.LineBorder;
 public class SwingRenderer implements GameRenderer {
 
     // GUI elements.
-    private final JPanel gui = new JPanel(new BorderLayout(3, 3));
+    private final JPanel boardGui = new JPanel(new BorderLayout(3, 3));
     private JButton[][] squares;
 
     // Move GUI elements.
@@ -68,12 +67,12 @@ public class SwingRenderer implements GameRenderer {
      * @param moveCount The player move count.
      */
     public SwingRenderer(CallbackConsumer callback, Dimension boardDim, int moveCount) {
-        initGUI(boardDim);
+        initboardGUI(boardDim);
         initMoveGUI(moveCount);
     }
 
     public JPanel getGUI() {
-        return gui;
+        return boardGui;
     }
 
     public JPanel getBoardGui() {
@@ -89,12 +88,12 @@ public class SwingRenderer implements GameRenderer {
      *
      * @param dim The dimensions of the board (number of tiles).
      */
-    private void initGUI(Dimension dim) {
+    private void initboardGUI(Dimension dim) {
         // Create assets.
         createTileGraphics();
 
         // Set up main GUI.
-        gui.setBorder(new EmptyBorder(5, 5, 5, 5));
+        boardGui.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         // Start setting up UI.
         JPanel board = new JPanel(new GridLayout(dim.height, dim.width));
@@ -128,14 +127,14 @@ public class SwingRenderer implements GameRenderer {
 
         JPanel boardConstraints = new JPanel(new GridBagLayout());
         boardConstraints.add(board);
-        gui.add(boardConstraints);
+        boardGui.add(boardConstraints);
     }
 
     private void initMoveGUI(int moveCount) {
         // Sanity check.
         assert(moveCount > 0);
 
-        // Make our card gui dimensions. It is moveCount in width.
+        // Make our move gui dimensions. It is moveCount in width.
         int height = 3; // Always three slots vertically: yours, exchange, mine.
         Dimension guiDims = new Dimension(moveCount, height);
 
