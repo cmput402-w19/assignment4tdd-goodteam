@@ -1,5 +1,6 @@
 package cs.ualberta.cmput402.boardgame.rendering;
 
+import cs.ualberta.cmput402.boardgame.Move;
 import cs.ualberta.cmput402.boardgame.board.Board;
 import cs.ualberta.cmput402.boardgame.fsm.CallbackConsumer;
 
@@ -22,7 +23,7 @@ public class SwingRenderer implements GameRenderer {
     private final JPanel moveGui = new JPanel(new BorderLayout(3, 3));
     private JButton[] theirMoves;
     private JButton[] myMoves;
-    private JButton neutralMove;
+    private JLabel neutralMove;
 
     // Assets.
     private Image[][] pieces = new Image[2][2];
@@ -126,13 +127,13 @@ public class SwingRenderer implements GameRenderer {
         gui.add(boardConstraints);
     }
 
-    private void initMoveGUI(int reserveMoves) {
+    private void initMoveGUI(int moveCount) {
         // Sanity check.
-        assert(reserveMoves > 0);
+        assert(moveCount > 0);
 
-        // Make our card gui dimensions. It reserveMoves in width.
+        // Make our card gui dimensions. It is moveCount in width.
         int height = 3; // Always three slots vertically: yours, exchange, mine.
-        Dimension guiDims = new Dimension(reserveMoves, height);
+        Dimension guiDims = new Dimension(moveCount, height);
 
         // Set up main GUI.
         moveGui.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -146,9 +147,63 @@ public class SwingRenderer implements GameRenderer {
                 new LineBorder(Color.BLACK, 3, true)
         ));
 
+        // Build top row buttons
+        theirMoves = new JButton[moveCount];
+        for (int i = 0; i < moveCount; ++i) {
+            // Get button.
+            JButton button = constructButton();
+
+            // Save reference to the button and add to the layout.
+            theirMoves[i] = button;
+            moveGrid.add(button);
+        }
+
+        // Build middle row.
+        // First is the exchange move, contained in a label.
+        {
+            // First button.
+            JLabel label = new JLabel(new ImageIcon(empty));
+            neutralMove = label;
+            moveGrid.add(label);
+        }
+        // Rest are empty panels.
+        for (int i = 1; i < moveCount; ++i) {
+            moveGrid.add(new JPanel());
+        }
+
+        // Build bottom row buttons
+        myMoves = new JButton[moveCount];
+        for (int i = 0; i < moveCount; ++i) {
+            // Get button.
+            JButton button = constructButton();
+
+            // Save reference to the button and add to the layout.
+            myMoves[i] = button;
+            moveGrid.add(button);
+        }
+
+        // Finally, the panel constraints, and the actual add.
         JPanel moveConstraints = new JPanel(new GridBagLayout());
         moveConstraints.add(moveGrid);
         moveGui.add(moveConstraints);
+    }
+
+    private JButton constructButton() {
+        // New button.
+        JButton button = new JButton();
+
+        // Remove insets.
+        Insets buttonInset = new Insets(0, 0, 0,0);
+        button.setMargin(buttonInset);
+
+        // Set the background.
+        button.setBackground(Color.WHITE);
+
+        // Set appearance.
+        ImageIcon icon = new ImageIcon(empty);
+        button.setIcon(icon);
+
+        return button;
     }
 
     @Override
