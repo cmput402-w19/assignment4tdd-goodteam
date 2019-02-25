@@ -21,15 +21,15 @@ public class PlayerTest {
     @Test
     public void testInitPlayer(){
 	assert(player.getTeam().equals(Player.Team.RED));
-	assert(player.getMoves().size() == 0);
+	assert(player.getMove(0) == null);
     }
 
     @Test
     public void testPlayerMoves(){
-	player.setMove(Move.TIGER);
-	assert(player.getMoves().size() == 1);
+	player.setMove(Move.TIGER, 0);
+	assert(player.getMove(0).equals(Move.TIGER));
 	player.removeMove(0);
-	assert(player.getMoves().size() == 0);
+	assert(player.getMove(0) == null);
     }
 
 }

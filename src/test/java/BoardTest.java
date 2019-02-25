@@ -73,23 +73,23 @@ public class BoardTest {
 
     @Test
     public void testInitMoves(){
-	ArrayList<Move> firstPMoves = board.getCurrentPlayer().getMoves();
+	Player firstP = board.getCurrentPlayer();
 	
-	assert(firstPMoves.size() == 2);
+	assert(firstP.getMoves().length == 2);
 	//want to test that both players have 2 moves, could write getter
 	//for other player but it would only be used here...
 	board.otherPlayerTurn();
-	ArrayList<Move> secondPMoves = board.getCurrentPlayer().getMoves();
-	assert(secondPMoves.size() == 2);
+	Player secondP = board.getCurrentPlayer();
+	assert(secondP.getMoves().length == 2);
 	Move extraMove = board.getExtraMove();
 	//dont care what the actual moves are, just that no one was double placed
-	assert((!extraMove.equals(firstPMoves.get(0))) && (!extraMove.equals(firstPMoves.get(1))) && (!extraMove.equals(secondPMoves.get(0))) && (!extraMove.equals(secondPMoves.get(1))));
+	assert((!extraMove.equals(firstP.getMove(0))) && (!extraMove.equals(firstP.getMove(1))) && (!extraMove.equals(secondP.getMove(0))) && (!extraMove.equals(secondP.getMove(1))));
     }
 
     @Test
     public void testSelectMove(){
 	board.selectMove(0);
-	assert(board.getCurrentPlayer().getMoves().get(0).isChosen());
+	assert(board.getCurrentPlayer().getMove(0).isChosen());
 	board.deselectMove(0);
     }
 

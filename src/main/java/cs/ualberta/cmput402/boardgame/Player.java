@@ -4,32 +4,35 @@ import java.util.ArrayList;
 
 public class Player{
 
-    private ArrayList<Move> moves;
+    private Move[] moves;
     public enum Team {RED, BLUE};
     private Team team;
     
     public Player(Team team){
 	this.team = team;
-	moves = new ArrayList<Move>();
+	moves = new Move[2];
     }
 
     public Team getTeam(){
 	return team;
     }
     
-    public void setMove(Move move){       
-	moves.add(move);	
+    public void setMove(Move move, int idx){       
+	moves[idx] = move;	
     }
     
 
 
-    public void removeMove(int i){
-	moves.remove(i);
+    public void removeMove(int idx){
+	moves[idx] = null;
     }
 
-
-    public ArrayList<Move> getMoves(){
+    public Move[] getMoves(){
         return moves;
+    }
+
+    public Move getMove(int idx){
+	return moves[idx];
     }
     
 }

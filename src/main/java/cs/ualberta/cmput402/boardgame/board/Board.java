@@ -37,10 +37,10 @@ public class Board {
 	    //thank you Chris Dennett
 	    //https://stackoverflow.com/questions/8065532/how-to-randomly-pick-an-element-from-an-array
 	    int rnd = new Random().nextInt(deck.size());
-	    currentPlayer.setMove(deck.get(rnd));
+	    currentPlayer.setMove(deck.get(rnd), i);
 	    deck.remove(rnd);
 	    int rnd2 = new Random().nextInt(deck.size());
-            idlePlayer.setMove(deck.get(rnd2));
+            idlePlayer.setMove(deck.get(rnd2), i);
             deck.remove(rnd2);
 	}
     }
@@ -100,12 +100,12 @@ public class Board {
     }
 
     public void deselectMove(int i){
-	getCurrentPlayer().getMoves().get(0).deselect();
+	getCurrentPlayer().getMove(0).deselect();
     }
     
 
     public void selectMove(int i){
-	getCurrentPlayer().getMoves().get(0).select();
+	getCurrentPlayer().getMove(0).select();
     }
     
     public Move getExtraMove(){
