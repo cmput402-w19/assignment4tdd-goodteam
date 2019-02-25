@@ -68,10 +68,25 @@ public class Board {
 	}
     }
 
-
-    public boolean playPiece(int x, int y){
+    public boolean onBoard(int xCoord, int yCoord){
+	if(xCoord > 4 || yCoord > 4 || xCoord < 0 || yCoord < 0){
+	    return false;
+	}
 	return true;
+    }
+    
 
+    public boolean playPiece(int oldx, int oldy, int x, int y){
+	//if its on the board and either that square is empty, or occupied by enemy
+	//move is good
+	if(onBoard(x, y) && ((getSquareAtPos(x, y).getState().equals(Square.State.EMPTY)) || getSquareAtPos(x, y).getPiece().getTeam().equals(idlePlayer.getTeam()))){
+	    //shouldnt have to do it like this, will fix shortly
+	    Piece oldpiece = board[oldx][oldy].getPiece();
+	    board[oldx][oldy].removePiece();
+	    board[x][y].placePiece(oldpiece.getTeam(), oldpiece.isMaster()); 
+	    return true;
+	}
+	return false;
     }
     
     public void otherPlayerTurn(){

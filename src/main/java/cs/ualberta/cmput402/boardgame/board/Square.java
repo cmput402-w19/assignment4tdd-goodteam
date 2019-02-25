@@ -21,7 +21,12 @@ public class Square {
     }
 
     public Piece getPiece(){
-	return new Piece(Player.Team.BLUE, false);
+	return pieceOnSquare;
+    }
+
+    public void removePiece(){
+	pieceOnSquare = null;
+	squareState = State.EMPTY;
     }
     
     public void placePiece(Player.Team team, boolean master){
