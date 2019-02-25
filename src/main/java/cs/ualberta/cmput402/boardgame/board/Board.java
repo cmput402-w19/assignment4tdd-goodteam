@@ -37,10 +37,10 @@ public class Board {
 	Collections.shuffle(deck);
 	
 	for (int i = 0; i < 2; i++){
-	    currentPlayer.setMove(deck.get(i), i);
-	    deck.remove(i);
-            idlePlayer.setMove(deck.get(i), i);
-            deck.remove(i);
+	    currentPlayer.setMove(deck.get(0), i);
+	    deck.remove(0);
+            idlePlayer.setMove(deck.get(0), i);
+            deck.remove(0);
 	}
     }
     
