@@ -77,7 +77,7 @@ public class Board {
 
 
     public void selectMove(int i){
-	
+	getCurrentPlayer().getMoves().get(0).select();
     }
     
     public Move getExtraMove(){
