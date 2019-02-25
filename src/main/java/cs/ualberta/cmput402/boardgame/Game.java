@@ -45,11 +45,18 @@ public class Game {
             // Set window parameters.
             f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             f.setLocationByPlatform(true); // See https://stackoverflow.com/a/7143398/418556 for demo.
-            f.setMinimumSize(f.getSize());
 
-            // Add our renderer and lock the size.
-            f.add(renderer.getGUI());
+            // Set up panel that contains individual GUIs.
+            JPanel guis = new JPanel(new GridLayout(1, 2)); // Two internal panels, side by side.
+            f.add(guis);
+
+            // Add our internal guis.
+            guis.add(renderer.getGUI());
+            guis.add(renderer.getMoveGui());
+
+            // Pack the filled guis and fix the size.
             f.pack();
+            f.setMinimumSize(f.getSize());
             f.setResizable(false);
 
             // Make visible.
