@@ -8,6 +8,11 @@
     <artifactId>BoardGame</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
+    </properties>
+
     <dependencies>
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
@@ -20,36 +25,33 @@
     </dependencies>
 
 <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>cs.ualberta.cmput402.BoardGame</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-            </plugin>
-
-<plugin>
-		<groupId>org.codehaus.mojo</groupId>
-		<artifactId>cobertura-maven-plugin</artifactId>
-		<version>2.7</version>
-		<configuration>
-			<formats>
-		        	<format>html</format>
-		 	        <format>xml</format>
-	         	</formats>
-			<check/>
-		</configuration>
-	</plugin>
-
-	    
-        </plugins>
+    <plugins>
+        <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <mainClass>cs.ualberta.cmput402.boardgame.Game</mainClass>
+                    </manifest>
+                </archive>
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+            </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>cobertura-maven-plugin</artifactId>
+            <version>2.7</version>
+            <configuration>
+                <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                <check/>
+            </configuration>
+        </plugin>
+    </plugins>
 </build>
     
 </project>

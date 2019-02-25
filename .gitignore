@@ -7,3 +7,6 @@
 
 #Mac finder leftovers- the worst
 *.DS_Store
+
+# Maven files.
+target/
