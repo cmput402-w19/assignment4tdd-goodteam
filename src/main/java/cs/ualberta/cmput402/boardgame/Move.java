@@ -29,6 +29,10 @@ public enum Move {
     public void select(){
 	selected = true;
     }
+
+    public void deselect(){
+	selected = false;
+    }
     
     public boolean isChosen(){
 	return selected;

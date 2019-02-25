@@ -1,11 +1,13 @@
 package cs.ualberta.cmput402.boardgame.board;
 
+import cs.ualberta.cmput402.boardgame.Player;
+
 public class Piece{
 
-    private Board.Team team;
+    private Player.Team team;
     private boolean isMaster;
     
-    public Piece(Board.Team team, boolean master){
+    public Piece(Player.Team team, boolean master){
 	this.team = team;
 	isMaster = master;
     }
@@ -14,7 +16,7 @@ public class Piece{
 	return isMaster;
     }
 
-    public Board.Team getTeam(){
+    public Player.Team getTeam(){
 	return team;
     }
 }
