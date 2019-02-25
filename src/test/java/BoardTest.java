@@ -86,7 +86,6 @@ public class BoardTest {
 	assert((!extraMove.equals(firstPMoves.get(0))) && (!extraMove.equals(firstPMoves.get(1))) && (!extraMove.equals(secondPMoves.get(0))) && (!extraMove.equals(secondPMoves.get(1))));
     }
 
-
     @Test
     public void testSelectMove(){
 	board.selectMove(0);
@@ -94,6 +93,29 @@ public class BoardTest {
 	board.deselectMove(0);
     }
 
-    
-    
+    @Test
+    public void testPlayPieceInvalid(){
+	//all four edges checked
+	assert(!(board.playPiece(-1, 0)));
+	assert(!board.playPiece(0, -1));
+	assert(!board.playPiece(5, 0));
+	assert(!board.playPiece(0, 5));
+	       
+    }    
+
+    @Test
+    public void testPlayPieceValid(){
+	//can move to location of other color, or empty square, both valid
+	int x = 4;
+	int y = 0;
+	assert(board.playPiece(x, y));
+	assert (board.getSquareAtPos(x, y).getState().equals(Square.State.OCCUPIED));
+	assert (board.getSquareAtPos(x, y).getPiece().getTeam().equals(Player.Team.RED));
+	int xx = 1;
+	assert(board.playPiece(xx, y));
+	assert (board.getSquareAtPos(xx, y).getState().equals(Square.State.OCCUPIED));
+        assert (board.getSquareAtPos(xx, y).getPiece().getTeam().equals(Player.Team.RED));
+
+    }
+
 }

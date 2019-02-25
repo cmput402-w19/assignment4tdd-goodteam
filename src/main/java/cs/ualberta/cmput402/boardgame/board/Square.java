@@ -19,6 +19,10 @@ public class Square {
     public State getState(){
 	return squareState;
     }
+
+    public Piece getPiece(){
+	return new Piece(Player.Team.BLUE, false);
+    }
     
     public void placePiece(Player.Team team, boolean master){
 	pieceOnSquare = new Piece(team, master);

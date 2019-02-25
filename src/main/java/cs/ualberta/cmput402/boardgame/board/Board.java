@@ -68,6 +68,12 @@ public class Board {
 	}
     }
 
+
+    public boolean playPiece(int x, int y){
+	return true;
+
+    }
+    
     public void otherPlayerTurn(){
 	//classic swap
 	Player temp = idlePlayer;
