@@ -18,6 +18,12 @@ public class SwingRenderer implements GameRenderer {
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JButton[][] squares;
 
+    // Move GUI elements.
+    private final JPanel moveGui = new JPanel(new BorderLayout(3, 3));
+    private JButton[] theirMoves;
+    private JButton[] myMoves;
+    private JButton neutralMove;
+
     // Assets.
     private Image[][] pieces = new Image[2][2];
     private Image empty;
@@ -62,6 +68,7 @@ public class SwingRenderer implements GameRenderer {
      */
     public SwingRenderer(CallbackConsumer callback, Dimension boardDim, int moveCount) {
         initGUI(boardDim);
+        initMoveGUI(moveCount);
     }
 
     public JPanel getGUI() {
@@ -69,7 +76,7 @@ public class SwingRenderer implements GameRenderer {
     }
 
     public JPanel getMoveGui() {
-        return null;
+        return moveGui;
     }
 
     /**
@@ -119,9 +126,34 @@ public class SwingRenderer implements GameRenderer {
         gui.add(boardConstraints);
     }
 
+    private void initMoveGUI(int reserveMoves) {
+        // Sanity check.
+        assert(reserveMoves > 0);
+
+        // Make our card gui dimensions. It reserveMoves in width.
+        int height = 3; // Always three slots vertically: yours, exchange, mine.
+        Dimension guiDims = new Dimension(reserveMoves, height);
+
+        // Set up main GUI.
+        moveGui.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        // Start setting up UI.
+        JPanel moveGrid = new TiledPanel(guiDims);
+
+        // Create a border
+        moveGrid.setBorder(new CompoundBorder(
+                new EmptyBorder(4,4,4,4),
+                new LineBorder(Color.BLACK, 3, true)
+        ));
+
+        JPanel moveConstraints = new JPanel(new GridBagLayout());
+        moveConstraints.add(moveGrid);
+        moveGui.add(moveConstraints);
+    }
+
     @Override
     public void drawBoard(Board board) {
-        
+
     }
 
     /**
