@@ -1,20 +1,24 @@
 package cs.ualberta.cmput402.boardgame.board;
 
-public class Piece{
+public enum Piece{
+    RED_STUDENT(Board.Team.RED, false),
+    RED_MASTER(Board.Team.RED, true),
+    BLUE_STUDENT(Board.Team.BLUE, false),
+    BLUE_MASTER(Board.Team.BLUE, true);
 
     private Board.Team team;
     private boolean isMaster;
     
-    public Piece(Board.Team team, boolean master){
-	this.team = team;
-	isMaster = master;
+    Piece(Board.Team team, boolean master){
+        this.team = team;
+        isMaster = master;
     }
 
     public boolean isMaster(){
-	return isMaster;
+        return isMaster;
     }
 
     public Board.Team getTeam(){
-	return team;
+        return team;
     }
 }

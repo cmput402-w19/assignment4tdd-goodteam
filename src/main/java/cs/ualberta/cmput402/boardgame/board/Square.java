@@ -18,8 +18,8 @@ public class Square {
 	return squareState;
     }
     
-    public void placePiece(Board.Team team, boolean master){
-	pieceOnSquare = new Piece(team, master);
+    public void placePiece(Piece piece){
+	pieceOnSquare = piece;
 	squareState = State.OCCUPIED;
     }
     

@@ -11,34 +11,33 @@ import org.junit.runners.model.TestClass;
 
 public class PieceTest {
 
-    public Piece piece;
+    private Piece piece;
 
     @Test
     public void testBlueStudentPiece(){
-	piece = new Piece(Board.Team.BLUE, false);
-	assert(piece.isMaster() == false);
-	assert(piece.getTeam().equals(Board.Team.BLUE));
+        piece = Piece.BLUE_STUDENT;
+        assert(!piece.isMaster());
+        assert(piece.getTeam().equals(Board.Team.BLUE));
     }
 
     @Test
     public void testRedMasterPiece(){
-	piece = new Piece(Board.Team.RED, true);
-	assert(piece.isMaster() == true);
-	assert(piece.getTeam().equals(Board.Team.RED));
+        piece = Piece.RED_MASTER;
+        assert(piece.isMaster());
+        assert(piece.getTeam().equals(Board.Team.RED));
     }
 
     @Test
     public void testRedStudentPiece(){
-	piece = new Piece(Board.Team.RED, false);
-	assert(piece.isMaster() == false);
-	assert(piece.getTeam().equals(Board.Team.RED));
+        piece = Piece.RED_STUDENT;
+        assert(!piece.isMaster());
+        assert(piece.getTeam().equals(Board.Team.RED));
     }
 
     @Test
-    public void testBlueMasterPiece(){
-	piece = new Piece(Board.Team.BLUE, true);
-	assert(piece.isMaster() == true);
-	assert(piece.getTeam().equals(Board.Team.BLUE));
+    public void testBlueMasterPiece() {
+        piece = Piece.BLUE_MASTER;
+        assert (piece.isMaster());
+        assert (piece.getTeam().equals(Board.Team.BLUE));
     }
-    
 }
