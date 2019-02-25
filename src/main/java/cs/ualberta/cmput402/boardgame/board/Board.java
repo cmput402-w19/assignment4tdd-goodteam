@@ -81,9 +81,9 @@ public class Board {
 	//move is good
 	if(onBoard(x, y) && ((getSquareAtPos(x, y).getState().equals(Square.State.EMPTY)) || getSquareAtPos(x, y).getPiece().getTeam().equals(idlePlayer.getTeam()))){
 	    //shouldnt have to do it like this, will fix shortly
-	    Piece oldpiece = board[oldx][oldy].getPiece();
-	    board[oldx][oldy].removePiece();
-	    board[x][y].placePiece(oldpiece.getTeam(), oldpiece.isMaster()); 
+	    Piece oldpiece = getSquareAtPos(oldx, oldy).getPiece();
+	    getSquareAtPos(oldx, oldy).removePiece();
+	    getSquareAtPos(x, y).placePiece(oldpiece.getTeam(), oldpiece.isMaster()); 
 	    return true;
 	}
 	return false;
@@ -121,8 +121,8 @@ public class Board {
 	return winner;
     }
 	
-    public Square getSquareAtPos(int i, int j){
-	return board[i][j];
+    public Square getSquareAtPos(int x, int y){
+	return board[y][x];
     }
     
 }

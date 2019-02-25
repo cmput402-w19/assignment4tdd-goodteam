@@ -34,7 +34,7 @@ public class BoardTest {
 	//first and last row will have players on them so omit in this test
 	for (int i = 1; i < board.getSize()-1; i++) {
 	    for (int j = 0; j < board.getSize(); j++) {
-                assert (board.getSquareAtPos(i, j).getState().equals(Square.State.EMPTY));
+                assert (board.getSquareAtPos(j, i).getState().equals(Square.State.EMPTY));
             }
         }
     }
@@ -46,12 +46,12 @@ public class BoardTest {
 	//now test pieces were placed
 	for (int i = 0; i <1; i++) {
 	    for (int j = 0; j < board.getSize(); j++) {
-		assert (board.getSquareAtPos(i, j).getState().equals(Square.State.OCCUPIED));
+		assert (board.getSquareAtPos(j, i).getState().equals(Square.State.OCCUPIED));
 	    }
 	}
 	for (int i = board.getSize(); i <board.getSize()-1; i++) {
             for (int j = 0; j < board.getSize(); j++) {
-		assert (board.getSquareAtPos(i, j).getState().equals(Square.State.OCCUPIED));
+		assert (board.getSquareAtPos(j, i).getState().equals(Square.State.OCCUPIED));
             }
         }
 	
@@ -59,8 +59,8 @@ public class BoardTest {
 
     @Test
     public void testInitMidShrine(){
-	assert (board.getSquareAtPos(0, 2).isShrine() == true);
-	assert (board.getSquareAtPos(4, 2).isShrine() == true);
+	assert (board.getSquareAtPos(2, 0).isShrine() == true);
+	assert (board.getSquareAtPos(2, 4).isShrine() == true);
     }
 
     @Test
@@ -106,15 +106,15 @@ public class BoardTest {
     @Test
     public void testPlayPieceValid(){
 	//can move to location of other color, or empty square, both valid
-	int x = 4;
-	int y = 0;
+	int x = 0;
+	int y = 4;
 	assert(board.playPiece(0,0,x, y));
 	assert (board.getSquareAtPos(x, y).getState().equals(Square.State.OCCUPIED));
 	assert (board.getSquareAtPos(x, y).getPiece().getTeam().equals(Player.Team.RED));
-	int xx = 1;
-	assert(board.playPiece(0,1,xx, y));
-	assert (board.getSquareAtPos(xx, y).getState().equals(Square.State.OCCUPIED));
-        assert (board.getSquareAtPos(xx, y).getPiece().getTeam().equals(Player.Team.RED));
+	int yy = 1;
+	assert(board.playPiece(1,0,x, yy));
+	assert (board.getSquareAtPos(x, yy).getState().equals(Square.State.OCCUPIED));
+        assert (board.getSquareAtPos(x, yy).getPiece().getTeam().equals(Player.Team.RED));
 
     }
 
