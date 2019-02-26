@@ -36,9 +36,9 @@ public class MoveTest {
         elephantMove = Move.ELEPHANT;
         monkeyMove = Move.MONKEY;
         tigerMove = Move.TIGER;
-        offsets1 = new Offsets(-1, 1);
-        offsets2 = new Offsets(-2, 1);
-        offsets3 = new Offsets(0, 2);
+        offsets1 = new Offsets(-1, -1);
+        offsets2 = new Offsets(-2, -1);
+        offsets3 = new Offsets(0, -2);
     }
 
     @Test
