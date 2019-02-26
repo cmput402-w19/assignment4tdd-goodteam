@@ -58,7 +58,10 @@ public class GameStateMachine implements CallbackConsumer {
         case Player1DestinationSelection:
 	    board.playPiece(oldx, oldy, x, y);
 	    renderer.drawBoard(board, true);
+	    board.swapMoves();
 	    board.otherPlayerTurn();
+	    renderer.drawMoves(board.getIdlePlayer().getMoves(), board.getCurrentPlayer().getMoves(),
+                board.getExtraMove());
 	    if(board.getWinner() == null){
 		currentState = State.Player2MoveSelection;
 	    }else{
@@ -77,8 +80,11 @@ public class GameStateMachine implements CallbackConsumer {
         case Player2DestinationSelection:
 	    board.playPiece(((boardSize-1)-oldx), ((boardSize-1)-oldy), ((boardSize-1)-x), ((boardSize-1)-y));
 	    renderer.drawBoard(board, false);
-            board.otherPlayerTurn();
-            if(board.getWinner() == null){
+	    board.swapMoves();
+	    board.otherPlayerTurn();
+	    renderer.drawMoves(board.getIdlePlayer().getMoves(), board.getCurrentPlayer().getMoves(),
+                board.getExtraMove());
+	    if(board.getWinner() == null){
 		currentState = State.Player1MoveSelection;
             }else{
 		currentState = State.Terminal;
@@ -96,17 +102,11 @@ public class GameStateMachine implements CallbackConsumer {
         case Player1MoveSelection:
             moveToPlay = board.getCurrentPlayer().getMove(idx);
 	    moveToPlay.select();
-	    board.swapMoves();
-	    renderer.drawMoves(board.getIdlePlayer().getMoves(), board.getCurrentPlayer().getMoves(),
-                board.getExtraMove());
 	    currentState = State.Player1PieceSelection;
             break;
         case Player2MoveSelection:
 	    moveToPlay = board.getCurrentPlayer().getMove(idx);
 	    moveToPlay.select();
-	    board.swapMoves();
-	    renderer.drawMoves(board.getIdlePlayer().getMoves(), board.getCurrentPlayer().getMoves(),
-                board.getExtraMove());
 	    currentState = State.Player2PieceSelection;
             break;
         default:
