@@ -1,5 +1,4 @@
 package cs.ualberta.cmput402.boardgame.fsm;
-import cs.ualberta.cmput402.boardgame.Game;
 import cs.ualberta.cmput402.boardgame.Move;
 import cs.ualberta.cmput402.boardgame.board.Piece;
 import cs.ualberta.cmput402.boardgame.board.Board;
@@ -25,7 +24,7 @@ public class GameStateMachine implements CallbackConsumer {
     private GameRenderer renderer;
 
     private Move moveToPlay;
-    private int oldx, oldy;
+    private int oldX, oldY;
     private int boardSize;
     
     // Do nothing constructor.
@@ -67,49 +66,69 @@ public class GameStateMachine implements CallbackConsumer {
     @Override
     public void onSquareClicked(int x, int y) {
     switch(currentState) {
-        case Player1PieceSelection:
+        case Player1PieceSelection: {
             //if the current player clicks a square with its own player on it, store that coord
-            Piece temppiece = board.getSquareAtPos(x,y).getPiece();
-            if(temppiece != null && temppiece.getTeam().equals(board.getCurrentPlayer().getTeam())) {
-                oldx = x;
-                oldy = y;
-            }
-            currentState = State.Player1DestinationSelection;
-            break;
-        case Player1DestinationSelection:
-            // Play the piece and redraw the board.
-            board.playPiece(oldx, oldy, x, y);
-            renderer.drawBoard(board, true);
-
-            // Swap the moves and turn.
-            board.swapMoves();
-            board.otherPlayerTurn();
-
-            // Redraw moves and deselect moves.
-            renderer.drawMoves(board.getIdlePlayer().getMoves(), board.getCurrentPlayer().getMoves(),
-                    board.getExtraMove());
-            renderer.setMoveStates(movesToStates(board.getCurrentPlayer().getMoves()));
-
-            // Check winning condition.
-            if (board.getWinner() == null) {
-                currentState = State.Player2MoveSelection;
-            } else {
-                currentState = State.Terminal;
-            }
-
-            break;
-        case Player2PieceSelection:
-	    //if the current player clicks a square with its own player on it, store that coord            
-            Piece piece = board.getSquareAtPos(((boardSize-1)-x),((boardSize-1)-y)).getPiece();
+            Piece piece = board.getSquareAtPos(x, y).getPiece();
             if (piece != null && piece.getTeam().equals(board.getCurrentPlayer().getTeam())) {
-                oldx = x;
-                oldy = y;
+                oldX = x;
+                oldY = y;
+                currentState = State.Player1DestinationSelection;
             }
-            currentState = State.Player2DestinationSelection;
+            else {
+                // Send error message.
+            }
             break;
-        case Player2DestinationSelection:
+        }
+        case Player1DestinationSelection: {
+            // If we succeed in playing the piece, go ahead with the transition.
+            if (board.playPiece(oldX, oldY, x, y)) {
+                // Redraw the board.
+                renderer.drawBoard(board, true);
+
+                // Swap the moves and turn.
+                board.swapMoves();
+                board.otherPlayerTurn();
+
+                // Redraw moves and deselect moves.
+                renderer.drawMoves(board.getIdlePlayer().getMoves(), board.getCurrentPlayer().getMoves(),
+                        board.getExtraMove());
+                renderer.setMoveStates(movesToStates(board.getCurrentPlayer().getMoves()));
+
+                // Check winning condition.
+                if (board.getWinner() == null) {
+                    currentState = State.Player2MoveSelection;
+                } else {
+                    currentState = State.Terminal;
+                }
+
+            }
+            break;
+        }
+        case Player2PieceSelection: {
+            // Get the true x, y.
+            x = (boardSize - 1) - x;
+            y = (boardSize - 1) - y;
+
+            //if the current player clicks a square with its own player on it, store that coord
+            Piece piece = board.getSquareAtPos(x, y).getPiece();
+            if (piece != null && piece.getTeam().equals(board.getCurrentPlayer().getTeam())) {
+                oldX = x;
+                oldY = y;
+
+                currentState = State.Player2DestinationSelection;
+            }
+            else {
+                // Send error message.
+            }
+            break;
+        }
+        case Player2DestinationSelection: {
+            // Get the true x, y.
+            x = (boardSize - 1) - x;
+            y = (boardSize - 1) - y;
+
             // Play the piece and redraw the board.
-            board.playPiece(((boardSize-1)-oldx), ((boardSize-1)-oldy), ((boardSize-1)-x), ((boardSize-1)-y));
+            board.playPiece(oldX, oldY, x, y);
             renderer.drawBoard(board, false);
 
             // Swap the moves and turn.
@@ -129,6 +148,7 @@ public class GameStateMachine implements CallbackConsumer {
             }
 
             break;
+        }
         default:
             break;
         }
