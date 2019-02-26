@@ -35,7 +35,7 @@ public class GameStateMachine implements CallbackConsumer {
         this.board = board;
 	this.boardSize = board.getSize();
         renderer.drawBoard(board, false);
-        renderer.drawMoves(board.getCurrentPlayer().getMoves(), board.getCurrentPlayer().getMoves(),
+        renderer.drawMoves(board.getIdlePlayer().getMoves(), board.getCurrentPlayer().getMoves(),
                 board.getExtraMove());
     }
 
@@ -95,11 +95,19 @@ public class GameStateMachine implements CallbackConsumer {
     switch(currentState){
         case Player1MoveSelection:
             moveToPlay = board.getCurrentPlayer().getMove(idx);
-            currentState = State.Player1PieceSelection;
+	    moveToPlay.select();
+	    board.swapMoves();
+	    renderer.drawMoves(board.getIdlePlayer().getMoves(), board.getCurrentPlayer().getMoves(),
+                board.getExtraMove());
+	    currentState = State.Player1PieceSelection;
             break;
         case Player2MoveSelection:
 	    moveToPlay = board.getCurrentPlayer().getMove(idx);
-            currentState = State.Player2PieceSelection;
+	    moveToPlay.select();
+	    board.swapMoves();
+	    renderer.drawMoves(board.getIdlePlayer().getMoves(), board.getCurrentPlayer().getMoves(),
+                board.getExtraMove());
+	    currentState = State.Player2PieceSelection;
             break;
         default:
             break;

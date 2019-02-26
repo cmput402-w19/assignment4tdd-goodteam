@@ -107,12 +107,23 @@ public class Board {
         }
     }
 
-
     public void otherPlayerTurn() {
         //classic swap
         Player temp = idlePlayer;
         idlePlayer = currentPlayer;
         currentPlayer = temp;
+    }
+
+    public void swapMoves(){
+	for(int i = 0; i <playerHandSize; i++ ){
+	    if(currentPlayer.getMove(i).isChosen()){
+		//find chosen move from player hand, put as extra card
+		Move moveSelected = currentPlayer.getMove(i);
+		moveSelected.deselect();
+		deck.add(moveSelected);
+		currentPlayer.setMove(deck.remove(0), i);
+	    }
+	}
     }
 
     public void deselectMove(int i) {
