@@ -38,6 +38,10 @@ public class SwingRenderer implements GameRenderer {
      * @param moveCount The player move count.
      */
     public SwingRenderer(CallbackConsumer callback, Dimension boardDim, int moveCount) {
+        // Create general assets.
+        createBackgroundGraphics();
+
+        // Create GUIs.
         initBoardGUI(boardDim);
         initMoveGUI(moveCount);
     }
@@ -56,9 +60,6 @@ public class SwingRenderer implements GameRenderer {
      * @param dim The dimensions of the board (number of tiles).
      */
     private void initBoardGUI(Dimension dim) {
-        // Create assets.
-        createBackgroundGraphics();
-
         // Set up main GUI.
         boardGui.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -92,11 +93,7 @@ public class SwingRenderer implements GameRenderer {
     /**
      * Builds the move GUI from swing components.
      *
-<<<<<<< HEAD
      * @param moveCount The number of cards each player holds.
-=======
-     * @param moveCount The number of moves a player can hold at once.
->>>>>>> origin/master
      */
     private void initMoveGUI(int moveCount) {
         // Sanity check.
