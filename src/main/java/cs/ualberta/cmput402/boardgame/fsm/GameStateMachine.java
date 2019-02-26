@@ -5,7 +5,7 @@ import cs.ualberta.cmput402.boardgame.rendering.GameRenderer;
 
 public class GameStateMachine implements CallbackConsumer {
 
-    private enum State {
+    public enum State {
         Player1MoveSelection,
         Player1PieceSelection,
         Player1DestinationSelection,
@@ -17,12 +17,10 @@ public class GameStateMachine implements CallbackConsumer {
 
     // Current finite state machine state.
     private State currentState;
+    private Board board;
+    private GameRenderer renderer;
 
-    // The renderer.
-    GameRenderer renderer;
-
-    // The board to interact with.
-    Board board;
+    private Move moveToPlay;
 
     // Do nothing constructor.
     public GameStateMachine() { }
@@ -45,6 +43,7 @@ public class GameStateMachine implements CallbackConsumer {
     public void onSquareClicked(int x, int y) {
     switch(currentState){
         case Player1PieceSelection:
+	    
             break;
         case Player1DestinationSelection:
             break;
@@ -62,6 +61,8 @@ public class GameStateMachine implements CallbackConsumer {
     public void onMoveClicked(int idx) {
     switch(currentState){
         case Player1MoveSelection:
+            moveToPlay = board.getCurrentPlayer().getMove(idx);
+            currentState = Player1PieceSelection;
             break;
         case Player2MoveSelection:
             break;
