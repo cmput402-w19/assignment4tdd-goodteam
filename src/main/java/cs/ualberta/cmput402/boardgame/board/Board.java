@@ -1,9 +1,25 @@
 package cs.ualberta.cmput402.boardgame.board;
 
+import java.awt.Color;
+
 public class Board {
 
-    public enum Team { RED, BLUE };
-    
+    public enum Team {
+        RED(Color.RED),
+        BLUE(Color.BLUE);
+
+        // The team color.
+        private Color color;
+
+        Team(Color color) {
+            this.color = color;
+        }
+
+        public Color getColor() {
+            return color;
+        }
+    }
+
     public Square board[][];
     private int size = 5;
     private Team currentPlayer;
