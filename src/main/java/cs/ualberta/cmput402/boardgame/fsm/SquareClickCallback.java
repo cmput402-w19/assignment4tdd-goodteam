@@ -38,6 +38,6 @@ public class SquareClickCallback implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        this.cbc.onSquareClicked(x, y);
+        cbc.onSquareClicked(x, y);
     }
 }
