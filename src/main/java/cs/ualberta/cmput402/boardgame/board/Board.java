@@ -3,6 +3,7 @@ package cs.ualberta.cmput402.boardgame.board;
 import java.util.ArrayList;
 import java.util.Collections;
 import cs.ualberta.cmput402.boardgame.Move;
+import cs.ualberta.cmput402.boardgame.Offsets;
 import cs.ualberta.cmput402.boardgame.Player;
 
 
@@ -73,10 +74,20 @@ public class Board {
     }
 
     public boolean playPiece(int oldx, int oldy, int x, int y) {
-    //if its on the board
+	
+	//check if the player selects a location on the board
         if(onBoard(x, y)) {
-            //check if that square is empty, or occupied by enemy
-            Square newSquare = getSquareAtPos(x, y);
+
+	    //first check if this move can even be applied, find selected move                             
+	    Move selectedPlayMove = currentPlayer.getMove(findCurrentPlayerSelectedMove());
+
+	    //checks if selected coords are in board locations described by move's offsets list
+	    if(!(validMove(x, y, selectedPlayMove))){
+		    return false;
+	    }
+	    
+	    Square newSquare = getSquareAtPos(x, y);
+	    //check if that square is empty, or occupied by enemy  
             if(newSquare.getState().equals(Square.State.EMPTY) ||
                     newSquare.getPiece().getTeam().equals(idlePlayer.getTeam())) {
                 Square oldSquare = getSquareAtPos(oldx, oldy);
@@ -92,6 +103,20 @@ public class Board {
         }
     return false;
     }
+
+	public boolean validMove(int x, int y, Move selectedMove){
+	    Offsets[] offsets = selectedMove.getOffsets();
+	    //for the offsets described, apply to hypothetical onboard location
+	    for(int i = 0; i < offsets.length; i++){
+		//not best to access public field maybe... but...
+		int hypx = (offsets[i].xOffset)+x;
+		int hypy = (offsets[i].yOffset)+y;
+		if((hypx == x) && (hypy == y)){
+		    return true;
+		}
+	    }
+	    return false;
+	}
 
     public void checkWin(Square newSquare) {
         //check if currentPlayer just moved onto idlePlayer's shrine
@@ -114,17 +139,25 @@ public class Board {
         currentPlayer = temp;
     }
 
-    public void swapMoves(){
+    public int findCurrentPlayerSelectedMove(){
 	for(int i = 0; i <playerHandSize; i++ ){
-	    if(currentPlayer.getMove(i).isChosen()){
-		//find chosen move from player hand, put as extra card
-		Move moveSelected = currentPlayer.getMove(i);
-		moveSelected.deselect();
-		deck.add(moveSelected);
-		currentPlayer.setMove(deck.remove(0), i);
+            if(currentPlayer.getMove(i).isChosen()){
+		return i;
 	    }
 	}
+	return -1;
     }
+
+    public void swapMoves(){
+	//find chosen move from player hand, put as extra card
+	int selectedMoveidx = findCurrentPlayerSelectedMove();
+	Move moveSelected = currentPlayer.getMove(selectedMoveidx);
+	moveSelected.deselect();
+	deck.add(moveSelected);
+	currentPlayer.setMove(deck.remove(0), selectedMoveidx);
+    }
+
+
 
     public void deselectMove(int i) {
         getCurrentPlayer().getMove(i).deselect();
