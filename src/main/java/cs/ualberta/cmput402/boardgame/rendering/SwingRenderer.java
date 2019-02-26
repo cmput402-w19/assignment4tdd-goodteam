@@ -2,6 +2,7 @@ package cs.ualberta.cmput402.boardgame.rendering;
 
 import cs.ualberta.cmput402.boardgame.Move;
 import cs.ualberta.cmput402.boardgame.board.Board;
+import cs.ualberta.cmput402.boardgame.board.Square;
 import cs.ualberta.cmput402.boardgame.fsm.CallbackConsumer;
 import cs.ualberta.cmput402.boardgame.fsm.SquareClickCallback;
 
@@ -29,8 +30,11 @@ public class SwingRenderer implements GameRenderer {
     // Dimensions.
     private final int tileSize = 64;
 
+    // Empty image asset.
+    private BufferedImage empty = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_ARGB);
+
     // Callback handler.
-    CallbackConsumer callback;
+    private CallbackConsumer callback;
 
     /**
      * Initialises the swing renderer with a place to send callbacks, the size of the board, and how many moves a player
@@ -131,8 +135,7 @@ public class SwingRenderer implements GameRenderer {
         // First is the exchange move, contained in a label.
         {
             // First column.
-            JLabel label = new JLabel(new ImageIcon(
-                    new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB)));
+            JLabel label = new JLabel(new ImageIcon(empty));
             neutralMove = label;
             moveGrid.add(label);
         }
@@ -168,14 +171,44 @@ public class SwingRenderer implements GameRenderer {
         button.setBackground(Color.WHITE);
 
         // Set appearance.
-        ImageIcon icon = new ImageIcon(new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_ARGB));
+        ImageIcon icon = new ImageIcon(empty);
         button.setIcon(icon);
 
         return button;
     }
 
     @Override
-    public void drawBoard(Board board) {
+    public void drawBoard(Board board, boolean rotated) {
+        // Iterate over board setting icons.
+        int size = board.getSize();
+        for (int y = 0; y < size; ++y) {
+            for (int x = 0; x < size; ++x) {
+                // Get the square in the board we're talking about.
+                Square square = board.getSquareAtPos(x, y);
+
+                // Get the draw destination based on rotated.
+                JButton button;
+                if (rotated)
+                    button = squares[size - y][size - x];
+                else
+                    button = squares[y][x];
+
+                // Occupied.
+                if (square.getState().equals(Square.State.OCCUPIED)) {
+                    button.setIcon(new ImageIcon(square.getPiece().getIcon()));
+                }
+                // Not occupied.
+                else {
+                    button.setIcon(new ImageIcon((empty)));
+                }
+
+                // Does this need a border?
+                if (square.isShrine()) {
+                    LineBorder shrineBorder = new LineBorder(square.belongsTo().getColor(), 3, true);
+                    button.setBorder(shrineBorder);
+                }
+            }
+        }
 
     }
 

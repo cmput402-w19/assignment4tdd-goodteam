@@ -8,8 +8,9 @@ public interface GameRenderer {
     /**
      * Draws the game board.
      * @param board The board to draw.
+     * @param rotated Is the board to be drawn rotated?
      */
-    public void drawBoard(Board board);
+    public void drawBoard(Board board, boolean rotated);
 
     /**
      * Draws the current moves.
