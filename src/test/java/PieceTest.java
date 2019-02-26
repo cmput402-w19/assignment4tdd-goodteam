@@ -60,7 +60,7 @@ public class PieceTest {
             Method createIcon = Piece.class.getDeclaredMethod("createIcon");
 
             // Make sure it's private before we set it as accessible.
-            assertTrue("Move.createIcon was not private.", Modifier.isPrivate(createIcon.getModifiers()));
+            assertTrue("Piece.createIcon was not private.", Modifier.isPrivate(createIcon.getModifiers()));
             createIcon.setAccessible(true);
 
             // The pieces we're investigating.
@@ -142,16 +142,16 @@ public class PieceTest {
             }
         }
         catch (NoSuchFieldException e) {
-            fail("Move did not have an icon size field.");
+            fail("Piece did not have an icon size field.");
         }
         catch (NoSuchMethodException e) {
-            fail("Move did not have icon creation method.");
+            fail("Piece did not have icon creation method.");
         }
         catch (IllegalAccessException e) {
-            fail("Move.createIcon was illegally accessed.");
+            fail("Piece.createIcon was illegally accessed.");
         }
         catch (InvocationTargetException e) {
-            fail("Move.createIcon was invoked with a bad target.");
+            fail("Piece.createIcon was invoked with a bad target.");
         }
     }
 
@@ -163,7 +163,7 @@ public class PieceTest {
             Method createIcon = Piece.class.getDeclaredMethod("createIcon");
 
             // Make sure it's private before we set it as accessible.
-            assertTrue("Move.createIcon was not private.", Modifier.isPrivate(createIcon.getModifiers()));
+            assertTrue("Piece.createIcon was not private.", Modifier.isPrivate(createIcon.getModifiers()));
             createIcon.setAccessible(true);
 
             // The pieces we're investigating.
@@ -245,16 +245,16 @@ public class PieceTest {
             }
         }
         catch (NoSuchFieldException e) {
-            fail("Move did not have an icon size field.");
+            fail("Piece did not have an icon size field.");
         }
         catch (NoSuchMethodException e) {
-            fail("Move did not have icon creation method.");
+            fail("Piece did not have icon creation method.");
         }
         catch (IllegalAccessException e) {
-            fail("Move.createIcon was illegally accessed.");
+            fail("Piece.createIcon was illegally accessed.");
         }
         catch (InvocationTargetException e) {
-            fail("Move.createIcon was invoked with a bad target.");
+            fail("Piece.createIcon was invoked with a bad target.");
         }
     }
 }
