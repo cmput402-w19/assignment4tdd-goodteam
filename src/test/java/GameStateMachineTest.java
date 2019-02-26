@@ -1,6 +1,7 @@
 import cs.ualberta.cmput402.boardgame.board.Board;
 import cs.ualberta.cmput402.boardgame.rendering.SwingRenderer;
 import cs.ualberta.cmput402.boardgame.fsm.GameStateMachine;
+import cs.ualberta.cmput402.boardgame.Player;
 
 import static org.mockito.Mockito.*;
 
@@ -11,19 +12,22 @@ import static junit.framework.TestCase.fail;
 public class GameStateMachineTest {
 
     private Board board;
-    //    private Player.Team currentTeam, idleTeam;
+    private Player.Team currentTeam, idleTeam;
     private SwingRenderer renderer;
     private GameStateMachine gsm;
     
     @Before
     public void setup() {
+
+	currentTeam = Player.Team.RED;
+	
 	//create mock board
 	board = mock(Board.class);
 	//create mock renderer
 	renderer = mock(SwingRenderer.class);
 
 	//define behaviours for board
-	//	when(board.getCurrentPlayer()).thenReturn();
+	//	when(board.getWinner()).thenReturn(null);
 
 	// Create State machine with mocked board and renderer.
 	gsm = new GameStateMachine();
@@ -60,6 +64,7 @@ public class GameStateMachineTest {
         assert(gsm.getCurrentState().equals(GameStateMachine.State.Player2DestinationSelection));
 	gsm.onSquareClicked(0,2);
 
+	//when(board.getWinner()).thenAnswer(currentTeam);
 	//select tiger and move red master to take blue master
 	gsm.onMoveClicked(0);
 	gsm.onSquareClicked(2,2);
