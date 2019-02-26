@@ -9,6 +9,9 @@ public class Square {
     private State squareState;
     private Piece pieceOnSquare;
     private boolean isShrine;
+    //this is only set for two squares, but its just
+    //as wasteful as an enum with mostly none value...
+    private Player.Team shrineTeam;
     
     public Square(){
 	squareState = State.EMPTY;
@@ -34,11 +37,19 @@ public class Square {
 	squareState = State.OCCUPIED;
     }
     
-    public void setShrine(){
+    public void setShrine(Player.Team team){
 	isShrine = true;
+	shrineTeam = team;
     }
 
     public boolean isShrine(){
 	return isShrine;
+    }
+
+    public Player.Team belongsTo(){
+	if(isShrine){
+	    return shrineTeam;
+	}
+	return null;
     }
 }
