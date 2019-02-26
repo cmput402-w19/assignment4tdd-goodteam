@@ -3,8 +3,7 @@ import cs.ualberta.cmput402.boardgame.fsm.SquareClickCallback;
 
 import org.junit.Before;
 import org.junit.Test;
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.*;
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -79,6 +78,12 @@ public class SquareClickCallbackTest {
             // Save where we got called with.
             this.x = x;
             this.y = y;
+        }
+
+        @Override
+        public void onMoveClicked(int idx) {
+            // We should never get here.
+            fail("onMoveClicked was called.");
         }
 
         public boolean wasCalled() {

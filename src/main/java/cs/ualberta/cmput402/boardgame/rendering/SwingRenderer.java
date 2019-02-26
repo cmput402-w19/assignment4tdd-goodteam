@@ -1,6 +1,8 @@
 package cs.ualberta.cmput402.boardgame.rendering;
 
+import cs.ualberta.cmput402.boardgame.Move;
 import cs.ualberta.cmput402.boardgame.board.Board;
+import cs.ualberta.cmput402.boardgame.fsm.CallbackConsumer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -16,6 +18,12 @@ public class SwingRenderer implements GameRenderer {
     // GUI elements.
     private final JPanel gui = new JPanel(new BorderLayout(3, 3));
     private JButton[][] squares;
+
+    // Move GUI elements.
+    private final JPanel moveGui = new JPanel(new BorderLayout(3, 3));
+    private JButton[] theirMoves;
+    private JButton[] myMoves;
+    private JLabel neutralMove;
 
     // Assets.
     private Image[][] pieces = new Image[2][2];
@@ -52,12 +60,24 @@ public class SwingRenderer implements GameRenderer {
         }
     }
 
-    public SwingRenderer(Dimension dim) {
-        initGUI(dim);
+    /**
+     * Initialises the swing renderer with a place to send callbacks, the size of the board, and how many moves a player
+     * holds at once.
+     * @param callback The callback destination.
+     * @param boardDim The board dimensions.
+     * @param moveCount The player move count.
+     */
+    public SwingRenderer(CallbackConsumer callback, Dimension boardDim, int moveCount) {
+        initGUI(boardDim);
+        initMoveGUI(moveCount);
     }
 
     public JPanel getGUI() {
         return gui;
+    }
+
+    public JPanel getMoveGui() {
+        return moveGui;
     }
 
     /**
@@ -73,33 +93,7 @@ public class SwingRenderer implements GameRenderer {
         gui.setBorder(new EmptyBorder(5, 5, 5, 5));
 
         // Start setting up UI.
-        JPanel board = new JPanel(new GridLayout(dim.width, dim.height)) {
-
-            /**
-             * Override the preferred size to return the largest it can, in
-             * a square shape.  Must (must, must) be added to a GridBagLayout
-             * as the only component (it uses the parent as a guide to size)
-             * with no GridBagConstaint (so it is centered).
-             */
-            @Override
-            public final Dimension getPreferredSize() {
-                Dimension d = super.getPreferredSize();
-                Dimension prefSize = null;
-                Component c = getParent();
-                if (c == null) {
-                    prefSize = d;
-                } else if (c.getWidth() > d.getWidth() && c.getHeight() > d.getHeight()) {
-                    prefSize = c.getSize();
-                } else {
-                    prefSize = d;
-                }
-                int w = (int) prefSize.getWidth();
-                int h = (int) prefSize.getHeight();
-                // the smaller of the two sizes
-                int s = (w>h ? h : w);
-                return new Dimension(s,s);
-            }
-        };
+        JPanel board = new JPanel(new GridLayout(dim.height, dim.width));
 
         // Create a border
         board.setBorder(new CompoundBorder(
@@ -131,6 +125,86 @@ public class SwingRenderer implements GameRenderer {
         JPanel boardConstraints = new JPanel(new GridBagLayout());
         boardConstraints.add(board);
         gui.add(boardConstraints);
+    }
+
+    /**
+     * Builds the move GUI from swing components.
+     *
+     * @param moveCount The number of moves a player can hold at once.
+     */
+    private void initMoveGUI(int moveCount) {
+        // Sanity check.
+        assert(moveCount > 0);
+
+        // Make our card gui dimensions. It is moveCount in width.
+        int height = 3; // Always three slots vertically: yours, exchange, mine.
+        Dimension guiDims = new Dimension(moveCount, height);
+
+        // Set up main GUI.
+        moveGui.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+        // Start setting up UI.
+        JPanel moveGrid = new JPanel(new GridLayout(guiDims.height, guiDims.width));
+
+        // Create a border
+        moveGrid.setBorder(new CompoundBorder(
+                new EmptyBorder(4,4,4,4),
+                new LineBorder(Color.BLACK, 3, true)
+        ));
+
+        // Build top row buttons
+        theirMoves = new JButton[moveCount];
+        for (int i = 0; i < moveCount; ++i) {
+            // Get button, save a reference, and add to the layout.
+            JButton button = constructButton();
+            theirMoves[i] = button;
+            moveGrid.add(button);
+        }
+
+        // Build middle row.
+        // First is the exchange move, contained in a label.
+        {
+            // First column.
+            JLabel label = new JLabel(new ImageIcon(empty));
+            neutralMove = label;
+            moveGrid.add(label);
+        }
+        // Rest are empty panels.
+        for (int i = 1; i < moveCount; ++i) {
+            moveGrid.add(new JPanel());
+        }
+
+        // Build bottom row buttons
+        myMoves = new JButton[moveCount];
+        for (int i = 0; i < moveCount; ++i) {
+            // Get button, save a reference, and add to the layout.
+            JButton button = constructButton();
+            myMoves[i] = button;
+            moveGrid.add(button);
+        }
+
+        // Finally, the panel constraints and the actual add.
+        JPanel moveConstraints = new JPanel(new GridBagLayout());
+        moveConstraints.add(moveGrid);
+        moveGui.add(moveConstraints);
+    }
+
+    private JButton constructButton() {
+        // New button.
+        JButton button = new JButton();
+
+        // Remove insets.
+        Insets buttonInset = new Insets(0, 0, 0,0);
+        button.setMargin(buttonInset);
+
+        // Set the background.
+        button.setBackground(Color.WHITE);
+
+        // Set appearance.
+        ImageIcon icon = new ImageIcon(empty);
+        button.setIcon(icon);
+
+        return button;
     }
 
     @Override

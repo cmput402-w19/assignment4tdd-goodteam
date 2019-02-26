@@ -18,7 +18,7 @@ digraph fsm {
     s -> p1s1 [label="Game start"];
 
     // Player 1 transitions.
-    p1s1 -> p1s2 [label="onCardClicked(int idx)"];
+    p1s1 -> p1s2 [label="onMoveClicked(int idx)"];
     p1s2 -> p1s3 [label="onSquareClicked(int x, int y)"];
     p1s3 -> p1f  [label="onSquareClicked(int x, int y)\nApply P1's move."];
 
@@ -27,7 +27,7 @@ digraph fsm {
     p1f  -> p2s1 [label="P1 does not win"];
 
     // Player 2 transitions.
-    p2s1 -> p2s2 [label="onCardClicked(int idx)"];
+    p2s1 -> p2s2 [label="onMoveClicked(int idx)"];
     p2s2 -> p2s3 [label="onSquareClicked(int x, int y)"];
     p2s3 -> p2f  [label="onSquareClicked(int x, int y)\nApply P2's move."];
 
