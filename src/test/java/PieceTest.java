@@ -96,16 +96,17 @@ public class PieceTest {
                 int endCardinal = (expectedSize * 3) / 4;
 
                 // Check corners and center are white.
-                assertEquals("Top left of icon was not white.",
-                        Color.WHITE.getRGB(), img.getRGB(beginEdge, beginEdge));
-                assertEquals("Top right of icon was not white.",
-                        Color.WHITE.getRGB(), img.getRGB(endEdge, beginEdge));
-                assertEquals("Bottom left of icon was not white.",
-                        Color.WHITE.getRGB(), img.getRGB(beginEdge, endEdge));
-                assertEquals("Bottom right of icon was not white.",
-                        Color.WHITE.getRGB(), img.getRGB(endEdge, endEdge));
-                assertEquals("Center of icon was not white.",
-                        Color.WHITE.getRGB(), img.getRGB(center, center));
+                Color clear = new Color(0, 0, 0, 0);
+                assertEquals("Top left of icon was not clear.",
+                        clear.getRGB(), img.getRGB(beginEdge, beginEdge));
+                assertEquals("Top right of icon was not clear.",
+                        clear.getRGB(), img.getRGB(endEdge, beginEdge));
+                assertEquals("Bottom left of icon was not clear.",
+                        clear.getRGB(), img.getRGB(beginEdge, endEdge));
+                assertEquals("Bottom right of icon was not clear.",
+                        clear.getRGB(), img.getRGB(endEdge, endEdge));
+                assertEquals("Center of icon was not clear.",
+                        clear.getRGB(), img.getRGB(center, center));
 
                 // Check the cardinal direction quarters.
                 assertEquals("West quarter was not team color.",
@@ -198,15 +199,16 @@ public class PieceTest {
                 int beginCardinal = (3 * expectedSize) / 8;
                 int endCardinal = (expectedSize * 5) / 8;
 
-                // Check corners are white.
-                assertEquals("Top left of icon was not white.",
-                        Color.WHITE.getRGB(), img.getRGB(beginEdge, beginEdge));
-                assertEquals("Top right of icon was not white.",
-                        Color.WHITE.getRGB(), img.getRGB(endEdge, beginEdge));
-                assertEquals("Bottom left of icon was not white.",
-                        Color.WHITE.getRGB(), img.getRGB(beginEdge, endEdge));
-                assertEquals("Bottom right of icon was not white.",
-                        Color.WHITE.getRGB(), img.getRGB(endEdge, endEdge));
+                // Check corners are clear.
+                Color clear = new Color(0, 0, 0, 0);
+                assertEquals("Top left of icon was not clear.",
+                        clear.getRGB(), img.getRGB(beginEdge, beginEdge));
+                assertEquals("Top right of icon was not clear.",
+                        clear.getRGB(), img.getRGB(endEdge, beginEdge));
+                assertEquals("Bottom left of icon was not clear.",
+                        clear.getRGB(), img.getRGB(beginEdge, endEdge));
+                assertEquals("Bottom right of icon was not clear.",
+                        clear.getRGB(), img.getRGB(endEdge, endEdge));
 
                 // Check center and the cardinal direction quarters are team color.
                 assertEquals("Center of icon was not team color.",
