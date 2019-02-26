@@ -1,3 +1,4 @@
+import cs.ualberta.cmput402.boardgame.Game;
 import cs.ualberta.cmput402.boardgame.board.Board;
 import cs.ualberta.cmput402.boardgame.rendering.SwingRenderer;
 import cs.ualberta.cmput402.boardgame.fsm.GameStateMachine;
@@ -56,11 +57,11 @@ public class GameStateMachineTest {
         gsm.onMoveClicked(0);
 
         //second player select piece
-            assert(gsm.getCurrentState().equals(GameStateMachine.State.Player2PieceSelection));
-        gsm.onSquareClicked(0,0);
+        assert(gsm.getCurrentState().equals(GameStateMachine.State.Player2PieceSelection));
+        gsm.onSquareClicked(0, 4);
 
         //second player select dst
-            assert(gsm.getCurrentState().equals(GameStateMachine.State.Player2DestinationSelection));
+        assert(gsm.getCurrentState().equals(GameStateMachine.State.Player2DestinationSelection));
         gsm.onSquareClicked(0,2);
 
         //when(board.getWinner()).thenAnswer(currentTeam);
