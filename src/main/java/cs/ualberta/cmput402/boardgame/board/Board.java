@@ -102,12 +102,12 @@ public class Board {
 	if(newSquare.isShrine()){
 	    //this is nested because belongs to may be null, so cant check all in one line
 	    if(newSquare.belongsTo().equals(idlePlayer.getTeam())){
-		setWinner();
+		winner = currentPlayer;
 	    }
 	}
 	//check if currentPlayer just took out idlePlayer's Master
 	if((newSquare.getState().equals(Square.State.OCCUPIED)) && (newSquare.getPiece().isMaster())){
-            setWinner();
+            winner = currentPlayer;
         }
     }
 
@@ -138,11 +138,6 @@ public class Board {
 
     public Player getCurrentPlayer(){
 	return currentPlayer;
-    }
-
-    public void setWinner(){
-	//a player wins on their turn
-	winner = currentPlayer;
     }
     
     public Player getWinner(){
