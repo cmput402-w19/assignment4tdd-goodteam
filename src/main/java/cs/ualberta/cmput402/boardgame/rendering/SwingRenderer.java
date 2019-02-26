@@ -213,6 +213,39 @@ public class SwingRenderer implements GameRenderer {
     }
 
     @Override
+    public void setSquareStates(ButtonState[][] states, boolean rotated) {
+        // Sanity checking.
+        assert(states.length == squares.length);
+        assert(states[0].length == squares[0].length);
+        assert(states.length == states[0].length);
+
+        // Iterate states and color buttons appropriately.
+        int size = states.length;
+        for (int y = 0; y < size; ++y) {
+            for (int x = 0; x < size; ++x) {
+                // Get button to edit.
+                JButton button;
+                if (rotated)
+                    button = squares[size - y][size - x];
+                else
+                    button = squares[y][x];
+
+                // Set color.
+                switch (states[y][x]) {
+                    case DEFAULT:
+                        button.setBackground(Color.WHITE);
+                        break;
+                    case CAN_SELECT:
+                        button.setBackground(Color.YELLOW);
+                        break;
+                    case SELECTED:
+                        button.setBackground(Color.LIGHT_GRAY);
+                }
+            }
+        }
+    }
+
+    @Override
     public void drawMoves(Move[] theirs, Move[] mine, Move extra) {
 
     }
