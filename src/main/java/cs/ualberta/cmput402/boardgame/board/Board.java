@@ -99,6 +99,10 @@ public class Board {
 	currentPlayer = temp;
     }
 
+    public boolean hasWon(){
+	return false;
+    }
+    
     public void deselectMove(int i){
 	getCurrentPlayer().getMove(i).deselect();
     }
@@ -120,6 +124,10 @@ public class Board {
 	return currentPlayer;
     }
 
+    public void setWinner(){
+	
+    }
+    
     public Player getWinner(){
 	return winner;
     }
