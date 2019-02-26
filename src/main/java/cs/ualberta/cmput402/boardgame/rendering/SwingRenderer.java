@@ -28,6 +28,8 @@ public class SwingRenderer implements GameRenderer {
 
     // Assets.
     private Image empty;
+    private Image selected;
+    private Image canSelect;
 
     // Dimensions.
     private final int tileSize = 64;
@@ -193,6 +195,20 @@ public class SwingRenderer implements GameRenderer {
      * Creates the images for the icons to use in the GUI.
      */
     private void createBackgroundGraphics() {
+        // Create the empty tile.
+        BufferedImage empty = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);
+        Graphics2D emptyG = empty.createGraphics();
+        emptyG.setColor(Color.WHITE);
+        emptyG.fillRect(0, 0, tileSize, tileSize);
+        this.empty = empty;
+
+        // Create the selected tile.
+        BufferedImage selected = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);
+        Graphics2D selectedG = selected.createGraphics();
+        selectedG.setColor(Color.CYAN);
+        selectedG.fillRect(0, 0, tileSize, tileSize);
+        this.empty = selected;
+
         // Create the empty tile.
         BufferedImage empty = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);
         Graphics2D emptyG = empty.createGraphics();
