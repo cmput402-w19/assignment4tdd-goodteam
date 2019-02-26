@@ -1,8 +1,7 @@
+import cs.ualberta.cmput402.boardgame.Player;
 import cs.ualberta.cmput402.boardgame.board.Piece;
-import cs.ualberta.cmput402.boardgame.board.Board;
 
 import org.junit.Test;
-
 import static junit.framework.TestCase.*;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertThat;
@@ -29,28 +28,28 @@ public class PieceTest {
     public void testBlueStudentPiece(){
         piece = Piece.BLUE_STUDENT;
         assert(!piece.isMaster());
-        assert(piece.getTeam().equals(Board.Team.BLUE));
+        assert(piece.getTeam().equals(Player.Team.BLUE));
     }
 
     @Test
     public void testRedMasterPiece(){
         piece = Piece.RED_MASTER;
         assert(piece.isMaster());
-        assert(piece.getTeam().equals(Board.Team.RED));
+        assert(piece.getTeam().equals(Player.Team.RED));
     }
 
     @Test
     public void testRedStudentPiece(){
         Piece piece = Piece.RED_STUDENT;
         assert(!piece.isMaster());
-        assert(piece.getTeam().equals(Board.Team.RED));
+        assert(piece.getTeam().equals(Player.Team.RED));
     }
 
     @Test
     public void testBlueMasterPiece() {
         piece = Piece.BLUE_MASTER;
         assert (piece.isMaster());
-        assert (piece.getTeam().equals(Board.Team.BLUE));
+        assert (piece.getTeam().equals(Player.Team.BLUE));
     }
 
     @Test

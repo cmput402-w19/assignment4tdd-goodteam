@@ -1,22 +1,24 @@
 package cs.ualberta.cmput402.boardgame.board;
 
+import cs.ualberta.cmput402.boardgame.Player;
+
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 public enum Piece{
-    RED_STUDENT(Board.Team.RED, false),
-    RED_MASTER(Board.Team.RED, true),
-    BLUE_STUDENT(Board.Team.BLUE, false),
-    BLUE_MASTER(Board.Team.BLUE, true);
+    RED_STUDENT(Player.Team.RED, false),
+    RED_MASTER(Player.Team.RED, true),
+    BLUE_STUDENT(Player.Team.BLUE, false),
+    BLUE_MASTER(Player.Team.BLUE, true);
 
-    private Board.Team team;
+    private Player.Team team;
     private boolean isMaster;
     private final Image icon;
     private final int iconSize;
 
-    Piece(Board.Team team, boolean master) {
+    Piece(Player.Team team, boolean master) {
         this.team = team;
         isMaster = master;
         iconSize = 64;
@@ -27,7 +29,7 @@ public enum Piece{
         return isMaster;
     }
 
-    public Board.Team getTeam() {
+    public Player.Team getTeam() {
         return team;
     }
 

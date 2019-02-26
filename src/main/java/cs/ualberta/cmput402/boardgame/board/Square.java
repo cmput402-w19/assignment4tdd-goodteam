@@ -1,5 +1,7 @@
 package cs.ualberta.cmput402.boardgame.board;
 
+import cs.ualberta.cmput402.boardgame.Player;
+
 public class Square {
 
     
@@ -7,6 +9,9 @@ public class Square {
     private State squareState;
     private Piece pieceOnSquare;
     private boolean isShrine;
+    //this is only set for two squares, but its just
+    //as wasteful as an enum with mostly none value...
+    private Player.Team shrineTeam;
     
     public Square(){
 	squareState = State.EMPTY;
@@ -17,17 +22,34 @@ public class Square {
     public State getState(){
 	return squareState;
     }
-    
-    public void placePiece(Piece piece){
+
+    public Piece getPiece(){
+	return pieceOnSquare;
+    }
+
+    public void removePiece(){
+	pieceOnSquare = null;
+	squareState = State.EMPTY;
+    }
+
+    public void placePiece(Piece piece) {
 	pieceOnSquare = piece;
 	squareState = State.OCCUPIED;
     }
     
-    public void setShrine(){
+    public void setShrine(Player.Team team){
 	isShrine = true;
+	shrineTeam = team;
     }
 
     public boolean isShrine(){
 	return isShrine;
+    }
+
+    public Player.Team belongsTo(){
+	if(isShrine){
+	    return shrineTeam;
+	}
+	return null;
     }
 }

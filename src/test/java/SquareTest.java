@@ -1,6 +1,7 @@
 import cs.ualberta.cmput402.boardgame.board.Piece;
 import cs.ualberta.cmput402.boardgame.board.Square;
 import cs.ualberta.cmput402.boardgame.board.Board;
+import cs.ualberta.cmput402.boardgame.Player;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runners.model.TestClass;
@@ -24,7 +25,8 @@ public class SquareTest {
 
     @Test
     public void testIsShrine(){
-	square.setShrine();
+	assert(square.belongsTo() == null);
+	square.setShrine(Player.Team.RED);
 	assert(square.isShrine() == true);
     }
     
