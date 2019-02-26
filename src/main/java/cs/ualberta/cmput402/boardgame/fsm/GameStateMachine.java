@@ -23,6 +23,7 @@ public class GameStateMachine implements CallbackConsumer {
 
     private Move moveToPlay;
     private int oldx, oldy;
+    private int boardSize;
     
     // Do nothing constructor.
     public GameStateMachine() { }
@@ -32,6 +33,7 @@ public class GameStateMachine implements CallbackConsumer {
         currentState = State.Player1MoveSelection;
         this.renderer = renderer;
         this.board = board;
+	this.boardSize = board.getSize();
         renderer.drawBoard(board, false);
         renderer.drawMoves(board.getCurrentPlayer().getMoves(), board.getCurrentPlayer().getMoves(),
                 board.getExtraMove());
@@ -55,6 +57,7 @@ public class GameStateMachine implements CallbackConsumer {
             break;
         case Player1DestinationSelection:
 	    board.playPiece(oldx, oldy, x, y);
+	    renderer.drawBoard(board, true);
 	    board.otherPlayerTurn();
 	    if(board.getWinner() == null){
 		currentState = State.Player2MoveSelection;
@@ -64,7 +67,7 @@ public class GameStateMachine implements CallbackConsumer {
             break;
         case Player2PieceSelection:
 	    //if the current player clicks a square with its own player on it, store that coord            
-            Piece piece = board.getSquareAtPos(x,y).getPiece();
+            Piece piece = board.getSquareAtPos(((boardSize-1)-x),((boardSize-1)-y)).getPiece();
             if(piece != null && piece.getTeam().equals(board.getCurrentPlayer().getTeam())){
                 oldx = x;
                 oldy = y;
@@ -72,7 +75,8 @@ public class GameStateMachine implements CallbackConsumer {
             currentState = State.Player2DestinationSelection;
             break;
         case Player2DestinationSelection:
-	    board.playPiece(oldx, oldy, x, y);
+	    board.playPiece(((boardSize-1)-oldx), ((boardSize-1)-oldy), ((boardSize-1)-x), ((boardSize-1)-y));
+	    renderer.drawBoard(board, false);
             board.otherPlayerTurn();
             if(board.getWinner() == null){
 		currentState = State.Player1MoveSelection;
