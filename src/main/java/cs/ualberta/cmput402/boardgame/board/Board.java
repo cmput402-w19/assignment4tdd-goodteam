@@ -100,12 +100,12 @@ public class Board {
     }
 
     public void deselectMove(int i){
-	getCurrentPlayer().getMove(0).deselect();
+	getCurrentPlayer().getMove(i).deselect();
     }
     
 
     public void selectMove(int i){
-	getCurrentPlayer().getMove(0).select();
+	getCurrentPlayer().getMove(i).select();
     }
     
     public Move getExtraMove(){
