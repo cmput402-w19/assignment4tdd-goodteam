@@ -21,11 +21,11 @@ public class Board {
         add(Move.GOOSE);
     }};
 
-    public Board(){
-    board = new Square[size][size];
-    winner = null;
-    setupPlayers();
-    initBoard();
+    public Board() {
+        board = new Square[size][size];
+        winner = null;
+        setupPlayers();
+        initBoard();
     }
 
     private void initBoard() {
@@ -50,102 +50,102 @@ public class Board {
         }
     }
 
-    public void setupPlayers(){
-    //set current and then deal cards random
-    currentPlayer = new Player(Player.Team.RED, playerHandSize);
-    idlePlayer = new Player(Player.Team.BLUE, playerHandSize);
+    public void setupPlayers() {
+        //set current and then deal cards random
+        currentPlayer = new Player(Player.Team.RED, playerHandSize);
+        idlePlayer = new Player(Player.Team.BLUE, playerHandSize);
 
-    Collections.shuffle(deck);
-    
-    for (int i = 0; i < playerHandSize; i++){
-        currentPlayer.setMove(deck.get(0), i);
-        deck.remove(0);
+        Collections.shuffle(deck);
+
+        for (int i = 0; i < playerHandSize; i++) {
+            currentPlayer.setMove(deck.get(0), i);
+            deck.remove(0);
             idlePlayer.setMove(deck.get(0), i);
             deck.remove(0);
-    }
-    }
-
-    public boolean onBoard(int xCoord, int yCoord){
-    if(xCoord > size-1 || yCoord > size-1 || xCoord < 0 || yCoord < 0){
-        return false;
-    }
-    return true;
-    }
-
-    public boolean playPiece(int oldx, int oldy, int x, int y){
-    //if its on the board
-    if(onBoard(x, y)){
-        //check if that square is empty, or occupied by enemy
-        Square newSquare = getSquareAtPos(x, y);
-        if(((newSquare.getState().equals(Square.State.EMPTY)) || newSquare.getPiece().getTeam().equals(idlePlayer.getTeam()))){
-        
-        Square oldSquare = getSquareAtPos(oldx, oldy);
-        Piece oldpiece = oldSquare.getPiece();
-
-        //for valid moves also check if this is end condition                        
-                checkWin(newSquare);
-        
-        oldSquare.removePiece();
-        newSquare.placePiece(oldpiece);
-        return true;
         }
     }
+
+    public boolean onBoard(int xCoord, int yCoord) {
+        if(xCoord > size-1 || yCoord > size-1 || xCoord < 0 || yCoord < 0) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean playPiece(int oldx, int oldy, int x, int y) {
+    //if its on the board
+        if(onBoard(x, y)) {
+            //check if that square is empty, or occupied by enemy
+            Square newSquare = getSquareAtPos(x, y);
+            if(newSquare.getState().equals(Square.State.EMPTY) ||
+                    newSquare.getPiece().getTeam().equals(idlePlayer.getTeam())) {
+                Square oldSquare = getSquareAtPos(oldx, oldy);
+                Piece oldpiece = oldSquare.getPiece();
+
+                //for valid moves also check if this is end condition
+                checkWin(newSquare);
+
+                oldSquare.removePiece();
+                newSquare.placePiece(oldpiece);
+                return true;
+            }
+        }
     return false;
     }
 
-    public void checkWin(Square newSquare){
-    //check if currentPlayer just moved onto idlePlayer's shrine
-    if(newSquare.isShrine()){
-        //this is nested because belongs to may be null, so cant check all in one line
-        if(newSquare.belongsTo().equals(idlePlayer.getTeam())){
-        winner = currentPlayer;
+    public void checkWin(Square newSquare) {
+        //check if currentPlayer just moved onto idlePlayer's shrine
+        if(newSquare.isShrine()) {
+            //this is nested because belongs to may be null, so cant check all in one line
+            if(newSquare.belongsTo().equals(idlePlayer.getTeam())) {
+                winner = currentPlayer;
+            }
         }
-    }
-    //check if currentPlayer just took out idlePlayer's Master
-    if((newSquare.getState().equals(Square.State.OCCUPIED)) && (newSquare.getPiece().isMaster())){
+        //check if currentPlayer just took out idlePlayer's Master
+        if((newSquare.getState().equals(Square.State.OCCUPIED)) && (newSquare.getPiece().isMaster())) {
             winner = currentPlayer;
         }
     }
 
-    
-    public void otherPlayerTurn(){
-    //classic swap
-    Player temp = idlePlayer;
-    idlePlayer = currentPlayer;
-    currentPlayer = temp;
-    }
-    
-    public void deselectMove(int i){
-    getCurrentPlayer().getMove(i).deselect();
-    }
-    
 
-    public void selectMove(int i){
-    getCurrentPlayer().getMove(i).select();
-    }
-    
-    public Move getExtraMove(){
-    return deck.get(0);
+    public void otherPlayerTurn() {
+        //classic swap
+        Player temp = idlePlayer;
+        idlePlayer = currentPlayer;
+        currentPlayer = temp;
     }
 
-    public int getSize(){
-    return size;
+    public void deselectMove(int i) {
+        getCurrentPlayer().getMove(i).deselect();
     }
 
-    public Player getCurrentPlayer(){
-    return currentPlayer;
+
+    public void selectMove(int i) {
+        getCurrentPlayer().getMove(i).select();
     }
 
-    public Player getIdlePlayer(){
-    return idlePlayer;
+    public Move getExtraMove() {
+        return deck.get(0);
     }
-    
-    public Player getWinner(){
-    return winner;
+
+    public int getSize() {
+        return size;
     }
-    
-    public Square getSquareAtPos(int x, int y){
-    return board[y][x];
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public Player getIdlePlayer() {
+        return idlePlayer;
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public Square getSquareAtPos(int x, int y) {
+        return board[y][x];
     }
     
 }
