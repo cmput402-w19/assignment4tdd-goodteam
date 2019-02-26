@@ -26,11 +26,6 @@ public class SwingRenderer implements GameRenderer {
     private JButton[] myMoves;
     private JLabel neutralMove;
 
-    // Assets.
-    private Image empty;
-    private Image selected;
-    private Image canSelect;
-
     // Dimensions.
     private final int tileSize = 64;
 
@@ -47,9 +42,6 @@ public class SwingRenderer implements GameRenderer {
     public SwingRenderer(CallbackConsumer callback, Dimension boardDim, int moveCount) {
         // Save callback handler.
         this.callback = callback;
-
-        // Create general assets.
-        createBackgroundGraphics();
 
         // Create GUIs.
         initBoardGUI(boardDim);
@@ -139,7 +131,8 @@ public class SwingRenderer implements GameRenderer {
         // First is the exchange move, contained in a label.
         {
             // First column.
-            JLabel label = new JLabel(new ImageIcon(empty));
+            JLabel label = new JLabel(new ImageIcon(
+                    new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB)));
             neutralMove = label;
             moveGrid.add(label);
         }
@@ -175,7 +168,7 @@ public class SwingRenderer implements GameRenderer {
         button.setBackground(Color.WHITE);
 
         // Set appearance.
-        ImageIcon icon = new ImageIcon(empty);
+        ImageIcon icon = new ImageIcon(new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_ARGB));
         button.setIcon(icon);
 
         return button;
@@ -189,31 +182,5 @@ public class SwingRenderer implements GameRenderer {
     @Override
     public void drawMoves(Move[] theirs, Move[] mine, Move extra) {
 
-    }
-
-    /**
-     * Creates the images for the icons to use in the GUI.
-     */
-    private void createBackgroundGraphics() {
-        // Create the empty tile.
-        BufferedImage empty = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);
-        Graphics2D emptyG = empty.createGraphics();
-        emptyG.setColor(Color.WHITE);
-        emptyG.fillRect(0, 0, tileSize, tileSize);
-        this.empty = empty;
-
-        // Create the selected tile.
-        BufferedImage selected = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);
-        Graphics2D selectedG = selected.createGraphics();
-        selectedG.setColor(Color.CYAN);
-        selectedG.fillRect(0, 0, tileSize, tileSize);
-        this.empty = selected;
-
-        // Create the empty tile.
-        BufferedImage empty = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);
-        Graphics2D emptyG = empty.createGraphics();
-        emptyG.setColor(Color.WHITE);
-        emptyG.fillRect(0, 0, tileSize, tileSize);
-        this.empty = empty;
     }
 }
