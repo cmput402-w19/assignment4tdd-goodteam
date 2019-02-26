@@ -2,9 +2,7 @@ package cs.ualberta.cmput402.boardgame.board;
 
 import cs.ualberta.cmput402.boardgame.Player;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public enum Piece{
@@ -43,7 +41,7 @@ public enum Piece{
         Graphics2D imgG = img.createGraphics();
 
         // Set background color.
-        Color clear = new Color(0, 0, 0, 0);
+        Color clear = new Color(1.f, 1.f, 1.f, 0);
         imgG.setColor(clear); // Clear.
         imgG.fillRect(0, 0, iconSize, iconSize);
 
@@ -64,6 +62,7 @@ public enum Piece{
                     outerRadius * 2, outerRadius * 2);
 
             // Remove inner
+            imgG.setComposite(AlphaComposite.getInstance(AlphaComposite.CLEAR));
             imgG.setColor(clear);
             imgG.fillOval(iconCenter - innerRadius, iconCenter - innerRadius,
                     innerRadius * 2, innerRadius * 2);
