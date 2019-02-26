@@ -1,14 +1,12 @@
 package cs.ualberta.cmput402.boardgame.board;
 
-import java.util.Random;
 import java.util.ArrayList;
 import java.util.Collections;
 import cs.ualberta.cmput402.boardgame.Move;
 import cs.ualberta.cmput402.boardgame.Player;
 
-public class Board {
 
-    
+public class Board {
     private Square board[][];
     private int size = 5;
     private int playerHandSize = 2;
@@ -22,12 +20,34 @@ public class Board {
 	    add(Move.TIGER);
 	    add(Move.GOOSE);
 	}};
-    
+
     public Board(){
 	board = new Square[size][size];
 	winner = null;
 	setupPlayers();
 	initBoard();
+    }
+
+    private void initBoard() {
+        //init board of squares
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                board[i][j] = new Square();
+            }
+        }
+        //place pieces on first and last row
+        for (int j = 0; j < size; j++) {
+            if (j == 2) {
+                //if middle of row, place shrine and master
+                board[0][j].setShrine(Player.Team.RED);
+                board[size-1][j].setShrine(Player.Team.BLUE);
+                board[0][j].placePiece(Piece.RED_MASTER);
+                board[size-1][j].placePiece(Piece.BLUE_MASTER);
+            } else {
+                board[0][j].placePiece(Piece.RED_STUDENT);
+                board[size-1][j].placePiece(Piece.BLUE_STUDENT);
+            }
+        }
     }
 
     public void setupPlayers(){
@@ -44,29 +64,6 @@ public class Board {
             deck.remove(0);
 	}
     }
-    
-    public void initBoard(){
-
-	//init board of squares
-	for (int i = 0; i < size; i++){
-	    for(int j = 0; j < size; j++){
-		board[i][j] = new Square();
-	    }
-	}
-	//place pieces on first and last row
-	for(int j = 0; j < size; j++){
-	    if(j == 2){
-		//if middle of row, place shrine and master
-		board[0][j].setShrine(Player.Team.RED);
-		board[size-1][j].setShrine(Player.Team.BLUE);
-		board[0][j].placePiece(Player.Team.RED, true);
-		board[size-1][j].placePiece(Player.Team.BLUE, true);
-	    }else{
-		board[0][j].placePiece(Player.Team.RED, false);
-		board[size-1][j].placePiece(Player.Team.BLUE, false);
-	    }
-	}
-    }
 
     public boolean onBoard(int xCoord, int yCoord){
 	if(xCoord > size-1 || yCoord > size-1 || xCoord < 0 || yCoord < 0){
@@ -74,7 +71,6 @@ public class Board {
 	}
 	return true;
     }
-    
 
     public boolean playPiece(int oldx, int oldy, int x, int y){
 	//if its on the board
@@ -90,7 +86,7 @@ public class Board {
                 checkWin(newSquare);
 		
 		oldSquare.removePiece();
-		newSquare.placePiece(oldpiece.getTeam(), oldpiece.isMaster()); 
+		newSquare.placePiece(oldpiece);
 		return true;
 	    }
 	}
@@ -131,7 +127,7 @@ public class Board {
     public Move getExtraMove(){
 	return deck.get(0);
     }
-    
+
     public int getSize(){
 	return size;
     }

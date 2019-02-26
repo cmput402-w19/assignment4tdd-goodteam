@@ -51,7 +51,7 @@ public class Game {
             f.add(guis);
 
             // Set up board GUI.
-            JPanel boardGui = renderer.getGUI();
+            JPanel boardGui = renderer.getBoardGui();
             guis.add(boardGui);
 
             // Set up moveGUI.

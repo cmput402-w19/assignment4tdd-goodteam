@@ -1,11 +1,26 @@
 package cs.ualberta.cmput402.boardgame;
 
-import java.util.ArrayList;
+import java.awt.Color;
 
 public class Player{
 
+    public enum Team {
+        RED(Color.RED),
+        BLUE(Color.BLUE);
+
+        // The team color.
+        private Color color;
+
+        Team(Color color) {
+            this.color = color;
+        }
+
+        public Color getColor() {
+            return color;
+        }
+    }
+
     private Move[] moves;
-    public enum Team {RED, BLUE};
     private Team team;
     private int handSize;
     

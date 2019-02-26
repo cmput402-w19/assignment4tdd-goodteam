@@ -31,9 +31,9 @@ public class Square {
 	pieceOnSquare = null;
 	squareState = State.EMPTY;
     }
-    
-    public void placePiece(Player.Team team, boolean master){
-	pieceOnSquare = new Piece(team, master);
+
+    public void placePiece(Piece piece) {
+	pieceOnSquare = piece;
 	squareState = State.OCCUPIED;
     }
     
