@@ -24,6 +24,7 @@ public class SquareTest {
 
     @Test
     public void testIsShrine(){
+	assert(square.belongsTo() == null);
 	square.setShrine(Player.Team.RED);
 	assert(square.isShrine() == true);
     }
