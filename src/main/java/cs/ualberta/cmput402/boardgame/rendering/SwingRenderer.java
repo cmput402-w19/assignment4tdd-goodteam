@@ -67,16 +67,12 @@ public class SwingRenderer implements GameRenderer {
      * @param moveCount The player move count.
      */
     public SwingRenderer(CallbackConsumer callback, Dimension boardDim, int moveCount) {
-        initboardGUI(boardDim);
+        initBoardGUI(boardDim);
         initMoveGUI(moveCount);
     }
 
-    public JPanel getGUI() {
-        return boardGui;
-    }
-
     public JPanel getBoardGui() {
-        return null;
+        return boardGui;
     }
 
     public JPanel getMoveGui() {
@@ -88,7 +84,7 @@ public class SwingRenderer implements GameRenderer {
      *
      * @param dim The dimensions of the board (number of tiles).
      */
-    private void initboardGUI(Dimension dim) {
+    private void initBoardGUI(Dimension dim) {
         // Create assets.
         createTileGraphics();
 
