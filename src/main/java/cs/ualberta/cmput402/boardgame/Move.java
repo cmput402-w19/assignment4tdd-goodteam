@@ -21,7 +21,7 @@ public enum Move {
     
     private boolean selected;
     private Offsets[] offsets;
-    public final Image icon;
+    private final Image icon;
     
     Move(Offsets[] offsets){
 	    selected = false;
@@ -93,5 +93,9 @@ public enum Move {
         }
 
         return img;
+    }
+
+    public Image getIcon() {
+        return icon;
     }
 }
