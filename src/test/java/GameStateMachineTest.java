@@ -23,7 +23,7 @@ public class GameStateMachineTest {
 	currentTeam = Player.Team.RED;
 	
 	//create mock board
-	board = mock(Board.class);
+	board = new Board();//mock(Board.class);
 	//create mock renderer
 	renderer = mock(SwingRenderer.class);
 

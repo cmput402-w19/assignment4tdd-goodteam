@@ -1,5 +1,6 @@
 package cs.ualberta.cmput402.boardgame.fsm;
 import cs.ualberta.cmput402.boardgame.Move;
+import cs.ualberta.cmput402.boardgame.board.Piece;
 import cs.ualberta.cmput402.boardgame.board.Board;
 import cs.ualberta.cmput402.boardgame.rendering.GameRenderer;
 
@@ -21,7 +22,8 @@ public class GameStateMachine implements CallbackConsumer {
     private GameRenderer renderer;
 
     private Move moveToPlay;
-
+    private int oldx, oldy;
+    
     // Do nothing constructor.
     public GameStateMachine() { }
 
@@ -43,13 +45,40 @@ public class GameStateMachine implements CallbackConsumer {
     public void onSquareClicked(int x, int y) {
     switch(currentState){
         case Player1PieceSelection:
-	    
+	    //if the current player clicks a square with its own player on it, store that coord
+	    Piece temppiece = board.getSquareAtPos(x,y).getPiece();
+	    if(temppiece != null && temppiece.getTeam().equals(board.getCurrentPlayer().getTeam())){
+		oldx = x;
+		oldy = y;
+	    }
+	    currentState = State.Player1DestinationSelection;
             break;
         case Player1DestinationSelection:
+	    board.playPiece(oldx, oldy, x, y);
+	    board.otherPlayerTurn();
+	    if(board.getWinner() == null){
+		currentState = State.Player2MoveSelection;
+	    }else{
+		currentState = State.Terminal;
+	    }
             break;
         case Player2PieceSelection:
+	    //if the current player clicks a square with its own player on it, store that coord            
+            Piece piece = board.getSquareAtPos(x,y).getPiece();
+            if(piece != null && piece.getTeam().equals(board.getCurrentPlayer().getTeam())){
+                oldx = x;
+                oldy = y;
+            }
+            currentState = State.Player2DestinationSelection;
             break;
         case Player2DestinationSelection:
+	    board.playPiece(oldx, oldy, x, y);
+            board.otherPlayerTurn();
+            if(board.getWinner() == null){
+		currentState = State.Player1MoveSelection;
+            }else{
+		currentState = State.Terminal;
+            }
             break;
         default:
             break;
@@ -65,6 +94,8 @@ public class GameStateMachine implements CallbackConsumer {
             currentState = State.Player1PieceSelection;
             break;
         case Player2MoveSelection:
+	    moveToPlay = board.getCurrentPlayer().getMove(idx);
+            currentState = State.Player2PieceSelection;
             break;
         default:
             break;
