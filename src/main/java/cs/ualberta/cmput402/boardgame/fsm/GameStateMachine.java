@@ -1,5 +1,5 @@
 package cs.ualberta.cmput402.boardgame.fsm;
-
+import cs.ualberta.cmput402.boardgame.Move;
 import cs.ualberta.cmput402.boardgame.board.Board;
 import cs.ualberta.cmput402.boardgame.rendering.GameRenderer;
 
@@ -62,7 +62,7 @@ public class GameStateMachine implements CallbackConsumer {
     switch(currentState){
         case Player1MoveSelection:
             moveToPlay = board.getCurrentPlayer().getMove(idx);
-            currentState = Player1PieceSelection;
+            currentState = State.Player1PieceSelection;
             break;
         case Player2MoveSelection:
             break;
