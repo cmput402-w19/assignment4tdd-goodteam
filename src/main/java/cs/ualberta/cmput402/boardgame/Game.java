@@ -2,6 +2,7 @@ package cs.ualberta.cmput402.boardgame;
 
 import cs.ualberta.cmput402.boardgame.board.Board;
 import cs.ualberta.cmput402.boardgame.fsm.CallbackConsumer;
+import cs.ualberta.cmput402.boardgame.fsm.GameStateMachine;
 import cs.ualberta.cmput402.boardgame.rendering.SwingRenderer;
 
 import javax.swing.*;
@@ -16,27 +17,19 @@ public class Game {
     private static class GUIThread implements Runnable {
         @Override
         public void run() {
-            // TODO: Clean up when pulling in board changes.
+            // Create FSM.
+            GameStateMachine gsm = new GameStateMachine();
+
+            // Init board.
             Board board = new Board();
 
-            // TODO This is a stub.
-            CallbackConsumer cbc = new CallbackConsumer() {
-                @Override
-                public void onSquareClicked(int x, int y) {
-                    System.out.println("Square!");
-                }
-
-                @Override
-                public void onMoveClicked(int idx) {
-                    System.out.println("Card!");
-                }
-            };
-
             // Create renderer.
-            // TODO: Use actual board dimensions for width/height
-            int boardSize = board.getSize();
             int reserveMoves = 2;
-            SwingRenderer renderer = new SwingRenderer(cbc, new Dimension(boardSize, boardSize), reserveMoves);
+            int boardSize = board.getSize();
+            SwingRenderer renderer = new SwingRenderer(gsm, new Dimension(boardSize, boardSize), reserveMoves);
+
+            // Initialise GSM with renderer and board.
+            gsm.init(renderer, board);
 
             // Build GUI window.
             // Based on https://stackoverflow.com/a/21142687/2379240

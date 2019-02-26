@@ -1,7 +1,9 @@
 package cs.ualberta.cmput402.boardgame.rendering;
 
+import cs.ualberta.cmput402.boardgame.Move;
 import cs.ualberta.cmput402.boardgame.board.Board;
 import cs.ualberta.cmput402.boardgame.fsm.CallbackConsumer;
+import cs.ualberta.cmput402.boardgame.fsm.SquareClickCallback;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -30,6 +32,9 @@ public class SwingRenderer implements GameRenderer {
     // Dimensions.
     private final int tileSize = 64;
 
+    // Callback handler.
+    CallbackConsumer callback;
+
     /**
      * Initialises the swing renderer with a place to send callbacks, the size of the board, and how many moves a player
      * holds at once.
@@ -38,6 +43,9 @@ public class SwingRenderer implements GameRenderer {
      * @param moveCount The player move count.
      */
     public SwingRenderer(CallbackConsumer callback, Dimension boardDim, int moveCount) {
+        // Save callback handler.
+        this.callback = callback;
+
         // Create general assets.
         createBackgroundGraphics();
 
@@ -75,11 +83,12 @@ public class SwingRenderer implements GameRenderer {
         // Build square buttons.
         squares = new JButton[dim.height][dim.width];
         Insets buttonInset = new Insets(0, 0, 0,0); // No insets.
-        for (int i = 0; i < dim.height; ++i) {
-            for (int j = 0; j < dim.width; ++j) {
+        for (int y = 0; y < dim.height; ++y) {
+            for (int x = 0; x < dim.width; ++x) {
                 // Get button, save a reference, and add to the layout.
                 JButton button = constructButton();
-                squares[i][j] = button;
+                button.addActionListener(new SquareClickCallback(callback, x, y));
+                squares[y][x] = button;
                 board.add(button);
             }
         }
@@ -172,6 +181,11 @@ public class SwingRenderer implements GameRenderer {
 
     @Override
     public void drawBoard(Board board) {
+
+    }
+
+    @Override
+    public void drawMoves(Move[] theirs, Move[] mine, Move extra) {
 
     }
 

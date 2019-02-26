@@ -1,5 +1,6 @@
 package cs.ualberta.cmput402.boardgame.rendering;
 
+import cs.ualberta.cmput402.boardgame.Move;
 import cs.ualberta.cmput402.boardgame.board.Board;
 
 public interface GameRenderer {
@@ -9,4 +10,12 @@ public interface GameRenderer {
      * @param board The board to draw.
      */
     public void drawBoard(Board board);
+
+    /**
+     * Draws the current moves.
+     * @param theirs The cards at the top of the screen.
+     * @param mine The cards at the bottom of the screen.
+     * @param extra The extra card in the middle.
+     */
+    public void drawMoves(Move[] theirs, Move[] mine, Move extra);
 }
