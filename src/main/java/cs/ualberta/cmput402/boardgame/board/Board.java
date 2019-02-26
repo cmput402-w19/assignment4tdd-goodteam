@@ -135,6 +135,10 @@ public class Board {
     public Player getCurrentPlayer(){
 	return currentPlayer;
     }
+
+    public Player getIdlePlayer(){
+	return idlePlayer;
+    }
     
     public Player getWinner(){
 	return winner;
