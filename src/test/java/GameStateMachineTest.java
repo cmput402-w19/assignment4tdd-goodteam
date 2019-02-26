@@ -16,61 +16,59 @@ public class GameStateMachineTest {
     private Player.Team currentTeam, idleTeam;
     private SwingRenderer renderer;
     private GameStateMachine gsm;
-    
+
     @Before
     public void setup() {
+        currentTeam = Player.Team.RED;
 
-	currentTeam = Player.Team.RED;
-	
-	//create mock board
-	board = new Board();//mock(Board.class);
-	//create mock renderer
-	renderer = mock(SwingRenderer.class);
+        //create mock board
+        board = new Board();//mock(Board.class);
+        //create mock renderer
+        renderer = mock(SwingRenderer.class);
 
-	//define behaviours for board
-	//	when(board.getWinner()).thenReturn(null);
+        //define behaviours for board
+        //    when(board.getWinner()).thenReturn(null);
 
-	// Create State machine with mocked board and renderer.
-	gsm = new GameStateMachine();
-	gsm.init(renderer, board);
+        // Create State machine with mocked board and renderer.
+        gsm = new GameStateMachine();
+        gsm.init(renderer, board);
     }
-    
+
     @Test
     public void testTransitions() {
-        
         // Assert in first state.
-	assert(gsm.getCurrentState().equals(GameStateMachine.State.Player1MoveSelection));	
+        assert(gsm.getCurrentState().equals(GameStateMachine.State.Player1MoveSelection));
         // Call move clicked with index of known move from mocked board.
-	gsm.onMoveClicked(0);
+        gsm.onMoveClicked(0);
 
         // Assert in second state.
-	assert(gsm.getCurrentState().equals(GameStateMachine.State.Player1PieceSelection));
+        assert(gsm.getCurrentState().equals(GameStateMachine.State.Player1PieceSelection));
         // Call square clicked with coords of known piece of player 1.
-	gsm.onSquareClicked(2, 0);
-	
-        // Assert in third state.
-	assert(gsm.getCurrentState().equals(GameStateMachine.State.Player1DestinationSelection));
-        // Call square clicked with valid coords of selected move from selected piece.
-	gsm.onSquareClicked(2,2);
-	
-	//second player select move
-	assert(gsm.getCurrentState().equals(GameStateMachine.State.Player2MoveSelection));
-	gsm.onMoveClicked(0);
-	
-	//second player select piece                                                         
-        assert(gsm.getCurrentState().equals(GameStateMachine.State.Player2PieceSelection));
-	gsm.onSquareClicked(0,4);
-	
-	//second player select dst                                                         
-        assert(gsm.getCurrentState().equals(GameStateMachine.State.Player2DestinationSelection));
-	gsm.onSquareClicked(0,2);
+        gsm.onSquareClicked(2, 4);
 
-	//when(board.getWinner()).thenAnswer(currentTeam);
-	//select tiger and move red master to take blue master
-	gsm.onMoveClicked(0);
-	gsm.onSquareClicked(2,2);
-	gsm.onSquareClicked(2,4);
-	//first player advance to win condition                                              
+        // Assert in third state.
+        assert(gsm.getCurrentState().equals(GameStateMachine.State.Player1DestinationSelection));
+        // Call square clicked with valid coords of selected move from selected piece.
+        gsm.onSquareClicked(2, 2);
+
+        //second player select move
+        assert(gsm.getCurrentState().equals(GameStateMachine.State.Player2MoveSelection));
+        gsm.onMoveClicked(0);
+
+        //second player select piece
+            assert(gsm.getCurrentState().equals(GameStateMachine.State.Player2PieceSelection));
+        gsm.onSquareClicked(0,0);
+
+        //second player select dst
+            assert(gsm.getCurrentState().equals(GameStateMachine.State.Player2DestinationSelection));
+        gsm.onSquareClicked(0,2);
+
+        //when(board.getWinner()).thenAnswer(currentTeam);
+        //select tiger and move red master to take blue master
+        gsm.onMoveClicked(0);
+        gsm.onSquareClicked(2,2);
+        gsm.onSquareClicked(2,0);
+        //first player advance to win condition
         assert(gsm.getCurrentState().equals(GameStateMachine.State.Terminal));
     }
 }
