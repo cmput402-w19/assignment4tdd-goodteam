@@ -4,6 +4,7 @@ import cs.ualberta.cmput402.boardgame.Move;
 import cs.ualberta.cmput402.boardgame.board.Board;
 import cs.ualberta.cmput402.boardgame.board.Square;
 import cs.ualberta.cmput402.boardgame.fsm.CallbackConsumer;
+import cs.ualberta.cmput402.boardgame.fsm.MoveClickCallback;
 import cs.ualberta.cmput402.boardgame.fsm.SquareClickCallback;
 
 import java.awt.*;
@@ -147,8 +148,9 @@ public class SwingRenderer implements GameRenderer {
         // Build bottom row buttons
         myMoves = new JButton[moveCount];
         for (int i = 0; i < moveCount; ++i) {
-            // Get button, save a reference, and add to the layout.
+            // Get button, save a reference, add a listener, and add to the layout.
             JButton button = constructButton();
+            button.addActionListener(new MoveClickCallback(callback, i));
             myMoves[i] = button;
             moveGrid.add(button);
         }

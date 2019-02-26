@@ -3,7 +3,7 @@ package cs.ualberta.cmput402.boardgame.fsm;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SquareClickCallback implements ActionListener {
+public class MoveClickCallback implements ActionListener {
 
     /**
      * The consumer of this actual event.
@@ -11,25 +11,18 @@ public class SquareClickCallback implements ActionListener {
     private CallbackConsumer cbc;
 
     /**
-     * The x position that was clicked.
+     * The position that was clicked.
      */
-    int x;
-
-    /**
-     * The y position that was clicked.
-     */
-    int y;
+    int idx;
 
     /**
      * Initialise with parameters to forward to the callback.
      * @param cbc The destination to forward args to on a click event.
-     * @param x The first arg, the x position of the button.
-     * @param y The second arg, the y position of the button.
+     * @param idx The index of the move that was clicked.
      */
-    public SquareClickCallback(CallbackConsumer cbc, int x, int y) {
+    public MoveClickCallback(CallbackConsumer cbc, int idx) {
         this.cbc = cbc;
-        this.x = x;
-        this.y = y;
+        this.idx = idx;
     }
 
     /**
@@ -38,6 +31,6 @@ public class SquareClickCallback implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        cbc.onSquareClicked(x, y);
+        cbc.onMoveClicked(idx);
     }
 }
