@@ -249,4 +249,27 @@ public class SwingRenderer implements GameRenderer {
     public void drawMoves(Move[] theirs, Move[] mine, Move extra) {
 
     }
+
+    @Override
+    public void setMoveStates(ButtonState[] states) {
+        // Sanity checking.
+        assert(states.length == myMoves.length);
+
+        // Set my states.
+        for (int i = 0; i < states.length; ++i) {
+            JButton button = myMoves[i];
+            // Set color.
+            switch (states[i]) {
+                case DEFAULT:
+                    button.setBackground(Color.WHITE);
+                    break;
+                case CAN_SELECT:
+                    button.setBackground(Color.YELLOW);
+                    break;
+                case SELECTED:
+                    button.setBackground(Color.LIGHT_GRAY);
+            }
+
+        }
+    }
 }

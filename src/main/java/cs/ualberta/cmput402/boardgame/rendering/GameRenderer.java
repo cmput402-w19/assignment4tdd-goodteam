@@ -30,4 +30,9 @@ public interface GameRenderer {
      */
     public void drawMoves(Move[] theirs, Move[] mine, Move extra);
 
+    /**
+     * Set the state of the current cards.
+     * @param states The states to set.
+     */
+    public void setMoveStates(ButtonState[] states);
 }
