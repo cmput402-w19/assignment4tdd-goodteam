@@ -48,12 +48,13 @@ public enum Move {
     private static Image createIcon(Offsets[] offsets) {
         // TODO: Can we get these values programmatically? A static function perhaps?
         int imgSize = 64;
+
         // Make our image.
-        BufferedImage img = new BufferedImage(imgSize, imgSize, BufferedImage.TYPE_INT_RGB);
+        BufferedImage img = new BufferedImage(imgSize, imgSize, BufferedImage.TYPE_INT_ARGB);
         Graphics2D imgG = img.createGraphics();
 
-        // Set background color.
-        imgG.setColor(Color.WHITE);
+        // Set background color to clear.
+        imgG.setColor(new Color(0, 0, 0, 0));
         imgG.fillRect(0, 0, imgSize, imgSize);
 
         // Find maximum offset to determine the size of the grid.

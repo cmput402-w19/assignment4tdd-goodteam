@@ -7,6 +7,7 @@ import static org.mockito.Mockito.*;
 
 import org.junit.Test;
 import org.junit.Before;
+
 import static junit.framework.TestCase.fail;
 
 public class GameStateMachineTest {

@@ -39,11 +39,12 @@ public enum Piece{
 
     private Image createIcon() {
         // Make our image.
-        BufferedImage img = new BufferedImage(iconSize, iconSize, BufferedImage.TYPE_INT_RGB);
+        BufferedImage img = new BufferedImage(iconSize, iconSize, BufferedImage.TYPE_INT_ARGB);
         Graphics2D imgG = img.createGraphics();
 
         // Set background color.
-        imgG.setColor(Color.WHITE);
+        Color clear = new Color(0, 0, 0, 0);
+        imgG.setColor(clear); // Clear.
         imgG.fillRect(0, 0, iconSize, iconSize);
 
         // Set our initial color.
@@ -63,7 +64,7 @@ public enum Piece{
                     outerRadius * 2, outerRadius * 2);
 
             // Remove inner
-            imgG.setColor(Color.WHITE);
+            imgG.setColor(clear);
             imgG.fillOval(iconCenter - innerRadius, iconCenter - innerRadius,
                     innerRadius * 2, innerRadius * 2);
         } else {
@@ -71,7 +72,6 @@ public enum Piece{
             int radius = iconSize / 4;
 
             // Draw circle.
-            imgG.setColor(team.getColor());
             imgG.fillOval(iconCenter - radius, iconCenter - radius,
                     radius * 2, radius * 2);
         }

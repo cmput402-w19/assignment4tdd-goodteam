@@ -1,7 +1,9 @@
 package cs.ualberta.cmput402.boardgame.rendering;
 
+import cs.ualberta.cmput402.boardgame.Move;
 import cs.ualberta.cmput402.boardgame.board.Board;
 import cs.ualberta.cmput402.boardgame.fsm.CallbackConsumer;
+import cs.ualberta.cmput402.boardgame.fsm.SquareClickCallback;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -24,11 +26,11 @@ public class SwingRenderer implements GameRenderer {
     private JButton[] myMoves;
     private JLabel neutralMove;
 
-    // Assets.
-    private Image empty;
-
     // Dimensions.
     private final int tileSize = 64;
+
+    // Callback handler.
+    CallbackConsumer callback;
 
     /**
      * Initialises the swing renderer with a place to send callbacks, the size of the board, and how many moves a player
@@ -38,8 +40,8 @@ public class SwingRenderer implements GameRenderer {
      * @param moveCount The player move count.
      */
     public SwingRenderer(CallbackConsumer callback, Dimension boardDim, int moveCount) {
-        // Create general assets.
-        createBackgroundGraphics();
+        // Save callback handler.
+        this.callback = callback;
 
         // Create GUIs.
         initBoardGUI(boardDim);
@@ -75,11 +77,12 @@ public class SwingRenderer implements GameRenderer {
         // Build square buttons.
         squares = new JButton[dim.height][dim.width];
         Insets buttonInset = new Insets(0, 0, 0,0); // No insets.
-        for (int i = 0; i < dim.height; ++i) {
-            for (int j = 0; j < dim.width; ++j) {
+        for (int y = 0; y < dim.height; ++y) {
+            for (int x = 0; x < dim.width; ++x) {
                 // Get button, save a reference, and add to the layout.
                 JButton button = constructButton();
-                squares[i][j] = button;
+                button.addActionListener(new SquareClickCallback(callback, x, y));
+                squares[y][x] = button;
                 board.add(button);
             }
         }
@@ -128,7 +131,8 @@ public class SwingRenderer implements GameRenderer {
         // First is the exchange move, contained in a label.
         {
             // First column.
-            JLabel label = new JLabel(new ImageIcon(empty));
+            JLabel label = new JLabel(new ImageIcon(
+                    new BufferedImage(64, 64, BufferedImage.TYPE_INT_ARGB)));
             neutralMove = label;
             moveGrid.add(label);
         }
@@ -164,7 +168,7 @@ public class SwingRenderer implements GameRenderer {
         button.setBackground(Color.WHITE);
 
         // Set appearance.
-        ImageIcon icon = new ImageIcon(empty);
+        ImageIcon icon = new ImageIcon(new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_ARGB));
         button.setIcon(icon);
 
         return button;
@@ -175,15 +179,8 @@ public class SwingRenderer implements GameRenderer {
 
     }
 
-    /**
-     * Creates the images for the icons to use in the GUI.
-     */
-    private void createBackgroundGraphics() {
-        // Create the empty tile.
-        BufferedImage empty = new BufferedImage(tileSize, tileSize, BufferedImage.TYPE_INT_RGB);
-        Graphics2D emptyG = empty.createGraphics();
-        emptyG.setColor(Color.WHITE);
-        emptyG.fillRect(0, 0, tileSize, tileSize);
-        this.empty = empty;
+    @Override
+    public void drawMoves(Move[] theirs, Move[] mine, Move extra) {
+
     }
 }

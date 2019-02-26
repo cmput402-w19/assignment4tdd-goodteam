@@ -5,7 +5,9 @@ import cs.ualberta.cmput402.boardgame.rendering.GameRenderer;
 
 public class GameStateMachine implements CallbackConsumer{
 
-    public enum State {
+
+    private enum State {
+
         Player1MoveSelection,
         Player1PieceSelection,
         Player1DestinationSelection,
@@ -14,8 +16,11 @@ public class GameStateMachine implements CallbackConsumer{
         Player2DestinationSelection,
 	Terminal;
     }
+  
     private State currentState;
-    
+
+
+
     public GameStateMachine() {
 
     }
@@ -43,7 +48,9 @@ public class GameStateMachine implements CallbackConsumer{
 	default:
 	    break;
 	}
+
     }
+
 
     @Override
     public void onMoveClicked(int idx) {
@@ -55,6 +62,7 @@ public class GameStateMachine implements CallbackConsumer{
 	default:
 	    break;
 	}
+
     }
 
 }
