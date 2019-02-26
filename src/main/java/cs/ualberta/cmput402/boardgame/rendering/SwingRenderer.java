@@ -247,7 +247,22 @@ public class SwingRenderer implements GameRenderer {
 
     @Override
     public void drawMoves(Move[] theirs, Move[] mine, Move extra) {
+        // Sanity checking.
+        assert(theirs.length == theirMoves.length);
+        assert(mine.length == myMoves.length);
 
+        // Set theirs.
+        for (int i = 0; i < theirs.length; ++i) {
+            theirMoves[i].setIcon(new ImageIcon(theirs[i].getIcon()));
+        }
+
+        // Set mine.
+        for (int i = 0; i < mine.length; ++i) {
+            myMoves[i].setIcon(new ImageIcon(mine[i].getIcon()));
+        }
+
+        // Set extra.
+        neutralMove.setIcon(new ImageIcon(extra.getIcon()));
     }
 
     @Override
