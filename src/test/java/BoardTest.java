@@ -118,4 +118,27 @@ public class BoardTest {
 
     }
 
+    @Test
+    public void testDetectWinnerOnShrine(){
+	//move red master out of way so can place blue there
+	board.playPiece(2, 0, 1, 2);
+	assert(board.getWinner() == null);
+	board.otherPlayerTurn();
+	board.playPiece(0, 4, 2, 0);
+	assert(!(board.getWinner() == null));
+	assert(board.getWinner().getTeam().equals(Player.Team.BLUE));
+    }
+
+    @Test
+    public void	testDetectWinnerTakeoutMaster(){
+	//place move red master off shrine, to isolate from that cause of win
+	//then take out red master with blue piece
+	board.playPiece(2, 0, 1, 2);
+	assert(board.getWinner() == null);
+        board.otherPlayerTurn();
+	board.playPiece(0, 4, 1, 2);
+	assert(!(board.getWinner() == null));
+        assert(board.getWinner().getTeam().equals(Player.Team.BLUE));
+    }
+    
 }

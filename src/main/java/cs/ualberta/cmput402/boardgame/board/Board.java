@@ -57,8 +57,8 @@ public class Board {
 	for(int j = 0; j < size; j++){
 	    if(j == 2){
 		//if middle of row, place shrine and master
-		board[0][j].setShrine();
-		board[size-1][j].setShrine();
+		board[0][j].setShrine(Player.Team.RED);
+		board[size-1][j].setShrine(Player.Team.BLUE);
 		board[0][j].placePiece(Player.Team.RED, true);
 		board[size-1][j].placePiece(Player.Team.BLUE, true);
 	    }else{
@@ -82,8 +82,13 @@ public class Board {
 	    //check if that square is empty, or occupied by enemy
 	    Square newSquare = getSquareAtPos(x, y);
 	    if(((newSquare.getState().equals(Square.State.EMPTY)) || newSquare.getPiece().getTeam().equals(idlePlayer.getTeam()))){
+		
 		Square oldSquare = getSquareAtPos(oldx, oldy);
 		Piece oldpiece = oldSquare.getPiece();
+
+		//for valid moves also check if this is end condition                        
+                checkWin(newSquare);
+		
 		oldSquare.removePiece();
 		newSquare.placePiece(oldpiece.getTeam(), oldpiece.isMaster()); 
 		return true;
@@ -91,6 +96,21 @@ public class Board {
 	}
 	return false;
     }
+
+    public void checkWin(Square newSquare){
+	//check if currentPlayer just moved onto idlePlayer's shrine
+	if(newSquare.isShrine()){
+	    //this is nested because belongs to may be null, so cant check all in one line
+	    if(newSquare.belongsTo().equals(idlePlayer.getTeam())){
+		winner = currentPlayer;
+	    }
+	}
+	//check if currentPlayer just took out idlePlayer's Master
+	if((newSquare.getState().equals(Square.State.OCCUPIED)) && (newSquare.getPiece().isMaster())){
+            winner = currentPlayer;
+        }
+    }
+
     
     public void otherPlayerTurn(){
 	//classic swap
@@ -98,14 +118,14 @@ public class Board {
 	idlePlayer = currentPlayer;
 	currentPlayer = temp;
     }
-
+    
     public void deselectMove(int i){
-	getCurrentPlayer().getMove(0).deselect();
+	getCurrentPlayer().getMove(i).deselect();
     }
     
 
     public void selectMove(int i){
-	getCurrentPlayer().getMove(0).select();
+	getCurrentPlayer().getMove(i).select();
     }
     
     public Move getExtraMove(){
@@ -119,7 +139,7 @@ public class Board {
     public Player getCurrentPlayer(){
 	return currentPlayer;
     }
-
+    
     public Player getWinner(){
 	return winner;
     }
