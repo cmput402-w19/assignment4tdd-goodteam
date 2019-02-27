@@ -39,6 +39,7 @@ public class GameStateMachine implements CallbackConsumer {
         renderer.drawBoard(board, false);
         renderer.drawMoves(board.getIdlePlayer().getMoves(), board.getCurrentPlayer().getMoves(),
                 board.getExtraMove());
+        renderer.setMessage("Welcome to Onitama! Player 1 select a move.");
     }
 
     public State getCurrentState() {
@@ -175,11 +176,15 @@ public class GameStateMachine implements CallbackConsumer {
                 oldY = y;
                 currentState = State.Player1DestinationSelection;
 
+                // Set destination selection message.
+                renderer.setMessage("Please select a destination.");
+
                 // Set up selectable state.
                 renderer.setSquareStates(selectableDestinations(board, x, y, false), false);
             }
             else {
                 // Send bad piece selection message.
+                renderer.setMessage("Please select a piece you own.");
             }
             break;
         }
@@ -201,14 +206,18 @@ public class GameStateMachine implements CallbackConsumer {
 
                 // Check winning condition.
                 if (board.getWinner() == null) {
+                    // Set player 2 select move message.
+                    renderer.setMessage("Player 2 please select a move.");
                     currentState = State.Player2MoveSelection;
                 } else {
+                    // Send player 1 wins message.
+                    renderer.setMessage("Player 1 wins!");
                     currentState = State.Terminal;
-                    System.out.println("Player 1 wins!");
                 }
             }
             else {
                 // Send move failed message.
+                renderer.setMessage("Please select a valid move.");
             }
             break;
         }
@@ -225,11 +234,15 @@ public class GameStateMachine implements CallbackConsumer {
                 oldY = y;
                 currentState = State.Player2DestinationSelection;
 
+                // Set destination selection message.
+                renderer.setMessage("Please select a destination.");
+
                 // Set up selectable state.
                 renderer.setSquareStates(selectableDestinations(board, x, y, true), true);
             }
             else {
                 // Send bad piece selected message.
+                renderer.setMessage("Please select a piece you own.");
             }
             break;
         }
@@ -254,18 +267,26 @@ public class GameStateMachine implements CallbackConsumer {
 
                 // Check winning condition.
                 if (board.getWinner() == null) {
+                    // Set player 1 select move message.
+                    renderer.setMessage("Player 1 please select a move.");
                     currentState = State.Player1MoveSelection;
                 } else {
+                    // Send player 2 wins message.
+                    renderer.setMessage("Player 2 wins!");
                     currentState = State.Terminal;
-                    System.out.println("Player 2 wins!");
                 }
             }
             else {
                 // Send move failed message.
+                renderer.setMessage("Please select a valid move.");
             }
             break;
         }
+        case Terminal:
+            break;
         default:
+            // Send bad state message.
+            renderer.setMessage("Please select a move.");
             break;
         }
     }
@@ -285,6 +306,9 @@ public class GameStateMachine implements CallbackConsumer {
                 // Set selectable pieces.
                 renderer.setSquareStates(selectablePieces(board), false);
 
+                // Send selecct piece message.
+                renderer.setMessage("Please select a piece to move.");
+
                 break;
             }
             case Player2MoveSelection: {
@@ -298,9 +322,16 @@ public class GameStateMachine implements CallbackConsumer {
                 // Set selectable pieces.
                 renderer.setSquareStates(selectablePieces(board), true);
 
+                // Send selecct piece message.
+                renderer.setMessage("Please select a piece to move.");
+
                 break;
             }
+            case Terminal:
+                break;
             default:
+                // Send bad state message.
+                renderer.setMessage("Please select a square.");
                 break;
         }
     }
