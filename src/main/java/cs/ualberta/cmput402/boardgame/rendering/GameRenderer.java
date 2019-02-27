@@ -35,4 +35,14 @@ public interface GameRenderer {
      * @param states The states to set.
      */
     public void setMoveStates(ButtonState[] states);
+
+    /**
+     * Clears the current game message.
+     */
+    public void clearMessage();
+
+    /**
+     * Set the current game message.
+     */
+    public void setMessage(String message);
 }

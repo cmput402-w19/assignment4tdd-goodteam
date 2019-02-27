@@ -28,6 +28,10 @@ public class SwingRenderer implements GameRenderer {
     private JButton[] myMoves;
     private JLabel neutralMove;
 
+    // Message GUI elements.
+    JToolBar toolBar = new JToolBar();
+    JLabel messageHolder = new JLabel("FIXME TEXT UNSET");
+
     // Dimensions.
     private final int tileSize = 64;
 
@@ -51,6 +55,7 @@ public class SwingRenderer implements GameRenderer {
         // Create GUIs.
         initBoardGUI(boardDim);
         initMoveGUI(moveCount);
+        initMessageGUI();
     }
 
     public JPanel getBoardGui() {
@@ -59,6 +64,10 @@ public class SwingRenderer implements GameRenderer {
 
     public JPanel getMoveGui() {
         return moveGui;
+    }
+
+    public JToolBar getMessageGui() {
+        return toolBar;
     }
 
     /**
@@ -159,6 +168,15 @@ public class SwingRenderer implements GameRenderer {
         JPanel moveConstraints = new JPanel(new GridBagLayout());
         moveConstraints.add(moveGrid);
         moveGui.add(moveConstraints);
+    }
+
+    /**
+     * Builds the message GUI from swing components.
+     */
+    private void initMessageGUI() {
+        toolBar.setFloatable(false);
+        toolBar.addSeparator(new Dimension(10, 0));
+        toolBar.add(messageHolder);
     }
 
     private JButton constructButton() {
@@ -288,5 +306,15 @@ public class SwingRenderer implements GameRenderer {
             }
 
         }
+    }
+
+    @Override
+    public void clearMessage() {
+        messageHolder.setText("");
+    }
+
+    @Override
+    public void setMessage(String message) {
+        messageHolder.setText(message);
     }
 }
