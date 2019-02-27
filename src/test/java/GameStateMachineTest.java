@@ -1,9 +1,12 @@
 import cs.ualberta.cmput402.boardgame.Game;
+import cs.ualberta.cmput402.boardgame.Move;
 import cs.ualberta.cmput402.boardgame.board.Board;
+import cs.ualberta.cmput402.boardgame.rendering.GameRenderer;
 import cs.ualberta.cmput402.boardgame.rendering.SwingRenderer;
 import cs.ualberta.cmput402.boardgame.fsm.GameStateMachine;
 import cs.ualberta.cmput402.boardgame.Player;
 
+import static junit.framework.TestCase.assertEquals;
 import static org.mockito.Mockito.*;
 
 import org.junit.Test;
@@ -14,18 +17,35 @@ import static junit.framework.TestCase.fail;
 public class GameStateMachineTest {
 
     private Board board;
-    private Player.Team currentTeam, idleTeam;
-    private SwingRenderer renderer;
+    private Player player;
+    private GameRenderer renderer;
     private GameStateMachine gsm;
 
     @Before
     public void setup() {
-        currentTeam = Player.Team.RED;
+//        player = mock(Player.class);
+//        when(player.getMove(0)).thenReturn(Move.TIGER);
+//        when(player.getMove(1)).thenReturn(Move.TIGER);
+//        when(player.getMoves()).thenReturn(new Move[] { Move.TIGER, Move.TIGER });
+//
+//        //create mock board
+//        board = mock(Board.class);
+//        when(board.getCurrentPlayer()).thenReturn(player);
+//        when(board.getIdlePlayer()).thenReturn(player);
 
-        //create mock board
-        board = new Board();//mock(Board.class);
+        // Make the board.
+        board = new Board();
+
+        // Everyone gets Tiger!
+        board.getCurrentPlayer().setMove(Move.TIGER, 0);
+        board.getCurrentPlayer().setMove(Move.TIGER, 1);
+        board.getIdlePlayer().setMove(Move.TIGER, 0);
+        board.getIdlePlayer().setMove(Move.TIGER, 1);
+        board.setExtraMove(Move.TIGER);
+
         //create mock renderer
-        renderer = mock(SwingRenderer.class);
+        renderer = mock(GameRenderer.class);
+
 
         //define behaviours for board
         //    when(board.getWinner()).thenReturn(null);
@@ -38,30 +58,30 @@ public class GameStateMachineTest {
     @Test
     public void testTransitions() {
         // Assert in first state.
-        assert(gsm.getCurrentState().equals(GameStateMachine.State.Player1MoveSelection));
+        assertEquals(gsm.getCurrentState(), GameStateMachine.State.Player1MoveSelection);
         // Call move clicked with index of known move from mocked board.
         gsm.onMoveClicked(0);
 
         // Assert in second state.
-        assert(gsm.getCurrentState().equals(GameStateMachine.State.Player1PieceSelection));
+        assertEquals(gsm.getCurrentState(), GameStateMachine.State.Player1PieceSelection);
         // Call square clicked with coords of known piece of player 1.
         gsm.onSquareClicked(2, 4);
 
         // Assert in third state.
-        assert(gsm.getCurrentState().equals(GameStateMachine.State.Player1DestinationSelection));
+        assertEquals(gsm.getCurrentState(), GameStateMachine.State.Player1DestinationSelection);
         // Call square clicked with valid coords of selected move from selected piece.
         gsm.onSquareClicked(2, 2);
 
         //second player select move
-        assert(gsm.getCurrentState().equals(GameStateMachine.State.Player2MoveSelection));
+        assertEquals(gsm.getCurrentState(), GameStateMachine.State.Player2MoveSelection);
         gsm.onMoveClicked(0);
 
         //second player select piece
-        assert(gsm.getCurrentState().equals(GameStateMachine.State.Player2PieceSelection));
+        assertEquals(gsm.getCurrentState(), GameStateMachine.State.Player2PieceSelection);
         gsm.onSquareClicked(0, 4);
 
         //second player select dst
-        assert(gsm.getCurrentState().equals(GameStateMachine.State.Player2DestinationSelection));
+        assertEquals(gsm.getCurrentState(), GameStateMachine.State.Player2DestinationSelection);
         gsm.onSquareClicked(0,2);
 
         //when(board.getWinner()).thenAnswer(currentTeam);
@@ -70,6 +90,6 @@ public class GameStateMachineTest {
         gsm.onSquareClicked(2,2);
         gsm.onSquareClicked(2,0);
         //first player advance to win condition
-        assert(gsm.getCurrentState().equals(GameStateMachine.State.Terminal));
+        assertEquals(gsm.getCurrentState(), GameStateMachine.State.Terminal);
     }
 }
