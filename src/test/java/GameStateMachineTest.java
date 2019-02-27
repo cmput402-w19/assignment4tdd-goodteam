@@ -1,6 +1,7 @@
 import cs.ualberta.cmput402.boardgame.Game;
 import cs.ualberta.cmput402.boardgame.Move;
 import cs.ualberta.cmput402.boardgame.board.Board;
+import cs.ualberta.cmput402.boardgame.rendering.GameRenderer;
 import cs.ualberta.cmput402.boardgame.rendering.SwingRenderer;
 import cs.ualberta.cmput402.boardgame.fsm.GameStateMachine;
 import cs.ualberta.cmput402.boardgame.Player;
@@ -17,7 +18,7 @@ public class GameStateMachineTest {
 
     private Board board;
     private Player player;
-    private SwingRenderer renderer;
+    private GameRenderer renderer;
     private GameStateMachine gsm;
 
     @Before
@@ -43,7 +44,7 @@ public class GameStateMachineTest {
         board.setExtraMove(Move.TIGER);
 
         //create mock renderer
-        renderer = mock(SwingRenderer.class);
+        renderer = mock(GameRenderer.class);
 
 
         //define behaviours for board
