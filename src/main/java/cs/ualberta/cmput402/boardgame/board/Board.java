@@ -178,6 +178,10 @@ public class Board {
         return deck.get(0);
     }
 
+    public void setExtraMove(Move move) {
+        deck.set(0, move);
+    }
+
     public int getSize() {
         return size;
     }
