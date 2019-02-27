@@ -35,7 +35,7 @@ public class GameStateMachine implements CallbackConsumer {
         currentState = State.Player1MoveSelection;
         this.renderer = renderer;
         this.board = board;
-	this.boardSize = board.getSize();
+        this.boardSize = board.getSize();
         renderer.drawBoard(board, false);
         renderer.drawMoves(board.getIdlePlayer().getMoves(), board.getCurrentPlayer().getMoves(),
                 board.getExtraMove());
