@@ -115,7 +115,7 @@ public class Board {
 		    }
 		//not best to access public field maybe... but...
 
-		int hypx = mod*(offsets[i].xOffset)+oldX;
+		int hypx = -mod*(offsets[i].xOffset)+oldX;
 		int hypy = -mod*(offsets[i].yOffset)+oldY;
 		if((hypx == x) && (hypy == y)){
 		    return true;
