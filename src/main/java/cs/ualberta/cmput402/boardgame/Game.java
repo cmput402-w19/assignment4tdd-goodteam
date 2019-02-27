@@ -47,9 +47,13 @@ public class Game {
             JPanel boardGui = renderer.getBoardGui();
             guis.add(boardGui);
 
-            // Set up moveGUI.
+            // Set up move GUI.
             JPanel moveGui = renderer.getMoveGui();
             guis.add(moveGui);
+
+            // Set up message GUI.
+            JToolBar messageGui = renderer.getMessageGui();
+            f.add(messageGui, BorderLayout.PAGE_START);
 
             // Pack the filled guis and fix the size.
             f.pack();
