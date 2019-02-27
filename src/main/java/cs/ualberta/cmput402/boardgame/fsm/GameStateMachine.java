@@ -75,7 +75,7 @@ public class GameStateMachine implements CallbackConsumer {
                 currentState = State.Player1DestinationSelection;
             }
             else {
-                // Send error message.
+                // Send bad piece selection message.
             }
             break;
         }
@@ -99,8 +99,11 @@ public class GameStateMachine implements CallbackConsumer {
                     currentState = State.Player2MoveSelection;
                 } else {
                     currentState = State.Terminal;
+                    System.out.println("Player 1 wins!");
                 }
-
+            }
+            else {
+                // Send move failed message.
             }
             break;
         }
@@ -118,7 +121,7 @@ public class GameStateMachine implements CallbackConsumer {
                 currentState = State.Player2DestinationSelection;
             }
             else {
-                // Send error message.
+                // Send bad piece selected message.
             }
             break;
         }
@@ -128,25 +131,29 @@ public class GameStateMachine implements CallbackConsumer {
             y = (boardSize - 1) - y;
 
             // Play the piece and redraw the board.
-            board.playPiece(oldX, oldY, x, y);
-            renderer.drawBoard(board, false);
+            if (board.playPiece(oldX, oldY, x, y)) {
+                renderer.drawBoard(board, false);
 
-            // Swap the moves and turn.
-            board.swapMoves();
-            board.otherPlayerTurn();
+                // Swap the moves and turn.
+                board.swapMoves();
+                board.otherPlayerTurn();
 
-            // Redraw moves and deselect moves.
-            renderer.drawMoves(board.getIdlePlayer().getMoves(), board.getCurrentPlayer().getMoves(),
-                    board.getExtraMove());
-            renderer.setMoveStates(movesToStates(board.getCurrentPlayer().getMoves()));
+                // Redraw moves and deselect moves.
+                renderer.drawMoves(board.getIdlePlayer().getMoves(), board.getCurrentPlayer().getMoves(),
+                        board.getExtraMove());
+                renderer.setMoveStates(movesToStates(board.getCurrentPlayer().getMoves()));
 
-            // Check winning condition.
-            if (board.getWinner() == null) {
-                currentState = State.Player1MoveSelection;
-            } else {
-                currentState = State.Terminal;
+                // Check winning condition.
+                if (board.getWinner() == null) {
+                    currentState = State.Player1MoveSelection;
+                } else {
+                    currentState = State.Terminal;
+                    System.out.println("Player 2 wins!");
+                }
             }
-
+            else {
+                // Send move failed message.
+            }
             break;
         }
         default:
