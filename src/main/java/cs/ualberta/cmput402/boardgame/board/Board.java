@@ -82,8 +82,8 @@ public class Board {
 	    Move selectedPlayMove = currentPlayer.getMove(findCurrentPlayerSelectedMove());
 
 	    //checks if selected coords are in board locations described by move's offsets list
-	    if(!(validMove(x, y, selectedPlayMove))){
-		    return false;
+	    if(!(validMove(oldx, oldy, x, y, selectedPlayMove))){
+		return false;
 	    }
 	    
 	    Square newSquare = getSquareAtPos(x, y);
@@ -104,13 +104,19 @@ public class Board {
     return false;
     }
 
-	public boolean validMove(int x, int y, Move selectedMove){
+	public boolean validMove(int oldX, int oldY, int x, int y, Move selectedMove){
 	    Offsets[] offsets = selectedMove.getOffsets();
+	    int mod = 1;
 	    //for the offsets described, apply to hypothetical onboard location
 	    for(int i = 0; i < offsets.length; i++){
+
+		if(currentPlayer.getTeam().equals(Player.Team.RED)){
+		    mod = -1;
+		    }
 		//not best to access public field maybe... but...
-		int hypx = (offsets[i].xOffset)+x;
-		int hypy = (offsets[i].yOffset)+y;
+
+		int hypx = mod*(offsets[i].xOffset)+oldX;
+		int hypy = -mod*(offsets[i].yOffset)+oldY;
 		if((hypx == x) && (hypy == y)){
 		    return true;
 		}
