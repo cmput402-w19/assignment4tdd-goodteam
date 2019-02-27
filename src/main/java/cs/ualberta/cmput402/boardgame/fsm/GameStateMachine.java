@@ -1,10 +1,11 @@
 package cs.ualberta.cmput402.boardgame.fsm;
 import cs.ualberta.cmput402.boardgame.Move;
+import cs.ualberta.cmput402.boardgame.Offsets;
+import cs.ualberta.cmput402.boardgame.Player;
 import cs.ualberta.cmput402.boardgame.board.Piece;
 import cs.ualberta.cmput402.boardgame.board.Board;
+import cs.ualberta.cmput402.boardgame.board.Square;
 import cs.ualberta.cmput402.boardgame.rendering.GameRenderer;
-
-import java.util.Arrays;
 
 public class GameStateMachine implements CallbackConsumer {
 
@@ -23,7 +24,6 @@ public class GameStateMachine implements CallbackConsumer {
     private Board board;
     private GameRenderer renderer;
 
-    private Move moveToPlay;
     private int oldX, oldY;
     private int boardSize;
     
@@ -63,6 +63,106 @@ public class GameStateMachine implements CallbackConsumer {
         return states;
     }
 
+    private static GameRenderer.ButtonState[][] selectablePieces(Board board) {
+        // Make our states.
+        int size = board.getSize();
+        GameRenderer.ButtonState[][] states = new GameRenderer.ButtonState[size][size];
+
+        // Get constant.
+        Player.Team turn = board.getCurrentPlayer().getTeam();
+
+        // Iterate squares.
+        for (int y = 0; y < size; ++y) {
+            for (int x = 0; x < size; ++x) {
+                // Sanity check.
+                assert(board.onBoard(x, y));
+
+                // Get pieces.
+                Square square = board.getSquareAtPos(x, y);
+
+                if (square.getState().equals(Square.State.OCCUPIED) && square.getPiece().getTeam().equals(turn)) {
+                    states[y][x] = GameRenderer.ButtonState.CAN_SELECT;
+                }
+                else {
+                    states[y][x] = GameRenderer.ButtonState.DEFAULT;
+                }
+            }
+        }
+
+        return states;
+    }
+
+    private static GameRenderer.ButtonState[][] selectableDestinations(Board board, int pX, int pY, boolean rotated) {
+        // Get size.
+        int size = board.getSize();
+
+        // Get constant.
+        Offsets[] origOffsets = null;
+        for (Move move : board.getCurrentPlayer().getMoves()) {
+            if (move.isChosen()) {
+                origOffsets = move.getOffsets();
+                break;
+            }
+        }
+        assert(origOffsets != null); // Sanity check, a move must have been selected.
+
+        // Rotate offsets if necessary.
+        Offsets[] finalOffsets;
+        if (!rotated) {
+            finalOffsets = origOffsets;
+        }
+        else {
+            // Empty destination array.
+            finalOffsets = new Offsets[origOffsets.length];
+
+            // Rotate all offsets around origin.
+            for (int i = 0; i < origOffsets.length; ++i) {
+                Offsets oldOff = origOffsets[i];
+                finalOffsets[i] = new Offsets(-oldOff.xOffset, -oldOff.yOffset);
+            }
+        }
+
+        // Make our states and fill with default.
+        GameRenderer.ButtonState[][] states = new GameRenderer.ButtonState[size][size];
+        for (int y = 0; y < size; ++y)
+            for (int x = 0; x < size; ++x)
+                states[y][x] = GameRenderer.ButtonState.DEFAULT;
+
+        // Set selectable squares.
+        Player.Team turn = board.getCurrentPlayer().getTeam();
+        for (Offsets offset : finalOffsets) {
+            // Calculate offset destination.
+            int destX = pX + offset.xOffset;
+            int destY = pY + offset.yOffset;
+
+
+            // Set can select if on board.
+            if (board.onBoard(destX, destY)) {
+                // Ge the destination square.
+                Square square = board.getSquareAtPos(destX, destY);
+
+                // If it's not occupied or if it's not our team on the square.
+                if (!square.getState().equals(Square.State.OCCUPIED) || !square.getPiece().getTeam().equals(turn))
+                    states[destY][destX] = GameRenderer.ButtonState.CAN_SELECT;
+            }
+        }
+
+        // Set selected piece.
+        assert(board.onBoard(pX, pY)); // Sanity check.
+        states[pY][pX] = GameRenderer.ButtonState.SELECTED;
+
+        return states;
+    }
+
+    private static GameRenderer.ButtonState[][] getNoStateBoard(int size) {
+        GameRenderer.ButtonState[][] states = new GameRenderer.ButtonState[size][size];
+        for (int y = 0; y < size; ++y)
+            for (int x = 0; x < size; ++x)
+                states[y][x] = GameRenderer.ButtonState.DEFAULT;
+
+        return states;
+    }
+
     @Override
     public void onSquareClicked(int x, int y) {
     switch(currentState) {
@@ -70,9 +170,13 @@ public class GameStateMachine implements CallbackConsumer {
             //if the current player clicks a square with its own player on it, store that coord
             Piece piece = board.getSquareAtPos(x, y).getPiece();
             if (piece != null && piece.getTeam().equals(board.getCurrentPlayer().getTeam())) {
+                // Save info for next state.
                 oldX = x;
                 oldY = y;
                 currentState = State.Player1DestinationSelection;
+
+                // Set up selectable state.
+                renderer.setSquareStates(selectableDestinations(board, x, y, false), false);
             }
             else {
                 // Send bad piece selection message.
@@ -89,10 +193,11 @@ public class GameStateMachine implements CallbackConsumer {
                 board.swapMoves();
                 board.otherPlayerTurn();
 
-                // Redraw moves and deselect moves.
+                // Redraw moves and deselect moves and board.
                 renderer.drawMoves(board.getIdlePlayer().getMoves(), board.getCurrentPlayer().getMoves(),
                         board.getExtraMove());
                 renderer.setMoveStates(movesToStates(board.getCurrentPlayer().getMoves()));
+                renderer.setSquareStates(getNoStateBoard(boardSize), false);
 
                 // Check winning condition.
                 if (board.getWinner() == null) {
@@ -115,10 +220,13 @@ public class GameStateMachine implements CallbackConsumer {
             //if the current player clicks a square with its own player on it, store that coord
             Piece piece = board.getSquareAtPos(x, y).getPiece();
             if (piece != null && piece.getTeam().equals(board.getCurrentPlayer().getTeam())) {
+                // Save info for next state.
                 oldX = x;
                 oldY = y;
-
                 currentState = State.Player2DestinationSelection;
+
+                // Set up selectable state.
+                renderer.setSquareStates(selectableDestinations(board, x, y, true), true);
             }
             else {
                 // Send bad piece selected message.
@@ -138,10 +246,11 @@ public class GameStateMachine implements CallbackConsumer {
                 board.swapMoves();
                 board.otherPlayerTurn();
 
-                // Redraw moves and deselect moves.
+                // Redraw moves and deselect moves and board.
                 renderer.drawMoves(board.getIdlePlayer().getMoves(), board.getCurrentPlayer().getMoves(),
                         board.getExtraMove());
                 renderer.setMoveStates(movesToStates(board.getCurrentPlayer().getMoves()));
+                renderer.setSquareStates(getNoStateBoard(boardSize), false);
 
                 // Check winning condition.
                 if (board.getWinner() == null) {
@@ -171,11 +280,10 @@ public class GameStateMachine implements CallbackConsumer {
                 currentState = State.Player1PieceSelection;
 
                 // Set move selection.
-                int length = board.getCurrentPlayer().getMoves().length;
-                GameRenderer.ButtonState[] states = new GameRenderer.ButtonState[length];
-                Arrays.fill(states, GameRenderer.ButtonState.DEFAULT);
-                states[idx] = GameRenderer.ButtonState.SELECTED;
-                renderer.setMoveStates(states);
+                renderer.setMoveStates(movesToStates(board.getCurrentPlayer().getMoves()));
+
+                // Set selectable pieces.
+                renderer.setSquareStates(selectablePieces(board), false);
 
                 break;
             }
@@ -186,6 +294,9 @@ public class GameStateMachine implements CallbackConsumer {
 
                 // Set move selection.
                 renderer.setMoveStates(movesToStates(board.getCurrentPlayer().getMoves()));
+
+                // Set selectable pieces.
+                renderer.setSquareStates(selectablePieces(board), true);
 
                 break;
             }

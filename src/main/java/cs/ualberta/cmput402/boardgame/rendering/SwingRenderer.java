@@ -228,7 +228,7 @@ public class SwingRenderer implements GameRenderer {
                 // Get button to edit.
                 JButton button;
                 if (rotated)
-                    button = squares[size - y][size - x];
+                    button = squares[(size -1 ) - y][(size -1) - x];
                 else
                     button = squares[y][x];
 
